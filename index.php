@@ -39,9 +39,9 @@ $datamar_json = json_encode($datamar);
     <link href="style.css" rel="stylesheet">
     
 
-<h1>DEU BOM MENÓ</h1>
+
 <style>
-asdasdasdasda
+
 h4{
   color: grey ;
   font-family: Arial, Helvetica, sans-serif;
@@ -93,7 +93,7 @@ footer{
   position: fixed;
   top: 0;
   left: 0;
-  background-color:#;
+  background-color: #111B42;
   padding-top: 20px;
 }
 
