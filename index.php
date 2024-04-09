@@ -58,7 +58,6 @@ h1{
 }
 
 
-
 .charts {
 width: 50px;
 height: 50px;
@@ -176,12 +175,11 @@ footer{
     <h2>Centro cirúrgico</h2><br>
     <ul>
     <div class="nav-item">
-    <div class="sidebar-heading align-items-left"> Categorias </div>
       <li><a href="#">Solicitações por Status</a></li>
       <li><a href="#"> Cirurgias por Tipo</a></li>
       <li><a href="#">Cirurgiões</a></li>
       <li><a href="#">Solicitações por Periodo de Tempo</a></li>
-      <li><a href="#">Tabela Geral</a></li>
+      <li><a href="tabelageral.php">Tabela Geral</a></li>
     </ul>
 </div>
   </div>
