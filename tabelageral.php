@@ -189,14 +189,12 @@ footer{
         </tr>
         
         <?php
-        if(!isset($_GET['busca'])){
+
         ?>
         <tr>
-         <td colspan="3">Digite algo</td>
         </tr>
         <?php
-        }else{
-          $pesquisa = $mysqli->real_escape_string($_GET['busca']);
+      
           $sql_code = "SELECT * FROM registros_hospital WHERE plano_saude LIKE '%$pesquisa%' OR quantidade_jan LIKE '%$pesquisa%' OR  quantidade_fev LIKE '%$pesquisa%' OR  quantidade_mar LIKE '%$pesquisa%'";
           $sql_query = $mysqli->query($sql_code) or die("erro ao consultar".$mysqli->error);
 
@@ -221,9 +219,6 @@ footer{
             }
         }
         ?>
-
-        <?php 
-        } ?>
     </table>
     </div>
   
