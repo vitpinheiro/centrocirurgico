@@ -172,7 +172,7 @@ footer{
  <div class="tabela">
 <h1 >Planos de saúde</h1>
     <form action="">
-        <input name="busca" value="<?php if(isset($_GET['busca']));  ?>" placeholder="Digite os termos de pesquisa" type="text">
+    <input name="busca" value="<?php if(isset($_GET['busca'])) echo $_GET['busca']; ?>" placeholder="Digite os termos de pesquisa" type="text">
         <button type="submit">Pesquisar</button>
     </form>
     <br>
@@ -190,10 +190,9 @@ footer{
         
         <?php
         if(!isset($_GET['busca'])){
+          
         ?>
-        <tr>
-         <td colspan="3">Digite algo</td>
-        </tr>
+        
         <?php
         }else{
           $pesquisa = $mysqli->real_escape_string($_GET['busca']);
