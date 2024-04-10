@@ -1,8 +1,10 @@
 <?php
 namespace teste;
 
-include_once("conexao.php");
-$pesquisa = $mysqli->real_escape_string($_GET['busca']);
+require_once("conexao.php");
+$pesquisa = isset($_GET['busca']) ? $mysqli->real_escape_string($_GET['busca']) : '';
+
+
 $sql_code = "SELECT * FROM registros_hospital WHERE plano_saude LIKE '%$pesquisa%' OR quantidade_jan LIKE '%$pesquisa%' OR  quantidade_fev LIKE '%$pesquisa%' OR  quantidade_mar LIKE '%$pesquisa%'";
 $sql_query = $mysqli->query($sql_code) or die("erro ao consultar".$mysqli->error);
 ?>
@@ -43,11 +45,6 @@ height: 50px;
 background-color: white;
 }
 
-#myChart{
-width: 10em;
-height: 90em;
-
-}
 #navbarNav{
 justify-content: right;
 

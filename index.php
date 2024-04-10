@@ -36,8 +36,7 @@ $datamar_json = json_encode($datamar);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="style.css" rel="stylesheet">
-    
+  
 
 
 <style>
@@ -99,6 +98,8 @@ footer{
 .sidebar h2 {
   color: white;
   text-align: center;
+  
+  
 }
 
 .sidebar ul {
@@ -114,6 +115,7 @@ footer{
 .sidebar ul li a {
   color: white;
   text-decoration: none;
+  
 }
 
 .sidebar ul li a:hover {
