@@ -37,7 +37,7 @@ $sql_query = $mysqli->query($sql_code) or die("erro ao consultar".$mysqli->error
         <?php
         }else{
           $pesquisa = $mysqli->real_escape_string($_GET['busca']);
-          $sql_code = "SELECT * FROM registros_hospital WHERE plano_saude LIKE '%$pesquisa%' OR quantidade_jan LIKE '%$pesquisa%' OR  quantidade_fev LIKE '%$pesquisa%' OR  quantidade_mar LIKE '%$pesquisa%'";
+          $sql_code = "SELECT * FROM registros_hospital WHERE plano_saude LIKE '%$pesquisa%' OR nome LIKE '%$pesquisa%' OR  genero LIKE '%$pesquisa%' OR  estado LIKE '%$pesquisa%'";
           $sql_query = $mysqli->query($sql_code) or die("erro ao consultar".$mysqli->error);
 
 
@@ -52,9 +52,9 @@ $sql_query = $mysqli->query($sql_code) or die("erro ao consultar".$mysqli->error
                 ?>
                 <tr>
                   <td><?php echo $dados['plano_saude']; ?></td>
-                  <td><?php echo $dados['quantidade_jan']; ?></td>
-                  <td><?php echo $dados['quantidade_fev']; ?></td>
-                  <td><?php echo $dados['quantidade_mar']; ?></td>
+                  <td><?php echo $dados['nome']; ?></td>
+                  <td><?php echo $dados['genero']; ?></td>
+                  <td><?php echo $dados['estado']; ?></td>
                   
                 </tr>
                 <?php

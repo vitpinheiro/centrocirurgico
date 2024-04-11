@@ -16,7 +16,13 @@ if(isset($_GET['filtro'])) {
     $filtro = $mysqli->real_escape_string($_GET['filtro']);
 
     // Consulta SQL com o filtro
-    $sql = "SELECT * FROM pacientes WHERE nome LIKE '%$filtro%' AND  idade LIKE '%$filtro%' AND  plano_saude LIKE '%$filtro%' AND  genero LIKE '%$filtro%' AND  estado LIKE '%$filtro%' AND  status LIKE '%$filtro%' ";
+    $sql = "SELECT * FROM pacientes WHERE nome LIKE '%$filtro%' 
+            AND  idade LIKE '%$filtro%' 
+            AND  plano_saude 
+            LIKE '%$filtro%' 
+            AND  genero LIKE '%$filtro%' 
+            AND  estado LIKE '%$filtro%' 
+            AND  status LIKE '%$filtro%' ";
     
     // Executar consulta
     $result = $mysqli->query($sql);

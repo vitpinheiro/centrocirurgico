@@ -109,8 +109,8 @@ footer{
 
 .sidebar ul li {
   padding: 8px;
-  text-align: center;
-}
+  text-align: center; 
+ }
 
 .sidebar ul li a {
   color: white;
@@ -126,10 +126,72 @@ footer{
   margin-left: 250px;
   padding: 20px;
   height: 20em;
+} */
+/*  */
+.line {
+  width: 25px;
+  height: 3px;
+  background-color: black;
+  margin: 5px 0;
+}
+/* Ajustes gerais */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.wrapper {
+  display: flex;
+}
+
+/* Estilos do sidebar */
+.sidebar {
+  width: 240px;
+  background-color: #111B42;
+  padding-top: 20px;
+  transition: transform 0.3s ease;
+  z-index: 2; /* Para garantir que o sidebar esteja acima do conteúdo */
+}
+
+/* Estilos do conteúdo principal */
+.content {
+  flex-grow: 1; /* O conteúdo principal ocupará o espaço restante */
+  padding: 20px;
+  height: 100vh; /* Ocupa a altura total da tela */
+  overflow-y: auto; /* Adiciona rolagem vertical se o conteúdo ultrapassar a altura da tela */
+}
+
+/* Estilos para o menu de hambúrguer */
+.hamburger-menu {
+  display: none;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 3; /* Para garantir que o menu de hambúrguer esteja acima do conteúdo */
 }
 
 
 
+/* Estilos para telas menores */
+@media only screen and (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    position: fixed; /* Corrigir posição do sidebar em telas menores */
+    top: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .content {
+    margin-left: 0; /* Remove a margem do conteúdo principal quando o sidebar estiver oculto */
+  }
+
+  .hamburger-menu {
+    display: block;
+  }
+}
 
 </style>
 
@@ -138,42 +200,9 @@ footer{
 <body>
 <header>
 
-<!-- 
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid d-flex justify-content-center align-items-center">
-    
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a id="home"class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav> -->
 
 
-
-
-<!--  -->
-
-<!--  -->
-</header>
-
-<!-- <div class="sidebar-heading">Categorias</div> -->
-<div class="sidebar shadow">
+<!-- <div class="sidebar shadow">
     <h2>Centro cirúrgico</h2><br>
     <ul>
     <div class="nav-item">
@@ -184,8 +213,25 @@ footer{
       <li><a href="tabelageral.php">Tabela Geral</a></li>
     </ul>
 </div>
-  </div>
-
+  </div>  -->
+  <!--  -->
+  <div class="wrapper"></div>
+  <div class="sidebar shadow">
+    <h2>Centro cirúrgico</h2><br>
+    <ul class="menu">
+        <li><a href="#">Solicitações por Status</a></li>
+        <li><a href="#">Cirurgias por Tipo</a></li>
+        <li><a href="#">Cirurgiões</a></li>
+        <li><a href="#">Solicitações por Período de Tempo</a></li>
+        <li><a href="tabelageral.php">Tabela Geral</a></li>
+    </ul>
+    <div class="hamburger-menu">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+</div>
+  <!--  -->
 
   <div class="content">
     <h2>Olá, TI Admin!</h2>
@@ -252,12 +298,12 @@ footer{
 </div>
  <br>
   
-    <div class="col-6 ">
+    <div class="col-lg-6 col-xs-12">
         <h5 class="text-center">Gráfico</h5>
         <canvas class="charts" id="myChart" ></canvas>
     </div>
 
-    <div class="col-6">
+    <div class="col-lg-6 col-xs-12">
         <h4 class="text-center">Gráfico de linhas</h4>
           <canvas class="charts" id="myChart3"></canvas>
         </div>
@@ -265,7 +311,7 @@ footer{
  
     <br>
     <div class="row justify-content-center">        
-        <div class="col-3">
+        <div class="col-lg-3 col-xs-12">
           <h5 class="text-center">Gráfico de pizza</h5>
           <canvas  class="charts" id="myChart2"></canvas>
         </div>
@@ -402,6 +448,17 @@ footer{
 <footer>
   <p></p>
 </footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const hamburger = document.querySelector('.hamburger-menu');
+        const sidebar = document.querySelector('.sidebar');
+
+        hamburger.addEventListener('click', function () {
+            sidebar.classList.toggle('active');
+        });
+    });
+</script>
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

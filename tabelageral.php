@@ -5,11 +5,11 @@ require_once("conexao.php");
 $pesquisa = isset($_GET['busca']) ? $mysqli->real_escape_string($_GET['busca']) : '';
 
 
-$sql_code = "SELECT * FROM registros_hospital WHERE plano_saude LIKE '%$pesquisa%' OR quantidade_jan LIKE '%$pesquisa%' OR  quantidade_fev LIKE '%$pesquisa%' OR  quantidade_mar LIKE '%$pesquisa%'";
+$sql_code = "SELECT * FROM pacientes WHERE plano_saude LIKE '%$pesquisa%' OR nome LIKE '%$pesquisa%' OR  idade LIKE '%$pesquisa%' OR  genero LIKE '%$pesquisa%' OR  estado LIKE '%$pesquisa%' OR  status LIKE '%$pesquisa%'";
 $sql_query = $mysqli->query($sql_code) or die("erro ao consultar".$mysqli->error);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -102,6 +102,7 @@ footer{
 
 .tabela{
     text-align: center;
+    
 
 
 }
@@ -169,25 +170,29 @@ footer{
 </div>
   </div>
 <br>
+
  <div class="tabela">
 <h1 >Planos de saúde</h1>
     <form action="">
     <input name="busca" value="<?php if(isset($_GET['busca'])) echo $_GET['busca']; ?>" placeholder="Digite os termos de pesquisa" type="text">
         <button type="submit">Pesquisar</button>
     </form>
-    <br>
-    <br>
-    <br>
-    <br>
 
+    <br>
+    <br>
+    <br>
+    <br>
+    
     <table class="table table-bordered" class="formulario" width="600px " border="2">
         <tr>
             <th>Plano de saude</th>
-            <th>Quant janeiro</th>
-            <th>Quant fevereiro</th>
-            <th>Quant março</th>
+            <th>Nome</th>
+            <th>Idade</th>
+            <th>Gênero</th>
+            <th>Estado</th>
+            <th>Status</th>
         </tr>
-        
+   
         <?php
 
         ?>
@@ -195,9 +200,9 @@ footer{
         </tr>
         <?php
       
-          $sql_code = "SELECT * FROM registros_hospital WHERE plano_saude LIKE '%$pesquisa%' OR quantidade_jan LIKE '%$pesquisa%' OR  quantidade_fev LIKE '%$pesquisa%' OR  quantidade_mar LIKE '%$pesquisa%'";
+          $sql_code = "SELECT * FROM pacientes WHERE plano_saude LIKE '%$pesquisa%' OR nome LIKE '%$pesquisa%' OR  idade LIKE '%$pesquisa%' OR  genero LIKE '%$pesquisa%' OR  estado LIKE '%$pesquisa%'  OR status LIKE '%$pesquisa%'";
           $sql_query = $mysqli->query($sql_code) or die("erro ao consultar".$mysqli->error);
-
+          
 
           if($sql_query->num_rows ==0 ){
         ?>
@@ -210,14 +215,15 @@ footer{
                 ?>
                 <tr>
                   <td><?php echo $dados['plano_saude']; ?></td>
-                  <td><?php echo $dados['quantidade_jan']; ?></td>
-                  <td><?php echo $dados['quantidade_fev']; ?></td>
-                  <td><?php echo $dados['quantidade_mar']; ?></td>
-                  
+                  <td><?php echo $dados['nome']; ?></td>
+                  <td><?php echo $dados['idade']; ?></td>
+                  <td><?php echo $dados['genero']; ?></td>
+                  <td><?php echo $dados['estado']; ?></td>
+                  <td><?php echo $dados['status']; ?></td>
                 </tr>
                 <?php
             }
-        }
+          }
         ?>
     </table>
     </div>
