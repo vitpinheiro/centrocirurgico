@@ -56,6 +56,10 @@ h1{
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
+h2 a{
+  text-decoration: none;
+  color:white;
+}
 
 .charts {
 width: 50px;
@@ -217,7 +221,7 @@ body, html {
   <!--  -->
   <div class="wrapper"></div>
   <div class="sidebar shadow">
-    <h2>Centro cirúrgico</h2><br>
+    <h2><a href="index.php">Centro cirúrgico</a></h2><br>
     <ul class="menu">
         <li><a href="solicitacaoporstatus.php">Solicitações por Status</a></li>
         <li><a href="#">Cirurgias por Tipo</a></li>
