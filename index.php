@@ -156,10 +156,10 @@ body, html {
 
 /* Estilos do conteúdo principal */
 .content {
-  flex-grow: 1; /* O conteúdo principal ocupará o espaço restante */
-  padding: 20px;
-  height: 100vh; /* Ocupa a altura total da tela */
-  overflow-y: auto; /* Adiciona rolagem vertical se o conteúdo ultrapassar a altura da tela */
+  /* flex-grow: 1; /* O conteúdo principal ocupará o espaço restante */
+  /* padding: 20px;
+  height: 100vh; Ocupa a altura total da tela */
+  /* overflow-y: auto; Adiciona rolagem vertical se o conteúdo ultrapassar a altura da tela */ */
 }
 
 /* Estilos para o menu de hambúrguer */
@@ -219,7 +219,7 @@ body, html {
   <div class="sidebar shadow">
     <h2>Centro cirúrgico</h2><br>
     <ul class="menu">
-        <li><a href="#">Solicitações por Status</a></li>
+        <li><a href="solicitacaoporstatus.php">Solicitações por Status</a></li>
         <li><a href="#">Cirurgias por Tipo</a></li>
         <li><a href="#">Cirurgiões</a></li>
         <li><a href="#">Solicitações por Período de Tempo</a></li>
@@ -233,214 +233,7 @@ body, html {
 </div>
   <!--  -->
 
-  <div class="content">
-    <h2>Olá, TI Admin!</h2>
-    <div class="row">
-    <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Concluídos</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">*Incluir dados*</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-  
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Agendados</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">*Incluir dados*</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-danger shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                                Pendentes</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">*Incluir dados*</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-<!--  -->
-<main>
-  <div class="container align-items-center justify-content-center shadow">
-    <div class="row">
-
-    <div class="row">
-    <div class="col-md-12 text-center">
-    </div>
-</div>
- <br>
-  
-    <div class="col-lg-6 col-xs-12">
-        <h5 class="text-center">Gráfico</h5>
-        <canvas class="charts" id="myChart" ></canvas>
-    </div>
-
-    <div class="col-lg-6 col-xs-12">
-        <h4 class="text-center">Gráfico de linhas</h4>
-          <canvas class="charts" id="myChart3"></canvas>
-        </div>
-   </div>
  
-    <br>
-    <div class="row justify-content-center">        
-        <div class="col-lg-3 col-xs-12">
-          <h5 class="text-center">Gráfico de pizza</h5>
-          <canvas  class="charts" id="myChart2"></canvas>
-        </div>
-    </div>
- 
-</div>
-  </div>
-</div>
-
-
-<script src="chart.js"></script>
-
-<script>
-  //Gráfico de barras
-  // const nova_barra_data = php echo json_encode($nova_barra); ?>;
-  // const nova_barra2_data = php echo json_encode($nova_barra2); ?>;
-  const ctx = document.getElementById('myChart');
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: <?php echo $labels_json;?>,
-      datasets: [{
-        label: 'quant janeiro',
-        data: <?php echo $datajan_json;?>,
-        borderWidth: 1
-      },
-      {
-        label: 'quant fevereiro ',
-        data: <?php echo $datafev_json;?>,
-        borderWidth: 1
-      
-      },
-      {
-        label: 'quant março ',
-        data: <?php echo $datamar_json;?>,
-        borderWidth: 1
-      
-      }
-    
-    
-    ]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-  
-  //Gráfico de pizza
-  const ctx2 = document.getElementById('myChart2');
-  new Chart(ctx2, {
-    type: 'pie',
-    data: {
-      labels: <?php echo $labels_json;?>,
-      datasets: [{
-        label: 'quant janeiro',
-        data: <?php echo $datajan_json;?>,
-        borderWidth: 1
-      },
-      {
-        label: 'quant fevereiro ',
-        data: <?php echo $datafev_json;?>,
-        borderWidth: 1
-      
-      },
-      {
-        label: 'quant março ',
-        data: <?php echo $datamar_json;?>,
-        borderWidth: 1
-      
-      },
-    ]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
-  //Gráfico de linha
-  // const nova_linha_data = php echo json_encode($nova_linha); ?>;
-  // const nova_linha2_data = php echo json_encode($nova_linha2); ?>;
-
-  const ctx3 = document.getElementById('myChart3');
-  
-  new Chart(ctx3, {
-    type: 'line',
-    data: {
-      labels: <?php echo $labels_json;?>,
-      datasets: [
-        {
-        label: ' quant janeiro',
-        data: <?php echo $datajan_json;?>,
-        borderWidth: 1
-     
-      },
-      {
-        label: ' quant fevereiro',
-        data: <?php echo $datafev_json;?>,
-        borderWidth: 1
-     
-      },
-      {
-        label: ' quant março',
-        data:  <?php echo $datamar_json;?>,
-        borderWidth: 1
-     
-      }
-    
-    ]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
-
-
-</script>
 <br>
 <br>
 </main>

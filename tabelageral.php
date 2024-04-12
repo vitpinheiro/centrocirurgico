@@ -115,6 +115,7 @@ footer{
 }
 
 
+
 </style>
 
 
@@ -161,7 +162,7 @@ footer{
     <h2><a href="index.php">Centro cirúrgico</a></h2><br>
     <ul>
     <div class="nav-item">
-      <li><a href="#">Solicitações por Status</a></li>
+      <li><a href="solicitacaoporstatus.php">Solicitações por Status</a></li>
       <li><a href="#"> Cirurgias por Tipo</a></li>
       <li><a href="#">Cirurgiões</a></li>
       <li><a href="#">Solicitações por Periodo de Tempo</a></li>
