@@ -37,17 +37,26 @@ $mostrarbanco = $puxardados->pegarregistro();
 }
 
 .pesquisar{
-  margin: 8em;
+  margin: 12em;
 
 }
 
 h1{
   padding: 0.2em;
   text-align: center;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  margin-top: 2em; /* Reduza a margem superior do h1 */
+  font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
+  margin-top: 1.2em; /* Reduza a margem superior do h1 */
 }
 
+div#card1{
+  margin: 8em;
+  
+}
+
+.card-title a{
+  text-decoration: none;
+  color: black;
+}
 
 
 </style>
@@ -59,6 +68,7 @@ h1{
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
 <figure class="logo"><img src="img/Logobordab.png" alt=""></figure>
   <div class="container-fluid">
+ 
     <a class="navbar-brand" href="#"></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -87,79 +97,81 @@ h1{
         </li>
       </ul>
       
-     
+      
     </div>
   </div>
 </nav>
 
-<h1>OLÁ, ADMIN!</h1>
+<h1 class="ola">OLÁ, ADMIN!</h1>
 
 </header>
 
 <main>
 
 
-<div class="pesquisar ">
-<form class="d-flex " role="search">
-   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-   <button class="btn btn-outline-success" type="submit">Search</button>
-</form>
+<div class="pesquisar container">
+  <form class="d-flex justify-content-center" role="search">
+  <div class="col-sm-8 col-md-8">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+  </div>
+  <div class="col-sm-4 col-md-2">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+    </div>
+  </form>
 </div>
 
 
-
-<div class="row justify-content-center">
-    <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">*Incluir dados*</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<div id="card1" class="row justify-content-center">
+  <div class="col-md-4">
+    <div class="card mb-3">
+      <div class="row g-0">
+        <div class="col-md-4">
+        <a href="solicitacaoporstatus.php">
+  <img src="img/projeto.png" class="img-fluid rounded-start" alt="Descrição da imagem"></a>
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title"><a href="solicitacaoporstatus.php">Solicitações por status</a></h5>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                              </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">*Incluir dados*</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-danger shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">*Incluir dados*</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+  <div class="col-md-4">
+    <div class="card mb-3">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <a href="cirurgioes.php">
+      <img src="img/medico.png" class="img-fluid rounded-start" alt="..."></a>
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title"><a href="cirurgioes.php">Cirurgiões</a></h5>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-4">
+    <div class="card mb-3" >
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="img/cirurgia.png" class="img-fluid rounded-start" alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">Cirurgias</h5>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 </main>

@@ -30,6 +30,36 @@ class PuxarDados {
         }
     }
 
+    
+    public function pegarcirurgioes() {
+        try {
+            $sql= "SELECT nome, CRM, especialidade, email, telefone, quantidade FROM cirurgioes ";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            $resultados = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $resultados;
+        } catch (\PDOException $e) {
+            throw $e;
+        }
+    }
+    public function pegarcirurgias() {
+        try {
+            $sql = "SELECT c.especialidade, SUM(c.quantidade) AS quantidade
+                    FROM (
+                        SELECT especialidade, COUNT(*) AS quantidade 
+                        FROM cirurgioes 
+                        GROUP BY especialidade
+                    ) AS c
+                    GROUP BY c.especialidade";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            $resultados = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $resultados;
+        } catch (\PDOException $e) {
+            throw $e;
+        }
+    }
+    
     public function pegarGenero() {
         try {
             $sql = "SELECT genero, COUNT(*) AS quantidade FROM pacientes GROUP BY genero";
@@ -54,5 +84,8 @@ class PuxarDados {
         }
     }
 }
+
+
+
 
 ?>
