@@ -44,21 +44,25 @@ class PuxarDados {
     }
     public function pegarcirurgias() {
         try {
-            $sql = "SELECT c.especialidade, SUM(c.quantidade) AS quantidade
-                    FROM (
-                        SELECT especialidade, COUNT(*) AS quantidade 
-                        FROM cirurgioes 
-                        GROUP BY especialidade
-                    ) AS c
-                    GROUP BY c.especialidade";
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute();
-            $resultados = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-            return $resultados;
-        } catch (\PDOException $e) {
+
+            $sql = "SELECT quantidade, especialidade, SUM(quantidade) AS quantidade_total 
+                    FROM cirurgioes 
+                    GROUP BY especialidade"; // Agrupa os resultados pela especialidade
+
+                    $stmt = $this->pdo->prepare($sql);
+                    // Executa a consulta SQL
+                    $stmt->execute();
+                    // Obtém os resultados da consulta como um array associativo
+                    $resultados = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                    // Retorna os resultados
+                    return $resultados;
+                    
+        } catch (\PDOException $e) { // Trata qualquer exceção do tipo PDOException
+            // Lança a exceção para ser tratada em outro lugar do código
             throw $e;
         }
     }
+    
     
     public function pegarGenero() {
         try {

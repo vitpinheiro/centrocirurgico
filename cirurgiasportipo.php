@@ -6,16 +6,23 @@ include_once("pegarregistro.php");
 
 $puxardados = new PuxarDados;
 $mostrarbanco = $puxardados->pegarcirurgias();
+// print_r($mostrarbanco);
 
 
 // Extraia as informações do banco de dados para uso no gráfico
+$quantidade = array_column($mostrarbanco, 'quantidade_total');
+// print_r($quantidade);
+
 $labels = array_column($mostrarbanco, 'especialidade');
-$quantidade = array_column($mostrarbanco, 'quantidade');
+// $quantidade = array_column($mostrarbanco, 'quantidade');
 // $data = array_column($mostrarbanco, 'plano_saude');
 // Converta os dados para JSON para uso no JavaScript
+
+$quantidade_json = json_encode($mostrarbanco);
 $labels_json = json_encode($labels);
 $quantidade_json = json_encode($quantidade);
-// echo ($mostrarbanco);
+
+// echo ($mostrarbanco);scv
 
 // // Juntando os arrays
 // $arrayjunto = array_merge($nomeconvenio, $quant);
@@ -219,8 +226,8 @@ body, html {
     <h2><a href="index.php">Centro cirúrgico</a></h2><br>
     <ul class="menu">
         <li><a href="solicitacaoporstatus.php">Solicitações por Status</a></li>
-        <li><a href="#">Cirurgias por Tipo</a></li>
-        <li><a href="#">Cirurgiões</a></li>
+        <li><a href="cirurgiasportipo.php">Cirurgias por Tipo</a></li>
+        <li><a href="cirurgioes.php">Cirurgiões</a></li>
         <li><a href="#">Solicitações por Período de Tempo</a></li>
         <li><a href="tabelageral.php">Tabela Geral</a></li>
     </ul>

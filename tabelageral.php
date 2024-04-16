@@ -163,8 +163,8 @@ footer{
     <ul>
     <div class="nav-item">
       <li><a href="solicitacaoporstatus.php">Solicitações por Status</a></li>
-      <li><a href="#"> Cirurgias por Tipo</a></li>
-      <li><a href="#">Cirurgiões</a></li>
+      <li><a href="cirurgiasportipo.php"> Cirurgias por Tipo</a></li>
+      <li><a href="cirurgioes.php">Cirurgiões</a></li>
       <li><a href="#">Solicitações por Periodo de Tempo</a></li>
       <li><a href="tabelageral.php">Tabela Geral</a></li>
     </ul>

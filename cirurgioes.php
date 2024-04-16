@@ -72,7 +72,6 @@ justify-content: right;
 
 }
 
-
 /*  */
     body {
   margin: 0;
@@ -219,8 +218,8 @@ body, html {
     <h2><a href="index.php">Centro cirúrgico</a></h2><br>
     <ul class="menu">
         <li><a href="solicitacaoporstatus.php">Solicitações por Status</a></li>
-        <li><a href="#">Cirurgias por Tipo</a></li>
-        <li><a href="#">Cirurgiões</a></li>
+        <li><a href="cirurgiasportipo.php">Cirurgias por Tipo</a></li>
+        <li><a href="cirurgioes.php">Cirurgiões</a></li>
         <li><a href="#">Solicitações por Período de Tempo</a></li>
         <li><a href="tabelageral.php">Tabela Geral</a></li>
     </ul>
