@@ -86,7 +86,6 @@ $mostrarbanco = $puxardados->pegarregistro();
             </div>
         </form>
     </div>
-
     <div id="card1" class="row justify-content-center">
         <div class="col-md-4" id="solicitacoesDiv">
             <div class="card mb-3">
