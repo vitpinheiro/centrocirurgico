@@ -69,11 +69,13 @@ $mostrarbanco = $puxardados->pegarregistro();
     </div>
   </div>
 </nav>
-
-<h1 class="ola">OLÁ, ADMIN!</h1>
 </header>
 
+
+
+
 <main>
+<h1 class="ola">OLÁ, ADMIN!</h1>
     <div class="pesquisar container">
         <form class="d-flex justify-content-center" role="search">
             <div class="col-sm-8 col-md-8">
