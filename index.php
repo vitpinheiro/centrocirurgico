@@ -19,6 +19,9 @@ $mostrarbanco = $puxardados->pegarregistro();
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules\sweetalert2\dist\sweetalert2.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="node_modules\font-awesome\css\font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
 
 <style>
@@ -101,7 +104,13 @@ $mostrarbanco = $puxardados->pegarregistro();
                 </div>
             </div>
         </div>
-
+        <div class="info-box">
+  <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+  <div class="info-box-content">
+    <span class="info-box-text">Messages</span>
+    <span class="info-box-number">1,410</span>
+  </div>
+</div>
         <div class="col-md-4" id="cirurgioesDiv">
             <div class="card mb-3">
                 <div class="row g-0">
@@ -118,7 +127,13 @@ $mostrarbanco = $puxardados->pegarregistro();
                 </div>
             </div>
         </div>
-
+        <div class="info-box">
+  <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+  <div class="info-box-content">
+    <span class="info-box-text">Messages</span>
+    <span class="info-box-number">1,410</span>
+  </div>
+</div>
         <div class="col-md-4" id="cirurgiasDiv">
             <div class="card mb-3">
                 <div class="row g-0">
@@ -139,6 +154,9 @@ $mostrarbanco = $puxardados->pegarregistro();
 </main>
 
 <script src="node_modules\bootstrap\dist\js\bootstrap.min.js"></script>
+<script src="node_modules\jquery\dist\jquery.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
