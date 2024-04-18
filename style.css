@@ -1,6 +1,6 @@
 /* index */
 *{
-    margin: 0em;
+    margin: 0em ;
   }
   
   .logo img{
@@ -14,16 +14,14 @@
     text-align: center;
   }
   
-  .pesquisar{
-    margin: 12em;
-  
-  }
+ 
   
   h1{
-    padding: 0.2em;
+    padding: 2em;
     text-align: center;
-    font-family: 'Gill Sans', 'Gill Sans MT', 'Calibri', 'Trebuchet MS', sans-serif;
-    margin-top: 1.2em; /* Reduza a margem superior do h1 */
+    font-family:Arial, Helvetica, sans-serif;
+    margin-top: 0; /* Remove a margem superior padrão */
+    margin-bottom:1em; /* Adiciona uma margem inferior */
   }
   
   div#card1{
@@ -35,6 +33,40 @@
     text-decoration: none;
     color: black;
   }
+
+/* Adicione estilos personalizados aqui */
+.info-box {
+  float: left; /* Faz com que as divs flutuem para a esquerda */
+  margin-right: 10px; /* Margem entre as divs */
+  border: 1px solid #ddd; /* Adicione uma borda */
+  border-radius: 5px; /* Adicione borda arredondada */
+  margin-bottom: 10px; /* Adicione margem inferior */
+  padding: 15px; /* Adicione preenchimento interno */
+  background-color: #fff; /* Defina a cor de fundo */
+  display: flex; /* Altere o display para flex para usar alinhamento flexível */
+  align-items: center; /* Alinhe os itens verticalmente ao centro */
+  
+}
+
+.info-box-icon {
+  flex-shrink: 0; /* Evite que a imagem diminua de tamanho */
+  margin-right: 10px; /* Adicione margem à direita */
+}
+
+.info-box-icon img {
+  width: 50px; /* Ajuste a largura da imagem */
+  height: auto; /* Mantenha a proporção */
+}
+
+.info-box-text  {
+  font-size: 18px; /* Defina o tamanho da fonte */
+  font-weight: bold; /* Defina a espessura da fonte */
+} 
+ 
+.info-box-content a{
+  color: black;
+}
+
 /* index */
 
 

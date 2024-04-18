@@ -1,12 +1,5 @@
 <?php
 
-namespace teste;
-
-include_once("pegarregistro.php");
-
-$puxardados = new PuxarDados;
-$mostrarbanco = $puxardados->pegarregistro();
-
 
 ?>
 <!DOCTYPE html>
@@ -23,11 +16,9 @@ $mostrarbanco = $puxardados->pegarregistro();
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
+    <style>
 
-<style>
-
-
-</style>
+    </style>
 
 </head>
 <body>
@@ -64,75 +55,51 @@ $mostrarbanco = $puxardados->pegarregistro();
           <a class="nav-link disabled" aria-disabled="true">Contato</a>
         </li>
       </ul>
-      
-      
     </div>
   </div>
 </nav>
 </header>
 
-
-
-
 <main>
-<h1 class="ola">OLÁ, ADMIN!</h1>
-    <div class="pesquisar container">
-        <form class="d-flex justify-content-center" role="search">
-            <div class="col-sm-8 col-md-8">
-                <input class="form-control me-2" type="search" id="searchInput" placeholder="Buscar" aria-label="Search">
+<div class="container text-center mt-5">
+    <h1 class="ola">OLÁ, ADMIN!</h1>
+
+    <div id="pesquisar" class="">
+        <form class="d-flex justify-content-center mb-10 " role="search">
+            <div class=" col-md-8 mb-3 mb-4 ">
+                <input class="form-control me-2 " type="search" id="searchInput" placeholder="Buscar" aria-label="Search">
             </div>
             <div class="col-sm-4 col-md-2">
-                <button class="btn btn-outline-success" type="submit">Buscar</button>
+                <button class="btn btn-outline-success w-100" type="submit">Buscar</button>
             </div>
         </form>
     </div>
-    <div id="card1" class="row justify-content-center">
-        <div class="col-md-4" id="solicitacoesDiv">
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <a href="solicitacaoporstatus.php">
-                            <img src="img/projeto.png" class="img-fluid rounded-start" alt="Descrição da imagem">
-                        </a>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="solicitacaoporstatus.php">Solicitações por status</a></h5>
-                        </div>
+</div>
+
+    <div class="container">
+        <div class="row" id="infoBoxContainer">
+            <div class="col-md-4 ">
+                <div class="info-box" id="solicitacoes">
+                    <span class="info-box-icon bg-success"><a href="solicitacaoporstatus.php"><img src="img/medico.svg" alt=""><i class="fa-solid fa-user-doctor"></a></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text"><a href="solicitacaoporstatus.php">Solicitações por status</a></span>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-4" id="cirurgioesDiv">
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <a href="cirurgioes.php">
-                            <img src="img/medico.png" class="img-fluid rounded-start" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="cirurgioes.php">Cirurgiões</a></h5>
-                        </div>
+            <div class="col-md-4">
+                <div class="info-box" id="cirurgioes">
+                    <span class="info-box-icon bg-success"><a href="cirurgioes.php"><img src="img/medico.svg" alt=""><i class="fa-solid fa-user-doctor"></a></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text"><a href="cirurgioes.php">Cirurgiões</a></span>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="col-md-4" id="cirurgiasDiv">
-            <div class="card mb-3">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <a href="cirurgiasportipo.php">
-                            <img src="img/cirurgia.png" class="img-fluid rounded-start" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title"><a href="cirurgiasportipo.php">Cirurgias</a></h5>
-                        </div>
+            <div class="col-md-4">
+                <div class="info-box" id="cirurgias">
+                    <span class="info-box-icon bg-success"><a href="cirurgiasportipo.php"><img class="cirurgia" src="img/cirurgia.svg" alt=""></a><i class="fa-solid fa-user-doctor"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text"><a href="cirurgiasportipo.php">Cirurgias</a></span>
                     </div>
                 </div>
             </div>
@@ -146,7 +113,9 @@ $mostrarbanco = $puxardados->pegarregistro();
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol
+
+6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
 <script>
@@ -155,18 +124,19 @@ $mostrarbanco = $puxardados->pegarregistro();
         // Texto digitado, convertido para minúsculas e sem acentos
         var searchText = this.value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         // Divs a serem exibidas
-        var divs = document.querySelectorAll('.card');
+        var divs = document.querySelectorAll('.info-box');
         // Iterar sobre as divs
         divs.forEach(function(div) {
             // Texto dentro da div, convertido para minúsculas e sem acentos
             var textInsideDiv = div.textContent.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
             // Verificar se o texto digitado está presente na div
             if (textInsideDiv.includes(searchText)) {
-                // Exibir a div
-                div.style.display = 'block';
+                // Mostrar a div
+                div.classList.remove('d-none');
             } else {
                 // Ocultar a div
-                div.style.display = 'none';
+                div.classList.add('d-none');
+                
             }
         });
     });
