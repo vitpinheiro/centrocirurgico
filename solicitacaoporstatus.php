@@ -303,12 +303,69 @@ body, html {
 </div>
  <br>
   
-    <div class="col-lg-6 col-xs-12">
+
+
+ <div class="accordion" id="accordionPanelsStayOpenExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+        Accordion Item #1
+      </button>
+    </h2>
+    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+      <div class="accordion-body">
+      <div class="col-lg-6 col-xs-12">
         <h5 class="text-center">Gráfico</h5>
         <canvas class="charts" id="myChart" ></canvas>
     </div>
-
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+        Accordion Item #2
+      </button>
+    </h2>
+    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+    <div class="accordion-body">
     <div class="col-lg-6 col-xs-12">
+        <h4 class="text-center">Gráfico de linhas</h4>
+          <canvas class="charts" id="myChart3"></canvas>
+        </div>
+   </div>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+        Accordion Item #3
+      </button>
+    </h2>
+    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+      <div class="accordion-body">
+      <div class="row justify-content-center">        
+        <div class="col-lg-3 col-xs-12">
+          <h5 class="text-center">Gráfico de pizza</h5>
+          <canvas  class="charts" id="myChart2"></canvas>
+        </div>
+    </div>
+ 
+
+      </div>
+    </div>
+  </div>
+</div>
+ 
+
+
+    <!-- <div class="col-lg-6 col-xs-12">
+        <h5 class="text-center">Gráfico</h5>
+        <canvas class="charts" id="myChart" ></canvas>
+    </div> -->
+
+    <!-- <div class="col-lg-6 col-xs-12">
         <h4 class="text-center">Gráfico de linhas</h4>
           <canvas class="charts" id="myChart3"></canvas>
         </div>
@@ -324,7 +381,7 @@ body, html {
  
 </div>
   </div>
-</div>
+</div> -->
 
 
 <script src="chart.js"></script>
@@ -450,23 +507,46 @@ body, html {
 <br>
 </main>
 
+<!-- Outros elementos HTML -->
+
 <footer>
   <p></p>
 </footer>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const hamburger = document.querySelector('.hamburger-menu');
-        const sidebar = document.querySelector('.sidebar');
 
-        hamburger.addEventListener('click', function () {
-            sidebar.classList.toggle('active');
-        });
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="chart.js"></script>
+
+<script>
+  // Seus scripts JavaScript
+</script>
+
+<script>
+  // Script para o menu hamburguer
+  document.addEventListener('DOMContentLoaded', function () {
+    const hamburger = document.querySelector('.hamburger-menu');
+    const sidebar = document.querySelector('.sidebar');
+
+    hamburger.addEventListener('click', function () {
+      sidebar.classList.toggle('active');
     });
+  });
+</script>
+
+<script>
+  // Script para o acordeão
+  document.querySelectorAll('.accordion-button').forEach(button => {
+    button.addEventListener('click', () => {
+      const target = button.getAttribute('data-bs-target');
+      const collapseElements = document.querySelectorAll('.accordion-collapse');
+      collapseElements.forEach(collapse => {
+        if (collapse.id !== target) {
+          collapse.classList.remove('collapse');
+        }
+      });
+    });
+  });
 </script>
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-
 </html>
