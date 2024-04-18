@@ -7,13 +7,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Centro Cirurgico</title>
+    <link rel="icon" href="img\Logobordab.png" type="image/x-icon">
+
 
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules\sweetalert2\dist\sweetalert2.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="node_modules\font-awesome\css\font-awesome.min.css">
-
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
     <style>
@@ -37,28 +39,12 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="http://10.1.1.31/centralservicos/login">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Contato</a>
-        </li>
       </ul>
     </div>
   </div>
 </nav>
 </header>
+<<<<<<< HEAD
 
 <main>
 <div class="container text-center mt-5">
@@ -106,6 +92,73 @@
         </div>
     </div>
 </main>
+=======
+    <main>
+    <h1 class="ola">OLÁ, ADMIN!</h1>
+        <div class="pesquisar container">
+            <form class="d-flex justify-content-center" role="search">
+                <div class="col-sm-8 col-md-8">
+                    <input class="form-control me-2" type="search" id="searchInput" placeholder="Buscar" aria-label="Search">
+                </div>
+                <div class="col-sm-4 col-md-2">
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </div>
+            </form>
+        </div>
+        <div id="card1" class="row justify-content-center">
+            <div class="col-md-4" id="solicitacoesDiv">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <a href="solicitacaoporstatus.php">
+                                <img src="img/projeto.png" class="img-fluid rounded-start" alt="Descrição da imagem">
+                            </a>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="solicitacaoporstatus.php">Solicitações por status</a></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" id="cirurgioesDiv">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <a href="cirurgioes.php">
+                                <img src="img/medico.png" class="img-fluid rounded-start" alt="...">
+                            </a>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="cirurgioes.php">Cirurgiões</a></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" id="cirurgiasDiv">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <a href="cirurgiasportipo.php">
+                                <img src="img/cirurgia.png" class="img-fluid rounded-start" alt="...">
+                            </a>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="cirurgiasportipo.php">Cirurgias</a></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+>>>>>>> db88c5221d2076f8b0920165f484262712ecc8bc
 
 <script src="node_modules\bootstrap\dist\js\bootstrap.min.js"></script>
 <script src="node_modules\jquery\dist\jquery.min.js"></script>

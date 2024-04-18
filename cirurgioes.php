@@ -7,22 +7,13 @@ include_once("pegarregistro.php");
 $puxardados = new PuxarDados;
 $mostrarbanco = $puxardados->pegarcirurgioes();
 
-
 // Extraia as informações do banco de dados para uso no gráfico
 $labels = array_column($mostrarbanco, 'nome');
 $quantidade = array_column($mostrarbanco, 'quantidade');
-// $data = array_column($mostrarbanco, 'plano_saude');
-// Converta os dados para JSON para uso no JavaScript
+
 $labels_json = json_encode($labels);
 $quantidade_json = json_encode($quantidade);
-// echo ($mostrarbanco);
 
-// // Juntando os arrays
-// $arrayjunto = array_merge($nomeconvenio, $quant);
-// $nova_linha = [3, 5, 4, 6, 8, 9, 10, 12];
-// $nova_barra = [3, 5, 4, 6, 8, 9, 10, 12];
-// $nova_barra2 = [4, 6, 5, 7, 9, 11, 13,14];
-// $nova_linha2 = [6, 8, 6, 8, 9, 12, 14,15];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -31,24 +22,39 @@ $quantidade_json = json_encode($quantidade);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  
 
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,411;1,411&display=swap" rel="stylesheet">
 
 <style>
 
+*{
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 411;
+  font-style: normal;
+}
+
 h4{
   color: grey ;
-  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 411;
 }
   
 h5{
   text-align: right;
   color: grey;
+  font-weight: 411;
+
 }
 
 h1{
   text-align: center;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 411;
+
 }
 
 h2 a{
@@ -72,13 +78,6 @@ justify-content: right;
 
 }
 
-/*  */
-    body {
-  margin: 0;
-  font-family: Arial, sans-serif;
- 
-}
-
 footer{
   padding: 2em;
 }
@@ -89,7 +88,9 @@ footer{
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #111B42;
+  background-color: #000000;
+  background-image: linear-gradient(180deg, #000000 10%, #464343 100%);
+  background-size: cover;
   padding-top: 20px;
 }
 
@@ -197,50 +198,42 @@ body, html {
 </head>
 <body>
 <header>
-
-
-
-<!-- <div class="sidebar shadow">
-    <h2>Centro cirúrgico</h2><br>
-    <ul>
-    <div class="nav-item">
-      <li><a href="#">Solicitações por Status</a></li>
-      <li><a href="#"> Cirurgias por Tipo</a></li>
-      <li><a href="#">Cirurgiões</a></li>
-      <li><a href="#">Solicitações por Periodo de Tempo</a></li>
-      <li><a href="tabelageral.php">Tabela Geral</a></li>
-    </ul>
-</div>
-  </div>  -->
-  <!--  -->
   <div class="wrapper"></div>
-  <div class="sidebar shadow">
-    <h2><a href="index.php">Centro cirúrgico</a></h2><br>
-    <ul class="menu">
-        <li><a href="solicitacaoporstatus.php">Solicitações por Status</a></li>
-        <li><a href="cirurgiasportipo.php">Cirurgias por Tipo</a></li>
-        <li><a href="cirurgioes.php">Cirurgiões</a></li>
-        <li><a href="#">Solicitações por Período de Tempo</a></li>
-        <li><a href="tabelageral.php">Tabela Geral</a></li>
+    <ul class = "navbar-nav bg-gradiente-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+      <div class="sidebar">
+        <h2><a href="index.php" style="font-weight: 700;">Centro cirúrgico</a></h2><br>
+        <ul class="menu text-start">
+            <li><a href="solicitacaoporstatus.php">Solicitações por Status</a></li>
+            <li><a href="cirurgiasportipo.php">Cirurgias por Tipo</a></li>
+            <li><a href="cirurgioes.php">Cirurgiões</a></li>
+            <li><a href="#">Solicitações por Período de Tempo</a></li>
+            <li><a href="tabelageral.php">Tabela Geral</a></li>
+        </ul>
+        <div class="hamburger-menu">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+      </div>
     </ul>
-    <div class="hamburger-menu">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-    </div>
-</div>
-  <!--  -->
+  </div>
+<!--  -->
 
   <div class="content">
     <div class="row">
+
+    <br> <br> <br>
+    <h2 style="font-weight: 900;">Cirurgiões</h2>
+    <br> <br> <br>
+
     <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            <div style="font-weight: 900;" class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Concluídos</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">*Incluir dados*</div>
+                                            <div class="fs-7 mb-0 font-weight-bold text-gray-800">*Incluir dados*</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -255,9 +248,9 @@ body, html {
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            <div style="font-weight: 900;" class="text-xs  font-weight-bold text-warning text-uppercase mb-1">
                                                 Agendados</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">*Incluir dados*</div>
+                                            <div class="mb-0 fs-7 font-weight-bold text-gray-800">*Incluir dados*</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -271,7 +264,7 @@ body, html {
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                            <div style="font-weight: 900;" class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                                                 Pendentes</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">*Incluir dados*</div>
                                         </div>
@@ -283,7 +276,6 @@ body, html {
                             </div>
                         </div>
                     </div>
-                    <h2>Cirurgiões</h2>
 <!--  -->
 <main>
   <div class="container align-items-center justify-content-center shadow">
