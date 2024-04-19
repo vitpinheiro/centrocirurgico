@@ -28,6 +28,8 @@ $quantidade_json = json_encode($quantidade);
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="node_modules\font-awesome\css\font-awesome.min.css">
 
+    <script src="chart.js"></script>
+
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -283,15 +285,12 @@ body, html {
                     </div>
 <!--  -->
 <main>
-  <div class="container">
-
- <br>
 <div class="row">
     <div class="col-6 accordion" id="accordionPanelsStayOpenExample">
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOn1e" aria-expanded="true" aria-controls="panelsStayOp1en-collapseOne">
-              Accordion Item #1
+            Tabela2
             </button>
           </h2>
 
@@ -308,7 +307,7 @@ body, html {
         <div class=" accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-              Accordion Item #1
+            Tabela2
             </button>
           </h2>
 
@@ -321,18 +320,25 @@ body, html {
     </div>
 </div>  
 
-<div class="row justify-content-center shadow">        
-        <div class="col-lg-3 col-xs-12">
-          <canvas  class="charts" id="myChart2"></canvas>
+
+<div class="row">
+  <div class="col-4 position-absolute end-0 accordion mt-4" id="accordionPanelsStayOpenExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOp1en-collapseOne">
+                Tabela1
+            </button>
+            </h2>
+
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+              <div class="accordion-body">
+                  <canvas  class="charts" id="myChart2"></canvas>
+              </div>
+            </div>     
         </div>
-    </div>
- 
-</div>
-  </div>
 </div>
 
 
-<script src="chart.js"></script>
 
 <script>
    const ctx = document.getElementById('myChart');
@@ -362,7 +368,6 @@ body, html {
   new Chart(ctx2, {
     type: 'pie',
     data: {
-      labels: <?php echo $labels_json;?>,
       datasets: [{
         label: 'quant janeiro',
         data: <?php echo $quantidade_json;?>,
@@ -430,6 +435,8 @@ body, html {
 </script>
 
 </body>
+
 <script src="node_modules\@popperjs\core\dist\umd\popper.min.js"></script>
 <script src="node_modules\bootstrap\dist\js\bootstrap.min.js"></script>
+
 </html>
