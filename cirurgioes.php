@@ -163,7 +163,7 @@ body, html {
   /* flex-grow: 1; /* O conteúdo principal ocupará o espaço restante */
   /* padding: 20px;
   height: 100vh; Ocupa a altura total da tela */
-  /* overflow-y: auto; Adiciona rolagem vertical se o conteúdo ultrapassar a altura da tela */ */
+  /* overflow-y: auto; Adiciona rolagem vertical se o conteúdo ultrapassar a altura da tela */
 }
 
 /* Estilos para o menu de hambúrguer */
@@ -285,42 +285,43 @@ body, html {
 <main>
   <div class="container">
 
-
  <br>
+<div class="row">
+    <div class="col-6 accordion" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOn1e" aria-expanded="true" aria-controls="panelsStayOp1en-collapseOne">
+              Accordion Item #1
+            </button>
+          </h2>
 
- <div class="col-6 accordion" id="accordionPanelsStayOpenExample">
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-          Accordion Item #1
-        </button>
-      </h2>
+          <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+            <div class="accordion-body">
+                  <canvas class="charts" id="myChart" ></canvas>
+            </div>
+          </div>     
+      </div>
+    </div>
 
-      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
-        <div class="accordion-body">
-              <canvas class="charts" id="myChart" ></canvas>
-        </div>
-      </div>     
-  </div>
-</div>
-</div>
-<div class="accordion" id="accordionPanelsStayOpenExample">
-    <div class=" col-6 accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-          Accordion Item #1
-        </button>
-      </h2>
 
-      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
-        <div class="accordion-body">
-          <canvas class="charts" id="myChart3"></canvas>
-        </div>
-      </div>     
-  </div>
-</div>
- 
-    <div class="row justify-content-center shadow">        
+    <div class="col-6 accordion" id="accordionPanelsStayOpenExample">
+        <div class=" accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+              Accordion Item #1
+            </button>
+          </h2>
+
+          <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+            <div class="accordion-body">
+              <canvas class="charts" id="myChart3"></canvas>
+            </div>
+          </div>     
+      </div>
+    </div>
+</div>  
+
+<div class="row justify-content-center shadow">        
         <div class="col-lg-3 col-xs-12">
           <canvas  class="charts" id="myChart2"></canvas>
         </div>
