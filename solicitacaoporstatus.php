@@ -294,70 +294,57 @@ body, html {
 
 <!--  -->
 <main>
-  <div class="container align-items-center justify-content-center shadow">
+<div class="container">
+    <br>
     <div class="row">
-
-    <div class="row">
-    <div class="col-md-12 text-center">
-    </div>
-</div>
- <br>
-  
-
-
- <div class="accordion" id="accordionPanelsStayOpenExample">
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-        Accordion Item #1
-      </button>
-    </h2>
-    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
-      <div class="accordion-body">
-      <div class="col-lg-6 col-xs-12">
-        <h5 class="text-center">Gráfico</h5>
-        <canvas class="charts" id="myChart" ></canvas>
-    </div>
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-        Accordion Item #2
-      </button>
-    </h2>
-    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
-    <div class="accordion-body">
-    <div class="col-lg-6 col-xs-12">
-        <h4 class="text-center">Gráfico de linhas</h4>
-          <canvas class="charts" id="myChart3"></canvas>
+        <div class="col-6 accordion" id="accordionPanelsStayOpenExample1">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        Accordion Item #1
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        <canvas class="charts" id="myChart"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
-   </div>
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-        Accordion Item #3
-      </button>
-    </h2>
-    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
-      <div class="accordion-body">
-      <div class="row justify-content-center">        
-        <div class="col-lg-3 col-xs-12">
-          <h5 class="text-center">Gráfico de pizza</h5>
-          <canvas  class="charts" id="myChart2"></canvas>
+        <div class="col-6 accordion" id="accordionPanelsStayOpenExample2">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
+                        Accordion Item #2
+                    </button>
+                </h2>
+
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        <canvas class="charts" id="myChart3"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
- 
 
-      </div>
+    <div class="row">
+        <div class="col-5 position-absolute end-0 accordion mt-4" id="accordionPanelsStayOpenExample3">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
+                        Tabela 1
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        <canvas class="charts" id="myChart2"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
- 
 
 
     <!-- <div class="col-lg-6 col-xs-12">
@@ -533,7 +520,7 @@ body, html {
   });
 </script>
 
-<script>
+<!-- <script>
   // Script para o acordeão
   document.querySelectorAll('.accordion-button').forEach(button => {
     button.addEventListener('click', () => {
@@ -546,7 +533,7 @@ body, html {
       });
     });
   });
-</script>
+</script> -->
 
 </body>
 </html>
