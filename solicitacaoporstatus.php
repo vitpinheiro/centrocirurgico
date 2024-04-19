@@ -203,6 +203,25 @@ body, html {
   }
 }
 
+/*  */
+/* Estilo para status "Ativo" */
+.badge-custom-green {
+    background-color: green;
+    color: black;
+}
+
+/* Estilo para status "Inativo" */
+.badge-custom-red {
+    background-color: red;
+    color: black;
+}
+
+/* Estilo para status "Pendente" */
+.badge-custom-yellow {
+    background-color: yellow;
+    color: black;
+}
+
    
 </style>
 
@@ -334,12 +353,50 @@ body, html {
         </div>
     </div>
 
-    <div class="row mt-4">
-        <div class=" col-6 ms-auto accordion " id="accordionPanelsStayOpenExample3">
+    <div class="row mt-5">
+    <div class="col-md-6">
+        <table class="table">
+            <thead>
+                <tr class="table-primary">
+                    <th>Nome</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table">
+                    <td class="table">Ana </td>
+                    <td><span class=" badge badge-custom-green">Ativo</span></td>
+                </tr>
+                <tr class="table">
+                    <td class="table">Julia</td>
+                    <td><span class="badge badge-custom-red">Inativo</span></td>
+                </tr>
+                <!-- Adicione mais linhas conforme necessário -->
+                <tr class="table">
+                    <td class="table">Bob</td>
+                    <td><span class="badge badge-custom-yellow">Pendente</span></td>
+                </tr>
+                <tr class="table">
+                    <td class="table">Barney</td>
+                    <td><span class=" badge badge-custom-green">Ativo</span></td>
+                </tr>
+                <tr class="table">
+                    <td class="table">Lucas</td>
+                    <td><span class="badge badge-custom-red">Inativo</span></td>
+                </tr>
+                <tr class="table">
+                    <td class="table">Laney</td>
+                    <td><span class="badge badge-custom-yellow">Pendente</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6 mt-4 mt-md-0">
+        <div class="accordion" id="accordionPanelsStayOpenExample3">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
-                        
+                        Gráfico
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">

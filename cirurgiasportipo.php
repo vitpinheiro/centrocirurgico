@@ -276,17 +276,18 @@ body, html {
                             </div>
                         </div>
                     </div>
-                    <h2>Cirurgiões</h2>
+                    <h2>Cirurgias por tipo</h2>
 <!--  -->
 <main>
 
-
-<div class="row">
+<div class="container">
+    <br>
+    <div class="row">
         <div class="col-6 accordion" id="accordionPanelsStayOpenExample1">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                        
+                        Accordion Item #1
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
@@ -300,10 +301,9 @@ body, html {
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
-                        
+                        Accordion Item #2
                     </button>
                 </h2>
-
                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show">
                     <div class="accordion-body">
                         <canvas class="charts" id="myChart3"></canvas>
@@ -314,11 +314,11 @@ body, html {
     </div>
 
     <div class="row mt-4">
-        <div class=" col-6 ms-auto accordion " id="accordionPanelsStayOpenExample3">
+        <div class="col-6 ms-auto accordion" id="accordionPanelsStayOpenExample3">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
-                        
+                        Accordion Item #3
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
@@ -330,9 +330,6 @@ body, html {
         </div>
     </div>
 </div>
-
-
-
 
 
 
@@ -434,10 +431,9 @@ body, html {
         });
     });
 </script>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
 </html>

@@ -47,10 +47,11 @@
 
 <main>
 <div class="container text-center mt-5">
-    <h1 class="ola">OLÁ, ADMIN!</h1>
+    
+<h1 class="pt-2 pb-5">OLÁ, ADMIN!</h1>
 
     <div id="pesquisar" class="">
-        <form class="d-flex justify-content-center mb-10 " role="search">
+        <form class="d-flex justify-content-center mt-5 pt-4 pb-2 " role="search">
             <div class=" col-md-8 mb-3 mb-4 ">
                 <input class="form-control me-2 " type="search" id="searchInput" placeholder="Buscar" aria-label="Search">
             </div>
@@ -61,7 +62,7 @@
     </div>
 </div>
 
-    <div class="container">
+    <div class="container mt-5">
         <div class="row" id="infoBoxContainer">
             <div class="col-md-4 ">
                 <div class="info-box" id="solicitacoes">
