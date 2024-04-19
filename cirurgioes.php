@@ -45,50 +45,6 @@ $quantidade_json = json_encode($quantidade);
   font-style: normal;
 }
 
-h4{
-  color: grey ;
-  font-weight: 411;
-}
-  
-h5{
-  text-align: right;
-  color: grey;
-  font-weight: 411;
-
-}
-
-h1{
-  text-align: center;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  font-weight: 411;
-
-}
-
-h2 a{
-  text-decoration: none;
-  color:white;
-}
-
-.charts {
-width: 50px;
-height: 50px;
-background-color: white;
-}
-
-#myChart{
-width: 10em;
-height: 90em;
-
-}
-#navbarNav{
-justify-content: right;
-
-}
-
-footer{
-  padding: 2em;
-}
-
 .sidebar {
   height: 100%;
   width: 240px;
@@ -101,103 +57,10 @@ footer{
   padding-top: 20px;
 }
 
-.sidebar h2 {
-  color: white;
-  text-align: center;
-  
-  
-}
-
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
-}
-
 .sidebar ul li {
-  padding: 8px;
-  text-align: center; 
+  margin: 10px;
+  text-align: left; 
  }
-
-.sidebar ul li a {
-  color: white;
-  text-decoration: none;
-  
-}
-
-.sidebar ul li a:hover {
-  background-color: #555;
-}
-
-.content {
-  margin-left: 250px;
-  padding: 20px;
-  height: 20em;
-} */
-/*  */
-.line {
-  width: 25px;
-  height: 3px;
-  background-color: black;
-  margin: 5px 0;
-}
-/* Ajustes gerais */
-body, html {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
-
-.wrapper {
-  display: flex;
-}
-
-/* Estilos do sidebar */
-.sidebar {
-  width: 240px;
-  background-color: #111B42;
-  padding-top: 20px;
-  transition: transform 0.3s ease;
-  z-index: 2; /* Para garantir que o sidebar esteja acima do conteúdo */
-}
-
-/* Estilos do conteúdo principal */
-.content {
-  /* flex-grow: 1; /* O conteúdo principal ocupará o espaço restante */
-  /* padding: 20px;
-  height: 100vh; Ocupa a altura total da tela */
-  /* overflow-y: auto; Adiciona rolagem vertical se o conteúdo ultrapassar a altura da tela */
-}
-
-/* Estilos para o menu de hambúrguer */
-.hamburger-menu {
-  display: none;
-  cursor: pointer;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 3; /* Para garantir que o menu de hambúrguer esteja acima do conteúdo */
-}
-
-
-
-/* Estilos para telas menores */
-@media only screen and (max-width: 768px) {
-  .sidebar {
-    transform: translateX(-100%);
-    position: fixed; /* Corrigir posição do sidebar em telas menores */
-    top: 0;
-    bottom: 0;
-    left: 0;
-  }
-
-  .content {
-    margin-left: 0; /* Remove a margem do conteúdo principal quando o sidebar estiver oculto */
-  }
-
-  .hamburger-menu {
-    display: block;
-  }
-}
 
 </style>
 
@@ -207,30 +70,55 @@ body, html {
 <header>
   <div class="wrapper"></div>
     <ul class = "navbar-nav bg-gradiente-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
       <div class="sidebar">
-        <h2><a href="index.php" style="font-weight: 700;">Centro cirúrgico</a></h2><br>
-        <ul class="menu text-start">
-            <li><a href="solicitacaoporstatus.php">Solicitações por Status</a></li>
-            <li><a href="cirurgiasportipo.php">Cirurgias por Tipo</a></li>
-            <li><a href="cirurgioes.php">Cirurgiões</a></li>
+
+        <h2>
+          <a class="nav-item" href="index.php" style="font-weight: 700;">Centro cirúrgico</a>
+        </h2>
+
+        <ul class="text-start">
+
+            <li class="nav-item">
+              <a  class="nav-link" href="solicitacaoporstatus.php">Solicitações por Status
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="cirurgiasportipo.php">
+                <i></I>
+                Cirurgias por Tipo
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="cirurgioes.php">
+              <i></I>
+              Cirurgiões
+              </a>
+            </li>
+
             <li><a href="#">Solicitações por Período de Tempo</a></li>
             <li><a href="tabelageral.php">Tabela Geral</a></li>
         </ul>
+
         <div class="hamburger-menu">
             <div class="line"></div>
             <div class="line"></div>
             <div class="line"></div>
         </div>
+
       </div>
     </ul>
   </div>
+</header>
 <!--  -->
 
   <div class="content">
     <div class="row">
 
     <br> <br> <br>
-    <h2 id="solicitacao" style="font-weight: 900;">Cirurgiões</h2>
+    <h2 style="font-weight: 900;">Cirurgiões</h2>
     <br> <br> <br>
 
     <div class="col-xl-3 col-md-6 mb-4">
@@ -287,7 +175,7 @@ body, html {
 <main>
 <div class="row">
     <div class="col-6 accordion" id="accordionPanelsStayOpenExample">
-        <div class="accordion-item">
+        <div class="accordion-item shadow">
           <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOn1e" aria-expanded="true" aria-controls="panelsStayOp1en-collapseOne">
             Tabela2
@@ -304,7 +192,7 @@ body, html {
 
 
     <div class="col-6 accordion" id="accordionPanelsStayOpenExample">
-        <div class=" accordion-item">
+        <div class=" accordion-item shadow">
           <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
             Tabela2
@@ -338,6 +226,46 @@ body, html {
         </div>
 </div>
 
+<div class="col-3">
+
+<div class="info-box mb-3 bg-warning">
+
+<span class="info-box-icon"><i class="fas fa-tag"></i></span>
+<div class="info-box-content">
+<span class="info-box-text">Inventory</span>
+<span class="info-box-number">5,200</span>
+
+</div>
+
+</div>
+
+<div class="info-box mb-3 bg-success">
+<span class="info-box-icon"><i class="far fa-heart"></i></span>
+<div class="info-box-content">
+<span class="info-box-text">Mentions</span>
+<span class="info-box-number">92,050</span>
+</div>
+
+</div>
+
+<div class="info-box mb-3 bg-danger">
+<span class="info-box-icon"><i class="fas fa-cloud-download-alt"></i></span>
+<div class="info-box-content">
+<span class="info-box-text">Downloads</span>
+<span class="info-box-number">114,381</span>
+</div>
+
+</div>
+
+<div class="info-box mb-3 bg-info">
+<span class="info-box-icon">
+  <i class="far fa-comment"></i></span>
+
+  <div class="info-box-content">
+    <span class="info-box-text">Direct Messages</span>
+</div>
+
+</div>
 
 
 <script>
