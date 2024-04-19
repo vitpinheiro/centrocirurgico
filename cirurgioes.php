@@ -21,7 +21,12 @@ $quantidade_json = json_encode($quantidade);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="icon" href="img\Logobordab.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules\sweetalert2\dist\sweetalert2.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="node_modules\font-awesome\css\font-awesome.min.css">
 
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     
@@ -278,26 +283,44 @@ body, html {
                     </div>
 <!--  -->
 <main>
-  <div class="container align-items-center justify-content-center shadow">
-    <div class="row">
+  <div class="container">
 
-    <div class="row">
-    <div class="col-md-12 text-center">
-    </div>
-</div>
+
  <br>
-  
-    <div class="col-lg-6 col-xs-12">
-        <canvas class="charts" id="myChart" ></canvas>
-    </div>
 
-    <div class="col-lg-6 col-xs-12">
+ <div class="col-6 accordion" id="accordionPanelsStayOpenExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+          Accordion Item #1
+        </button>
+      </h2>
+
+      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+        <div class="accordion-body">
+              <canvas class="charts" id="myChart" ></canvas>
+        </div>
+      </div>     
+  </div>
+</div>
+</div>
+<div class="accordion" id="accordionPanelsStayOpenExample">
+    <div class=" col-6 accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+          Accordion Item #1
+        </button>
+      </h2>
+
+      <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+        <div class="accordion-body">
           <canvas class="charts" id="myChart3"></canvas>
         </div>
-   </div>
+      </div>     
+  </div>
+</div>
  
-    <br>
-    <div class="row justify-content-center">        
+    <div class="row justify-content-center shadow">        
         <div class="col-lg-3 col-xs-12">
           <canvas  class="charts" id="myChart2"></canvas>
         </div>
@@ -406,8 +429,6 @@ body, html {
 </script>
 
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-
+<script src="node_modules\@popperjs\core\dist\umd\popper.min.js"></script>
+<script src="node_modules\bootstrap\dist\js\bootstrap.min.js"></script>
 </html>
