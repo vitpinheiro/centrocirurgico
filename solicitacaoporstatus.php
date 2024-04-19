@@ -41,6 +41,10 @@ $datamar_json = json_encode($datamar);
 
 
 <style>
+ #solicitacao{
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-weight:500;
+}
 
 h4{
   color: grey ;
@@ -60,6 +64,7 @@ h1{
 h2 a{
   text-decoration: none;
   color:white;
+  
 }
 
 .charts {
@@ -143,7 +148,7 @@ footer{
 body, html {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  
 }
 
 .wrapper {
@@ -198,6 +203,7 @@ body, html {
   }
 }
 
+   
 </style>
 
 
@@ -239,7 +245,7 @@ body, html {
   <!--  -->
 
   <div class="content">
-    <h2>Olá, TI Admin!</h2>
+    <h2 id="solicitacao" >Solicitações por status</h2>
     <div class="row">
     <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
@@ -294,14 +300,14 @@ body, html {
 
 <!--  -->
 <main>
-<div class="container">
+
     <br>
     <div class="row">
         <div class="col-6 accordion" id="accordionPanelsStayOpenExample1">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                        Accordion Item #1
+                        
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
@@ -315,7 +321,7 @@ body, html {
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
-                        Accordion Item #2
+                        
                     </button>
                 </h2>
 
@@ -328,12 +334,12 @@ body, html {
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-5 position-absolute end-0 accordion mt-4" id="accordionPanelsStayOpenExample3">
+    <div class="row mt-4">
+        <div class=" col-6 ms-auto accordion " id="accordionPanelsStayOpenExample3">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
-                        Tabela 1
+                        
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">

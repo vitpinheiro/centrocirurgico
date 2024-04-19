@@ -279,34 +279,63 @@ body, html {
                     <h2>Cirurgiões</h2>
 <!--  -->
 <main>
-  <div class="container align-items-center justify-content-center shadow">
-    <div class="row">
 
-    <div class="row">
-    <div class="col-md-12 text-center">
-    </div>
-</div>
- <br>
-  
-    <div class="col-lg-6 col-xs-12">
-        <canvas class="charts" id="myChart" ></canvas>
+
+<div class="row">
+        <div class="col-6 accordion" id="accordionPanelsStayOpenExample1">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                        
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        <canvas class="charts" id="myChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 accordion" id="accordionPanelsStayOpenExample2">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
+                        
+                    </button>
+                </h2>
+
+                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        <canvas class="charts" id="myChart3"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="col-lg-6 col-xs-12">
-          <canvas class="charts" id="myChart3"></canvas>
-        </div>
-   </div>
- 
-    <br>
-    <div class="row justify-content-center">        
-        <div class="col-lg-3 col-xs-12">
-          <canvas  class="charts" id="myChart2"></canvas>
+    <div class="row mt-4">
+        <div class=" col-6 ms-auto accordion " id="accordionPanelsStayOpenExample3">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
+                        
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        <canvas class="charts" id="myChart2"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
- 
 </div>
-  </div>
-</div>
+
+
+
+
+
+
 
 
 <script src="chart.js"></script>

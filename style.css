@@ -91,6 +91,7 @@ h4{
     color:white;
   }
   
+ 
   .charts {
   width: 50px;
   height: 50px;
@@ -178,4 +179,5 @@ h4{
   .wrapper {
     display: flex;
   }
+
 
