@@ -1,8 +1,11 @@
 <?php
 
-namespace funcoes;
+namespace teste;
 
 class PuxarFuncoes {
+
+    private $pdo;
+
         public function __construct() {
             //ARRUMAR UM JEITO DE DIMINUIR ISSO
             $dbhost = 'localhost';
@@ -15,10 +18,4 @@ class PuxarFuncoes {
             $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         }
 
-        public function  TestandoFuncoes(){
-
-        }
-
-
     }
-?>

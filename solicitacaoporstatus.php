@@ -2,10 +2,20 @@
 
 namespace teste;
 
-include_once("pegarregistro.php");
+include_once("pegarregistro.php");            
 
 $puxardados = new PuxarDados;
+$puxar = new PuxarFuncoes;
 $mostrarbanco = $puxardados->pegarregistro();
+$mostrarstatus = $puxar->pegarnomestatus();
+
+
+
+$nomepaciente =array_column($mostrarstatus, 'nome');
+$nomepaciente_json = json_encode($nomepaciente);
+$statuspaciente = array_column($mostrarstatus, 'status');
+$statuspaciente_json = json_encode($statuspaciente);
+
 
 
 // Extraia as informações do banco de dados para uso no gráfico
@@ -133,11 +143,11 @@ footer{
 }
 
 .content {
-  margin-left: 250px;
+
   padding: 20px;
-  height: 20em;
-} */
-/*  */
+ 
+} 
+
 .line {
   width: 25px;
   height: 3px;
@@ -166,17 +176,15 @@ body, html {
 
 /* Estilos do conteúdo principal */
 .content {
-  /* flex-grow: 1; /* O conteúdo principal ocupará o espaço restante */
-  /* padding: 20px;
-  height: 100vh; Ocupa a altura total da tela */
-  /* overflow-y: auto; Adiciona rolagem vertical se o conteúdo ultrapassar a altura da tela */ */
+  margin-left: 250px; /* Ajuste a largura conforme necessário */
+  
 }
 
 /* Estilos para o menu de hambúrguer */
 .hamburger-menu {
   display: none;
   cursor: pointer;
-  position: absolute;
+
   top: 20px;
   right: 20px;
   z-index: 3; /* Para garantir que o menu de hambúrguer esteja acima do conteúdo */
@@ -245,7 +253,8 @@ body, html {
 </div>
   </div>  -->
   <!--  -->
-  <div class="wrapper"></div>
+
+<div class="div-wrapper">
   <div class="sidebar shadow">
     <h2><a href="index.php">Centro cirúrgico</a></h2><br>
     <ul class="menu">
@@ -260,6 +269,7 @@ body, html {
         <div class="line"></div>
         <div class="line"></div>
     </div>
+</div> 
 </div>
   <!--  -->
 
@@ -363,34 +373,17 @@ body, html {
                 </tr>
             </thead>
             <tbody>
-                <tr class="table">
-                    <td class="table">Ana </td>
-                    <td><span class=" badge badge-custom-green">Ativo</span></td>
-                </tr>
-                <tr class="table">
-                    <td class="table">Julia</td>
-                    <td><span class="badge badge-custom-red">Inativo</span></td>
-                </tr>
-                <!-- Adicione mais linhas conforme necessário -->
-                <tr class="table">
-                    <td class="table">Bob</td>
-                    <td><span class="badge badge-custom-yellow">Pendente</span></td>
-                </tr>
-                <tr class="table">
-                    <td class="table">Barney</td>
-                    <td><span class=" badge badge-custom-green">Ativo</span></td>
-                </tr>
-                <tr class="table">
-                    <td class="table">Lucas</td>
-                    <td><span class="badge badge-custom-red">Inativo</span></td>
-                </tr>
-                <tr class="table">
-                    <td class="table">Laney</td>
-                    <td><span class="badge badge-custom-yellow">Pendente</span></td>
-                </tr>
+                <?php foreach ($nomepaciente as $index => $nome): ?>
+                    <tr class="table">
+                        <td><?php echo $nome; ?></td>
+                        <td><?php echo $statuspaciente[$index]; ?></td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
+</div>
+
     <div class="col-md-6 mt-4 mt-md-0">
         <div class="accordion" id="accordionPanelsStayOpenExample3">
             <div class="accordion-item">
