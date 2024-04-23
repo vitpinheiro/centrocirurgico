@@ -45,238 +45,94 @@ $datamar_json = json_encode($datamar);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="stylesolicitacoes.css">
     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  
-
+    <link rel="stylesheet" href="node_modules\font-awesome\css\font-awesome.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules\sweetalert2\dist\sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    
+    
 
 <style>
- #solicitacao{
-  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  font-weight:500;
-}
-
-h4{
-  color: grey ;
-  font-family: Arial, Helvetica, sans-serif;
-}
-  
-h5{
-  text-align: right;
-  color: grey;
-}
-
-h1{
-  text-align: center;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-
-h2 a{
-  text-decoration: none;
-  color:white;
-  
-}
-
-.charts {
-width: 50px;
-height: 50px;
-background-color: white;
-}
-
-#myChart{
-width: 10em;
-height: 90em;
-
-}
-#navbarNav{
-justify-content: right;
-
-}
-
-
-/*  */
-    body {
-  margin: 0;
-  font-family: Arial, sans-serif;
  
-}
 
-footer{
-  padding: 2em;
-}
 
-.sidebar {
-  height: 100%;
-  width: 240px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: #111B42;
-  padding-top: 20px;
-}
-
-.sidebar h2 {
-  color: white;
-  text-align: center;
-  
-  
-}
-
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.sidebar ul li {
-  padding: 8px;
-  text-align: center; 
- }
-
-.sidebar ul li a {
-  color: white;
-  text-decoration: none;
-  
-}
-
-.sidebar ul li a:hover {
-  background-color: #555;
-}
-
-.content {
-
-  padding: 20px;
- 
-} 
-
-.line {
-  width: 25px;
-  height: 3px;
-  background-color: black;
-  margin: 5px 0;
-}
-/* Ajustes gerais */
-body, html {
-  margin: 0;
-  padding: 0;
-  
-}
-
-.wrapper {
-  display: flex;
-}
-
-/* Estilos do sidebar */
+/* Estilos do sidebar
 .sidebar {
   width: 240px;
   background-color: #111B42;
   padding-top: 20px;
   transition: transform 0.3s ease;
   z-index: 2; /* Para garantir que o sidebar esteja acima do conteúdo */
-}
 
-/* Estilos do conteúdo principal */
-.content {
-  margin-left: 250px; /* Ajuste a largura conforme necessário */
-  
-}
-
-/* Estilos para o menu de hambúrguer */
-.hamburger-menu {
-  display: none;
-  cursor: pointer;
-
-  top: 20px;
-  right: 20px;
-  z-index: 3; /* Para garantir que o menu de hambúrguer esteja acima do conteúdo */
-}
-
-
-
-/* Estilos para telas menores */
-@media only screen and (max-width: 768px) {
-  .sidebar {
-    transform: translateX(-100%);
-    position: fixed; /* Corrigir posição do sidebar em telas menores */
-    top: 0;
-    bottom: 0;
-    left: 0;
+  *{
+    padding: 5px;
   }
+ 
 
-  .content {
-    margin-left: 0; /* Remove a margem do conteúdo principal quando o sidebar estiver oculto */
-  }
+     /* Centralizar o conteúdo horizontalmente */
+    
 
-  .hamburger-menu {
-    display: block;
-  }
+        /* Diminuir o conteúdo e centralizá-lo */
+        .content {
+            margin-top: 20px; /* Espaçamento superior */
+            
+        }
+
+        /* Estilizar o dropdown */
+        /* Estilizar o dropdown */
+.dropdown-menu {
+    /* Adicionando sombra e borda arredondada */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    /* Adicionando uma cor de fundo */
+    background-color: #ffffff;
+    /* Definindo a largura do dropdown */
+    min-width: 200px;
+    /* Ajustando o espaçamento interno */
+    padding: 10px;
+    /* Definindo a posição como relativa para garantir que o dropdown esteja acima do conteúdo */
+    position: relative;
 }
 
-/*  */
-/* Estilo para status "Ativo" */
-.badge-custom-green {
-    background-color: green;
-    color: black;
-}
 
-/* Estilo para status "Inativo" */
-.badge-custom-red {
-    background-color: red;
-    color: black;
-}
 
-/* Estilo para status "Pendente" */
-.badge-custom-yellow {
-    background-color: yellow;
-    color: black;
-}
-
-   
 </style>
 
 
 </head>
 <body>
+
 <header>
+<!-- Example single danger button -->
 
-
-
-<!-- <div class="sidebar shadow">
-    <h2>Centro cirúrgico</h2><br>
-    <ul>
-    <div class="nav-item">
-      <li><a href="#">Solicitações por Status</a></li>
-      <li><a href="#"> Cirurgias por Tipo</a></li>
-      <li><a href="#">Cirurgiões</a></li>
-      <li><a href="#">Solicitações por Periodo de Tempo</a></li>
-      <li><a href="tabelageral.php">Tabela Geral</a></li>
-    </ul>
+<div class="btn-group ">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    MENU
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="#">Home</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="solicitacaoporstatus.php">Solicitações por status</a>
+    <a class="dropdown-item" href="cirurgiasportipo.php">Cirurgias por tipo</a>
+    <a class="dropdown-item" href="cirurgioes.php">Cirurgiões</a>
+    <a class="dropdown-item" href="#">Solicitações por período de tempo</a>
+    <a class="dropdown-item" href="tabelageral.php">Tabela geral</a>
+  </div>
 </div>
-  </div>  -->
-  <!--  -->
 
-<div class="div-wrapper">
-  <div class="sidebar shadow">
-    <h2><a href="index.php">Centro cirúrgico</a></h2><br>
-    <ul class="menu">
-        <li><a href="solicitacaoporstatus.php">Solicitações por Status</a></li>
-        <li><a href="cirurgiasportipo.php">Cirurgias por Tipo</a></li>
-        <li><a href="cirurgioes.php">Cirurgiões</a></li>
-        <li><a href="#">Solicitações por Período de Tempo</a></li>
-        <li><a href="tabelageral.php">Tabela Geral</a></li>
-    </ul>
-    <div class="hamburger-menu">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-    </div>
-</div> 
-</div>
-  <!--  -->
 
+
+
+</header>
+
+
+  <main>
   <div class="content">
     <h2 id="solicitacao" >Solicitações por status</h2>
     <div class="row">
-    <div class="col-xl-3 col-md-6 mb-4">
+    <div class="col-xl-3 col-md-12 col-lg-3 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -328,11 +184,12 @@ body, html {
                     </div>
 
 <!--  -->
-<main>
+
+
 
     <br>
     <div class="row">
-        <div class="col-6 accordion" id="accordionPanelsStayOpenExample1">
+        <div class=" col-lg-5 col-md-10 col-sm-12  accordion" id="accordionPanelsStayOpenExample1">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
@@ -346,14 +203,13 @@ body, html {
                 </div>
             </div>
         </div>
-        <div class="col-6 accordion" id="accordionPanelsStayOpenExample2">
+        <div class=" col-lg-5 col-md-6 col-sm-12 order-lg-2 accordion" id="accordionPanelsStayOpenExample2">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
                         
                     </button>
                 </h2>
-
                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show">
                     <div class="accordion-body">
                         <canvas class="charts" id="myChart3"></canvas>
@@ -363,8 +219,26 @@ body, html {
         </div>
     </div>
 
-    <div class="row mt-5">
-    <div class="col-md-6">
+  
+    <div class="col-12 col-md-6 col-lg-5 mt-4 mt-md-0 ">
+        <div class="accordion" id="accordionPanelsStayOpenExample3">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
+                        Gráfico
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        <canvas class="charts" id="myChart2"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-12 col-md-6 col-lg-8">
         <table class="table">
             <thead>
                 <tr class="table-primary">
@@ -381,24 +255,6 @@ body, html {
                 <?php endforeach; ?>
             </tbody>
         </table>
-    </div>
-</div>
-
-    <div class="col-md-6 mt-4 mt-md-0">
-        <div class="accordion" id="accordionPanelsStayOpenExample3">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
-                        Gráfico
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
-                    <div class="accordion-body">
-                        <canvas class="charts" id="myChart2"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -550,11 +406,17 @@ body, html {
 <br>
 </main>
 
+
+
+
+
 <!-- Outros elementos HTML -->
 
 <footer>
   <p></p>
 </footer>
+
+
 
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
