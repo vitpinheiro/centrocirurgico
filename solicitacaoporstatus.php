@@ -4,13 +4,26 @@ namespace teste;
 
 include_once("pegarregistro.php");            
 
-$puxardados = new PuxarDados;
+
 $puxar = new PuxarFuncoes;
-$mostrarbanco = $puxardados->pegarregistro();
+
+// mostrar quantidade nos cards
+$quantidadeConcluidos = $puxar->pegarQuantidadeConcluidos();
+$quantidadeEmAndamento = $puxar->pegarQuantidadeEmAndamento();
+$quantidadePendentes = $puxar->pegarQuantidadePendentes();
+
+
+// gráficos
+$mostrarstatus2 = $puxar->pegarstatus();
+$status = array_column($mostrarstatus2, 'status');
+$quantidades = array_column($mostrarstatus2, 'quantidade');
+$status_json = json_encode($status);
+$quantidades_json = json_encode($quantidades);
+
+
+
+// tabela
 $mostrarstatus = $puxar->pegarnomestatus();
-
-
-
 $nomepaciente =array_column($mostrarstatus, 'nome');
 $nomepaciente_json = json_encode($nomepaciente);
 $statuspaciente = array_column($mostrarstatus, 'status');
@@ -19,17 +32,21 @@ $statuspaciente_json = json_encode($statuspaciente);
 
 
 // Extraia as informações do banco de dados para uso no gráfico
-$labels = array_column($mostrarbanco, 'plano_saude');
-$datajan = array_column($mostrarbanco, 'quantidade_jan');
-$datafev = array_column($mostrarbanco, 'quantidade_fev');
-$datamar = array_column($mostrarbanco, 'quantidade_mar');
+// 
+//  $labels = array_column($mostrarbanco, 'plano_saude');
+// $datajan = array_column($mostrarbanco, 'quantidade_jan');
+//  $datafev = array_column($mostrarbanco, 'quantidade_fev');
+// $datamar = array_column($mostrarbanco, 'quantidade_mar');
 // $data = array_column($mostrarbanco, 'plano_saude');
+// 
 // Converta os dados para JSON para uso no JavaScript
-$labels_json = json_encode($labels);
-$datajan_json = json_encode($datajan);
-$datafev_json = json_encode($datafev);
-$datamar_json = json_encode($datamar);
-// $data_json = json_encode($data);
+// 
+//  $labels_json = json_encode($labels);
+//  $datajan_json = json_encode($datajan);
+//  $datafev_json = json_encode($datafev);
+//  $datamar_json = json_encode($datamar);
+//  $data_json = json_encode($data);
+//  
 // echo ($mostrarbanco);
 
 // // Juntando os arrays
@@ -44,9 +61,7 @@ $datamar_json = json_encode($datamar);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="stylesolicitacoes.css">
-    
+    <title>Solicitações por status</title>
     <link rel="stylesheet" href="node_modules\font-awesome\css\font-awesome.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules\sweetalert2\dist\sweetalert2.min.css">
@@ -96,7 +111,10 @@ $datamar_json = json_encode($datamar);
     position: relative;
 }
 
-
+body{
+  margin-left: 150px;
+ 
+}
 
 </style>
 
@@ -121,10 +139,6 @@ $datamar_json = json_encode($datamar);
     <a class="dropdown-item" href="tabelageral.php">Tabela geral</a>
   </div>
 </div>
-
-
-
-
 </header>
 
 
@@ -133,16 +147,16 @@ $datamar_json = json_encode($datamar);
     <h2 id="solicitacao" >Solicitações por status</h2>
     <div class="row">
     <div class="col-xl-3 col-md-12 col-lg-3 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card border-left-success shadow h-80 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Concluídos</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">*Incluir dados*</div>
+                                            <div class="display-4 h4 mb-0 font-weight-bold text-gray-1000"><?php echo $quantidadeConcluidos; ?></div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        
                                         </div>
                                     </div>
                                 </div>
@@ -150,32 +164,32 @@ $datamar_json = json_encode($datamar);
                         </div>
   
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card border-left-warning shadow h-80 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Agendados</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">*Incluir dados*</div>
+                                                Em andamento</div>
+                                            <div class="display-4 h4 mb-0 font-weight-bold text-gray-800"><?php echo $quantidadeEmAndamento; ?></div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-danger shadow h-100 py-2">
+                            <div class="card border-left-danger shadow h-80 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                                                 Pendentes</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">*Incluir dados*</div>
+                                            <div class="display-4 h4 mb-0 font-weight-bold text-gray-800"><?php echo $quantidadePendentes; ?></div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                        <img src="img/pendente.svg" alt=""><i class="<i class="fa-solid fa-hourglass-end fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -237,8 +251,9 @@ $datamar_json = json_encode($datamar);
         </div>
     </div>
 </div>
+
 <div class="row mt-5">
-    <div class="col-12 col-md-6 col-lg-8">
+    <div class="col-12 col-md-6 col-lg-10">
         <table class="table">
             <thead>
                 <tr class="table-primary">
@@ -293,23 +308,12 @@ $datamar_json = json_encode($datamar);
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: <?php echo $labels_json;?>,
+      labels: <?php echo $status_json; ?>,
       datasets: [{
-        label: 'quant janeiro',
-        data: <?php echo $datajan_json;?>,
+        label: 'quantidade',
+        data: <?php echo $quantidades_json; ?>,
+
         borderWidth: 1
-      },
-      {
-        label: 'quant fevereiro ',
-        data: <?php echo $datafev_json;?>,
-        borderWidth: 1
-      
-      },
-      {
-        label: 'quant março ',
-        data: <?php echo $datamar_json;?>,
-        borderWidth: 1
-      
       }
     
     
@@ -329,24 +333,12 @@ $datamar_json = json_encode($datamar);
   new Chart(ctx2, {
     type: 'pie',
     data: {
-      labels: <?php echo $labels_json;?>,
+      labels: <?php echo $status_json; ?>,
       datasets: [{
-        label: 'quant janeiro',
-        data: <?php echo $datajan_json;?>,
+        label: 'quantidade',
+        data: <?php echo $quantidades_json; ?>,
         borderWidth: 1
-      },
-      {
-        label: 'quant fevereiro ',
-        data: <?php echo $datafev_json;?>,
-        borderWidth: 1
-      
-      },
-      {
-        label: 'quant março ',
-        data: <?php echo $datamar_json;?>,
-        borderWidth: 1
-      
-      },
+      }
     ]
     },
     options: {
@@ -367,27 +359,14 @@ $datamar_json = json_encode($datamar);
   new Chart(ctx3, {
     type: 'line',
     data: {
-      labels: <?php echo $labels_json;?>,
+      labels: <?php echo $status_json;?>,
       datasets: [
         {
-        label: ' quant janeiro',
-        data: <?php echo $datajan_json;?>,
-        borderWidth: 1
-     
-      },
-      {
-        label: ' quant fevereiro',
-        data: <?php echo $datafev_json;?>,
-        borderWidth: 1
-     
-      },
-      {
-        label: ' quant março',
-        data:  <?php echo $datamar_json;?>,
+        label: ' quantidade',
+        data: <?php echo $quantidades_json;?>,
         borderWidth: 1
      
       }
-    
     ]
     },
     options: {

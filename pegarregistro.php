@@ -63,6 +63,21 @@ class PuxarDados {
         }
     }
     
+
+
+    
+    public function pegarcardiaca() {
+        try {
+            $sql = "SELECT SUM(quantidade) AS quantidade FROM cirurgioes WHERE especialidade = 'Cirurgia Cardíaca'";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            $resultado = $stmt->fetchColumn(); // Apenas uma coluna é retornada
+            return $resultado;
+        } catch (\PDOException $e) {
+            throw $e;
+        }
+    }
+
     
     public function pegarGenero() {
         try {
@@ -104,6 +119,55 @@ class PuxarFuncoes {
             $this->pdo = new \PDO("mysql:host={$dbhost};dbname={$dbname}", $dbuser, $dbpass);
             $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         }
+
+        public function pegarstatus() {
+            try {
+                $sql= "SELECT status, COUNT(*) AS quantidade FROM procedimentos GROUP BY status ";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute();
+                $resultados = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                return $resultados;
+            } catch (\PDOException $e) {
+                throw $e;
+            }
+        }
+    
+        public function pegarQuantidadeConcluidos() {
+            try {
+                $sql = "SELECT COUNT(*) AS quantidade FROM procedimentos WHERE status = 'Concluído'";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute();
+                $resultado = $stmt->fetchColumn(); // Apenas uma coluna é retornada
+                return $resultado;
+            } catch (\PDOException $e) {
+                throw $e;
+            }
+        }
+
+        public function pegarQuantidadeEmAndamento() {
+            try {
+                $sql = "SELECT COUNT(*) AS quantidade FROM procedimentos WHERE status = 'Em andamento'";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute();
+                $resultado = $stmt->fetchColumn(); // Apenas uma coluna é retornada
+                return $resultado;
+            } catch (\PDOException $e) {
+                throw $e;
+            }
+        }
+        
+        public function pegarQuantidadePendentes() {
+            try {
+                $sql = "SELECT COUNT(*) AS quantidade FROM procedimentos WHERE status = 'Pendente'";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute();
+                $resultado = $stmt->fetchColumn(); // Apenas uma coluna é retornada
+                return $resultado;
+            } catch (\PDOException $e) {
+                throw $e;
+            }
+        }
+        
 
         public function pegarnomestatus() {
             try {

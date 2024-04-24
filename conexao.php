@@ -10,3 +10,4 @@ $mysqli= new mysqli($host, $user, $pass, $db);
 if($mysqli->connect_error){
     die("falha na conexão");
 }
+

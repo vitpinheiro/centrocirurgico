@@ -7,6 +7,8 @@ include_once("pegarregistro.php");
 $puxardados = new PuxarDados;
 $mostrarbanco = $puxardados->pegarcirurgias();
 
+$cirurgiacardiaca = $puxardados->pegarcardiaca();
+
 $quantidade = array_column($mostrarbanco, 'quantidade_total');
 
 $labels = array_column($mostrarbanco, 'especialidade');
@@ -21,9 +23,11 @@ $quantidade_json = json_encode($quantidade);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  
+    <title>Cirurgias por tipo</title>
+    <link rel="stylesheet" href="node_modules\font-awesome\css\font-awesome.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules\sweetalert2\dist\sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
 
 <style>
@@ -42,7 +46,7 @@ h1{
   text-align: center;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-
+/* 
 h2 a{
   text-decoration: none;
   color:white;
@@ -57,132 +61,47 @@ background-color: white;
 #myChart{
 width: 10em;
 height: 90em;
-
-}
-#navbarNav{
-justify-content: right;
-
-}
-
-
 /*  */
-    body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+
+
+
+*{
+    padding: 5px;
+  }
+ 
+
+     /* Centralizar o conteúdo horizontalmente */
+    
+
+        /* Diminuir o conteúdo e centralizá-lo */
+        .content {
+            margin-top: 20px; /* Espaçamento superior */
+            
+        }
+
+        /* Estilizar o dropdown */
+        /* Estilizar o dropdown */
+.dropdown-menu {
+    /* Adicionando sombra e borda arredondada */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    /* Adicionando uma cor de fundo */
+    background-color: #ffffff;
+    /* Definindo a largura do dropdown */
+    min-width: 200px;
+    /* Ajustando o espaçamento interno */
+    padding: 10px;
+    /* Definindo a posição como relativa para garantir que o dropdown esteja acima do conteúdo */
+    position: relative;
+}
+
+body{
+  margin-left: 150px;
  
 }
 
-footer{
-  padding: 2em;
-}
-
-.sidebar {
-  height: 100%;
-  width: 240px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: #111B42;
-  padding-top: 20px;
-}
-
-.sidebar h2 {
-  color: white;
-  text-align: center;
-  
-  
-}
-
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.sidebar ul li {
-  padding: 8px;
-  text-align: center; 
- }
-
-.sidebar ul li a {
-  color: white;
-  text-decoration: none;
-  
-}
-
-.sidebar ul li a:hover {
-  background-color: #555;
-}
-
-.content {
-  margin-left: 250px;
-  padding: 20px;
-  height: 20em;
-} */
-/*  */
-.line {
-  width: 25px;
-  height: 3px;
-  background-color: black;
-  margin: 5px 0;
-}
-/* Ajustes gerais */
-body, html {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
-
-.wrapper {
-  display: flex;
-}
-
-/* Estilos do sidebar */
-.sidebar {
-  width: 240px;
-  background-color: #111B42;
-  padding-top: 20px;
-  transition: transform 0.3s ease;
-  z-index: 2; /* Para garantir que o sidebar esteja acima do conteúdo */
-}
-
-/* Estilos do conteúdo principal */
-.content {
-  /* flex-grow: 1; /* O conteúdo principal ocupará o espaço restante */
-  /* padding: 20px;
-  height: 100vh; Ocupa a altura total da tela */
-  /* overflow-y: auto; Adiciona rolagem vertical se o conteúdo ultrapassar a altura da tela */ */
-}
-
-/* Estilos para o menu de hambúrguer */
-.hamburger-menu {
-  display: none;
-  cursor: pointer;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 3; /* Para garantir que o menu de hambúrguer esteja acima do conteúdo */
-}
 
 
-
-/* Estilos para telas menores */
-@media only screen and (max-width: 768px) {
-  .sidebar {
-    transform: translateX(-100%);
-    position: fixed; /* Corrigir posição do sidebar em telas menores */
-    top: 0;
-    bottom: 0;
-    left: 0;
-  }
-
-  .content {
-    margin-left: 0; /* Remove a margem do conteúdo principal quando o sidebar estiver oculto */
-  }
-
-  .hamburger-menu {
-    display: block;
-  }
-}
 
 </style>
 
@@ -190,40 +109,23 @@ body, html {
 </head>
 <body>
 <header>
-
-
-
-<!-- <div class="sidebar shadow">
-    <h2>Centro cirúrgico</h2><br>
-    <ul>
-    <div class="nav-item">
-      <li><a href="#">Solicitações por Status</a></li>
-      <li><a href="#"> Cirurgias por Tipo</a></li>
-      <li><a href="#">Cirurgiões</a></li>
-      <li><a href="#">Solicitações por Periodo de Tempo</a></li>
-      <li><a href="tabelageral.php">Tabela Geral</a></li>
-    </ul>
+<div class="btn-group ">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    MENU
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="#">Home</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="solicitacaoporstatus.php">Solicitações por status</a>
+    <a class="dropdown-item" href="cirurgiasportipo.php">Cirurgias por tipo</a>
+    <a class="dropdown-item" href="cirurgioes.php">Cirurgiões</a>
+    <a class="dropdown-item" href="#">Solicitações por período de tempo</a>
+    <a class="dropdown-item" href="tabelageral.php">Tabela geral</a>
+  </div>
 </div>
-  </div>  -->
-  <!--  -->
-  <div class="wrapper"></div>
-  <div class="sidebar shadow">
-    <h2><a href="index.php">Centro cirúrgico</a></h2><br>
-    <ul class="menu">
-        <li><a href="solicitacaoporstatus.php">Solicitações por Status</a></li>
-        <li><a href="cirurgiasportipo.php">Cirurgias por Tipo</a></li>
-        <li><a href="cirurgioes.php">Cirurgiões</a></li>
-        <li><a href="#">Solicitações por Período de Tempo</a></li>
-        <li><a href="tabelageral.php">Tabela Geral</a></li>
-    </ul>
-    <div class="hamburger-menu">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-    </div>
-</div>
-  <!--  -->
+</header>
 
+<main>
   <div class="content">
     <div class="row">
     <div class="col-xl-3 col-md-6 mb-4">
@@ -231,12 +133,12 @@ body, html {
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Concluídos</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">*Incluir dados*</div>
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Cirurgia Cardíaca</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $cirurgiacardiaca;?></div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                          
                                         </div>
                                     </div>
                                 </div>
@@ -248,9 +150,9 @@ body, html {
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Agendados</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">*Incluir dados*</div>
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Ortopedia</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -264,30 +166,152 @@ body, html {
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                                Pendentes</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">*Incluir dados*</div>
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Cirurgia Geral</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+    <div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Neurocirurgia</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                        </div>
+                                        <div class="col-auto">
+                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+  
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Cirurgia Plástica</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-danger shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Cirurgia Vascular</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    <div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Cirurgia Oncológica</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                        </div>
+                                        <div class="col-auto">
+                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+  
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Cirurgia Plástica Estética</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-danger shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Cirurgia Pediátrica</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    <div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Cirurgia Torácica</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                        </div>
+                                        <div class="col-auto">
+                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+  
+                     
                     <h2>Cirurgias por tipo</h2>
 <!--  -->
-<main>
+
 
 <div class="container">
     <br>
     <div class="row">
-        <div class="col-6 accordion" id="accordionPanelsStayOpenExample1">
+        <div class="col-lg-5 col-md-6 col-sm-12 accordion " id="accordionPanelsStayOpenExample1">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                        Accordion Item #1
+                      
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
@@ -297,11 +321,11 @@ body, html {
                 </div>
             </div>
         </div>
-        <div class="col-6 accordion" id="accordionPanelsStayOpenExample2">
+        <div class="col-lg-5 col-md-6 col-sm-12 accordion " id="accordionPanelsStayOpenExample2">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
-                        Accordion Item #2
+                      
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show">
@@ -314,11 +338,11 @@ body, html {
     </div>
 
     <div class="row mt-4">
-        <div class="col-6 ms-auto accordion" id="accordionPanelsStayOpenExample3">
+        <div class="col-12 col-md-6 col-lg-5  accordion " id="accordionPanelsStayOpenExample3">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
-                        Accordion Item #3
+                      
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
@@ -431,6 +455,7 @@ body, html {
         });
     });
 </script>
+
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
