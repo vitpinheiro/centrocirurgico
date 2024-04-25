@@ -93,6 +93,30 @@ class PuxarFuncoes {
             print_r($sql);
         }
 
+
+        public function cirurgioesporsetor() {
+            try{  
+                $sql= " SELECT  
+                ciru.id_setores as idsetor,
+                ciru.nome,
+                seto.nome_setor
+                FROM cirurgioes as ciru 
+                INNER JOIN setores as seto
+                ON seto.id = ciru.id_setores
+                ORDER BY id_setores ASC";
+              
+              $stmt = $this->pdo->prepare($sql);
+              $stmt->execute();
+              $resultado = $stmt->fetchColumn(); // Apenas uma coluna é retornada
+              return $resultado;
+
+          } catch (\PDOException $e) {
+              throw $e;
+          }
+      }
+       
+
+
         public function pegarnomestatus() {
             try {
                 $sql = "SELECT p.nome, proc.status  
