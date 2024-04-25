@@ -1,12 +1,37 @@
 <?php
 
 namespace teste;
-
+include("conexao.php");
 include_once("pegarregistro.php");
 
 $funcoes = new PuxarFuncoes;
-$contarciru= $funcoes->contarCirurgias();
-print_r($contarciru);
+$sql ="SELECT 
+        -- proc.id as idprocedimento,
+        -- proc.id_cirugia,
+        -- ciru.id as idcirurgia,
+
+        ciru.cirurgia as ciru1,
+        COUNT(id_cirugia) AS quantidade_total
+            FROM procedimentos as proc
+            INNER JOIN cirurgias as ciru ON ciru.id = proc.id_cirugia
+            GROUP BY proc.id_cirugia";
+                    
+            $result = mysqli_query($conn, $sql);
+            $row=mysqli_fetch_assoc($result);
+
+            if ($result && mysqli_num_rows($result) > 0){
+                while ($row = mysqli_fetch_assoc($result))
+                {
+                    $cirurgias_array[] = $row['ciru1'];
+                    $quantcirurgias_array[] = $row['quantidade_total'];
+                }
+            }
+
+            print_r($cirurgias_array);
+            print_r($quantcirurgias_array);
+
+
+
 
 ?>
 <!DOCTYPE html>
@@ -91,9 +116,6 @@ body{
  
 }
 
-
-
-
 </style>
 
 
@@ -119,182 +141,26 @@ body{
 <main>
   <div class="content">
     <div class="row">
-    <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Cirurgia Cardíaca</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $contarciru;?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                          
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-  
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Ortopedia</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-danger shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Cirurgia Geral</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <?php foreach ($cirurgias_array as $ciru):?>
 
-    <div class="row">
-    <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Neurocirurgia</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                        <div class="col-auto">
-                                          
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-  
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Cirurgia Plástica</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-danger shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Cirurgia Vascular</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <div class="col-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                <?php echo $ciru;?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">adsadasdsada</div>
+                        </div>                      
                     </div>
-    <div class="row">
-    <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Cirurgia Oncológica</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                        <div class="col-auto">
-                                          
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-  
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Cirurgia Plástica Estética</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-danger shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Cirurgia Pediátrica</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    <div class="row">
-    <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                            Cirurgia Torácica</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                        <div class="col-auto">
-                                          
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-  
-                     
-                    <h2>Cirurgias por tipo</h2>
-<!--  -->
-
-
+                </div>
+            </div>
+        </div>
+    
+    <?php endforeach?>
+    </div>
+</div>
+<h2>Cirurgias por tipo</h2>
 <div class="container">
     <br>
     <div class="row">
