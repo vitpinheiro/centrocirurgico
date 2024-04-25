@@ -4,18 +4,9 @@ namespace teste;
 
 include_once("pegarregistro.php");
 
-// $puxardados = new PuxarDados;
-// $mostrarbanco = $puxardados->pegarcirurgias();
-
-// $cirurgiacardiaca = $puxardados->pegarcardiaca();
-
-// $quantidade = array_column($mostrarbanco, 'quantidade_total');
-
-// $labels = array_column($mostrarbanco, 'especialidade');
-
-// $quantidade_json = json_encode($mostrarbanco);
-// $labels_json = json_encode($labels);
-// $quantidade_json = json_encode($quantidade);
+$funcoes = new PuxarFuncoes;
+$contarciru= $funcoes->contarCirurgias();
+print_r($contarciru);
 
 ?>
 <!DOCTYPE html>
@@ -135,6 +126,7 @@ body{
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Cirurgia Cardíaca</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $contarciru;?></div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                                         </div>
                                         <div class="col-auto">

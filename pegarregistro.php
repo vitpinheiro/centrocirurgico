@@ -67,6 +67,31 @@ class PuxarFuncoes {
             }
         }
         
+        public function contarCirurgias(){
+
+            try{   
+                 $sql ="SELECT 
+                        -- proc.id as idprocedimento,
+                        -- proc.id_cirugia,
+                        -- ciru.id as idcirurgia,
+
+                        ciru.cirurgia as ciru1,
+                        COUNT(id_cirugia) AS quantidade_total
+                            FROM procedimentos as proc
+                            INNER JOIN cirurgias as ciru ON ciru.id = proc.id_cirugia
+                            GROUP BY proc.id_cirugia";
+                    
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute();
+                $resultado = $stmt->fetchColumn(); // Apenas uma coluna é retornada
+                return $resultado;
+
+            } catch (\PDOException $e) {
+                throw $e;
+            }
+
+            print_r($sql);
+        }
 
         public function pegarnomestatus() {
             try {
