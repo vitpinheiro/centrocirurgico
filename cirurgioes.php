@@ -1,6 +1,7 @@
 <?php
 
 namespace teste;
+include("conexao.php");
 
 include_once("pegarregistro.php");
 
@@ -15,8 +16,29 @@ include_once("pegarregistro.php");
 // $quantidade_json = json_encode($quantidade);
 
 $funcoes = new PuxarFuncoes;
-$contarciru= $funcoes->cirurgioesporsetor();
-print_r($contarciru);
+$sql = "SELECT  
+ciru.id_setores as idsetor,
+ciru.nome as nomeciru,
+seto.nome_setor as setor
+FROM cirurgioes as ciru 
+INNER JOIN setores as seto
+ON seto.id = ciru.id_setores
+ORDER BY id_setores ASC";
+
+                    
+$result = mysqli_query($conn, $sql);
+$row=mysqli_fetch_assoc($result);
+
+if ($result && mysqli_num_rows($result) > 0){
+    while ($row = mysqli_fetch_assoc($result))
+    {
+     $setores_array[] = $row['setor'];
+     $cirurgioes_array[] = $row['nomeciru'];
+     }
+    }
+
+
+
 
 ?>
 <!DOCTYPE html>
@@ -105,58 +127,31 @@ body{
 
   
     
-
     <div class="row">
-        <div class=" col-lg-5 col-md-10 col-sm-12  accordion" id="accordionPanelsStayOpenExample1">
+    <?php foreach ($setores_array as $index => $setor): ?>
+        <div class="col-lg-5 col-md-10 col-sm-12 accordion" id="accordionPanelsStayOpenExample<?php echo $index; ?>">
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                        
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $index; ?>" aria-expanded="true" aria-controls="panelsStayOpen-collapse<?php echo $index; ?>">
+                        <?php echo $setor; ?>
                     </button>
                 </h2>
-                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                <div id="panelsStayOpen-collapse<?php echo $index; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne">
                     <div class="accordion-body">
-                        
+                      <ul>
+                        <li>
+                        <?php echo $cirurgioes_array[$index]; ?>
+                        </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <div class=" col-lg-5 col-md-6 col-sm-12 order-lg-2 accordion" id="accordionPanelsStayOpenExample2">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
-                        
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show">
-                    <div class="accordion-body">
-                        <canvas class="charts" id="myChart3"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-  
-    <div class="col-12 col-md-6 col-lg-5 mt-4 mt-md-0 ">
-        <div class="accordion" id="accordionPanelsStayOpenExample3">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
-                      
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
-                    <div class="accordion-body">
-                        <canvas class="charts" id="myChart2"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php endforeach ?>
 </div>
 
-
+  
+    
 
 
 <script>

@@ -90,7 +90,7 @@ class PuxarFuncoes {
                 throw $e;
             }
 
-            print_r($sql);
+           
         }
 
 
