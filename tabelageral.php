@@ -91,7 +91,7 @@ body{
     MENU
   </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item" href="#">Home</a>
+    <a class="dropdown-item" href="index.php">Home</a>
     <div class="dropdown-divider"></div>
     <a class="dropdown-item" href="solicitacaoporstatus.php">Solicitações por status</a>
     <a class="dropdown-item" href="cirurgiasportipo.php">Cirurgias por tipo</a>
