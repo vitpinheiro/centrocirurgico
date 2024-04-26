@@ -5,16 +5,6 @@ include("conexao.php");
 
 include_once("pegarregistro.php");
 
-// $puxardados = new PuxarDados;
-// $mostrarbanco = $puxardados->pegarcirurgioes();
-
-// // Extraia as informações do banco de dados para uso no gráfico
-// $labels = array_column($mostrarbanco, 'nome');
-// $quantidade = array_column($mostrarbanco, 'quantidade');
-
-// $labels_json = json_encode($labels);
-// $quantidade_json = json_encode($quantidade);
-
 $funcoes = new PuxarFuncoes;
 $sql = "SELECT  
 ciru.id_setores as idsetor,
@@ -51,12 +41,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     <link rel="stylesheet" href="node_modules\font-awesome\css\font-awesome.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules\sweetalert2\dist\sweetalert2.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
-
-    <script src="chart.js"></script>
-
-    
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">  
     
 <style>
  *{
@@ -119,10 +104,7 @@ body{
 
 <main>
  
-
-  
     <h2>Cirurgiões</h2>
-    
     <?php foreach ($cirurgioes_por_setor as $setor => $cirurgioes) { ?>
     <div class="row">
         <div class="col-lg-5 col-md-10 col-sm-12 accordion" id="accordionPanelsStayOpenExample<?php echo $setor; ?>">
@@ -145,108 +127,50 @@ body{
                     </div>
                 </div>
             </div>
-        </div>
-
+        </div>    
 </div>
 <?php
     }
 }
 ?>
-<script>
-   const ctx = document.getElementById('myChart');
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: <?php echo $labels_json;?>,
-      datasets: [{
-        label: 'Quantidade',
-        data: <?php echo $quantidade_json;?>,
-        borderWidth: 1
-      },
+</main>
+<div class="col-6">
+        <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
+
+  <script src="chart.js"></script>
+
+  <script>
     
-    ]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
+      const ctx = document.getElementById('myChart');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: [1,2,4,5],
+          datasets: [{
+            label: 'quantidade',
+            data: [1,2,4,5],
+            borderWidth: 1
+          }
+        
+        
+        ]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
         }
-      }
-    }
-  });
-  
-  //Gráfico de pizza
-  const ctx2 = document.getElementById('myChart2');
-  new Chart(ctx2, {
-    type: 'pie',
-    data: {
-      datasets: [{
-        label: 'quant janeiro',
-        data: <?php echo $quantidade_json;?>,
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
+      });
+  </script>
 
-  //Gráfico de linha
-  // const nova_linha_data = php echo json_encode($nova_linha); ?>;
-  // const nova_linha2_data = php echo json_encode($nova_linha2); ?>;
-
-  const ctx3 = document.getElementById('myChart3');
-  new Chart(ctx3, {
-    type: 'line',
-    data: {
-      labels: <?php echo $labels_json;?>,
-      datasets: [
-        {
-        label: ' quant janeiro',
-        data: <?php echo $quantidade_json;?>,
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
-
-
-
-
-
-
-
-</script>
 <br>
 <br>
 </main>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const hamburger = document.querySelector('.hamburger-menu');
-        const sidebar = document.querySelector('.sidebar');
-
-        hamburger.addEventListener('click', function () {
-            sidebar.classList.toggle('active');
-        });
-    });
-</script>
-
 </body>
-
-<script src="node_modules\@popperjs\core\dist\umd\popper.min.js"></script>
-<script src="node_modules\bootstrap\dist\js\bootstrap.min.js"></script>
+  <script src="node_modules\@popperjs\core\dist\umd\popper.min.js"></script>
+  <script src="node_modules\bootstrap\dist\js\bootstrap.min.js"></script>
 
 </html>
