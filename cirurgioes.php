@@ -128,7 +128,7 @@ body{
         <div class="col-lg-5 col-md-10 col-sm-12 accordion" id="accordionPanelsStayOpenExample<?php echo $setor; ?>">
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $setor; ?>" aria-expanded="true" aria-controls="panelsStayOpen-collapse<?php echo $setor; ?>">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $setor; ?>" aria-expanded="true" aria-controls="panelsStayOpen-collapse<?php echo $setor; ?>">Setor de
                         <?php echo $setor; ?>
                     </button>
                 </h2>
@@ -148,10 +148,32 @@ body{
         </div>
 
 </div>
+
+
+
 <?php
     }
 }
 ?>
+<div class="row align-items-start">
+    <div class="col-xl-9 col-md-6 mb-4">
+        <!-- Colunas existentes -->
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-danger shadow h-80 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                            Pendentes
+                        </div>
+                        <div class="display-4 h4 mb-0 font-weight-bold text-gray-800"></div>
+                    </div>
+                    <div class="col-auto">
+                        <!-- Conteúdo da coluna direita -->
+                    </div>
+
+
 <script>
    const ctx = document.getElementById('myChart');
   new Chart(ctx, {

@@ -30,7 +30,7 @@ class PuxarFuncoes {
                 throw $e;
             }
         }
-    
+
         public function pegarQuantidadeConcluidos() {
             try {
                 $sql = "SELECT COUNT(*) AS quantidade FROM procedimentos WHERE status = 'Concluído'";
@@ -94,6 +94,7 @@ class PuxarFuncoes {
         }
 
 
+    
         public function cirurgioesporsetor() {
             try{  
                 $sql= " SELECT  
@@ -114,7 +115,7 @@ class PuxarFuncoes {
               throw $e;
           }
       }
-       
+    
 
 
         public function pegarnomestatus() {
@@ -138,5 +139,5 @@ class PuxarFuncoes {
             }
         }
     
-
     }
+    

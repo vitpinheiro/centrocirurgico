@@ -26,12 +26,10 @@ $sql ="SELECT
                     $quantcirurgias_array[] = $row['quantidade_total'];
                 }
             }
+            $cirurgias_json = json_encode($cirurgias_array);
+            $quantcirurgias_json = json_encode($quantcirurgias_array);
 
-            print_r($cirurgias_array);
-            print_r($quantcirurgias_array);
-
-
-
+           
 
 ?>
 <!DOCTYPE html>
@@ -44,7 +42,6 @@ $sql ="SELECT
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules\sweetalert2\dist\sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
-
 
 <style>
 
@@ -90,10 +87,7 @@ height: 90em;
     
 
         /* Diminuir o conteúdo e centralizá-lo */
-        .content {
-            margin-top: 20px; /* Espaçamento superior */
-            
-        }
+       
 
         /* Estilizar o dropdown */
         /* Estilizar o dropdown */
@@ -112,8 +106,14 @@ height: 90em;
 }
 
 body{
-  margin-left: 150px;
+
  
+}
+.carousel-control-prev-icon{
+  background-color: black;
+}
+.carousel-control-next-icon{
+   background-color: black;
 }
 
 </style>
@@ -122,101 +122,79 @@ body{
 </head>
 <body>
 <header>
-<div class="btn-group ">
-  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    MENU
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="index.php">Home</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="solicitacaoporstatus.php">Solicitações por status</a>
-    <a class="dropdown-item" href="cirurgiasportipo.php">Cirurgias por tipo</a>
-    <a class="dropdown-item" href="cirurgioes.php">Cirurgiões</a>
-    <a class="dropdown-item" href="#">Solicitações por período de tempo</a>
-    <a class="dropdown-item" href="tabelageral.php">Tabela geral</a>
-  </div>
-</div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        MENU
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="index.php">Home</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="solicitacaoporstatus.php">Solicitações por status</a>
+                        <a class="dropdown-item" href="cirurgiasportipo.php">Cirurgias por tipo</a>
+                        <a class="dropdown-item" href="cirurgioes.php">Cirurgiões</a>
+                        <a class="dropdown-item" href="#">Solicitações por período de tempo</a>
+                        <a class="dropdown-item" href="tabelageral.php">Tabela geral</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <!-- Adicione aqui quaisquer outros elementos que você deseje alinhar -->
+            </div>
+        </div>
+    </div>
 </header>
 
 <main>
-  <div class="content">
-    <div id="carouselExample" class="carousel slide">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
+  
 
-          <div class="row">
-          <div class="col-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                <?php echo $ciru;?></div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">adsadasdsada</div>
-                        </div>                      
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="container">
+<h2>Cirurgias por tipo:</h2>
+<div id="carouselExampleIndicators" class="carousel slide">
+    <div class="carousel-inner">
+        <?php 
+        $total_items = count($cirurgias_array);
+        $items_per_slide = 3;
+        $total_slides = ceil($total_items / $items_per_slide);
 
+        for ($i = 0; $i < $total_slides; $i++) {
+            echo '<div class="carousel-item';
+            if ($i === 0) echo ' active'; // Adiciona a classe 'active' ao primeiro item
+            echo '"><div class="row">';
+            
+            // Itera sobre os itens a serem exibidos neste slide
+            for ($j = $i * $items_per_slide; $j < min(($i + 1) * $items_per_slide, $total_items); $j++) {
+                echo '<div class="col-4">';
+                echo '<div class="card border-left-success shadow h-80 py-1">';
+                echo '<div class="card-body">';
+                echo '<div class="row  ">';
+                echo '<div class="col mr-2">';
+                echo '<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">' . $cirurgias_array[$j] . '</div>';
+                echo '<div class="display-4 h4 font-weight-bold text-gray-800">' . $quantcirurgias_array[$j] . '</div>';
+                echo '</div></div></div></div></div>';
+            }
+            
+            echo '</div></div>';
+        }
+        ?>
     </div>
-
-        <div class="carousel-item">
-        <div class="row">
-
-          <div class="col-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                <?php echo $ciru;?></div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">adsadasdsada</div>
-                        </div>                      
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        </div>
-    </div>
-
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" style="margin-left:-80px;">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
-      </button>
-
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next" style="margin-right: -80px;">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
-      </button>
-  </div>
-
-    <div class="row">
-    <?php foreach ($cirurgias_array as $ciru):?>
-        <div class="col-4">
-            <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                <?php echo $ciru;?></div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">adsadasdsada</div>
-                        </div>                      
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-    <?php endforeach?>
-    </div>
+    </button>
 </div>
-<h2>Cirurgias por tipo</h2>
-<div class="container">
+
+
     <br>
     <div class="row">
       
-        <div class="col-lg-5 col-md-6 col-sm-12 accordion " id="accordionPanelsStayOpenExample1">
+        <div class="col-lg-6 col-md-6 col-sm-12 accordion " id="accordionPanelsStayOpenExample1">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
@@ -225,13 +203,13 @@ body{
                 </h2>
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                     <div class="accordion-body">
-                        <canvas class="charts" id="myChart"></canvas>
+                        <canvas class="charts" id="myChart3"></canvas>
                     </div>
                 </div>
             </div>
 
         </div>
-        <div class="col-lg-5 col-md-6 col-sm-12 accordion " id="accordionPanelsStayOpenExample2">
+        <div class="col-lg-6 col-md-6 col-sm-12 accordion " id="accordionPanelsStayOpenExample2">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
@@ -240,15 +218,15 @@ body{
                 </h2>
                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show">
                     <div class="accordion-body">
-                        <canvas class="charts" id="myChart3"></canvas>
+                        <canvas class="charts" id="myChart2"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row mt-4">
-        <div class="col-12 col-md-6 col-lg-5  accordion " id="accordionPanelsStayOpenExample3">
+    <div class="row mt-4 justify-content-end">
+        <div class="col-12 col-md-6 col-lg-6 accordion " id="accordionPanelsStayOpenExample3">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
@@ -257,114 +235,134 @@ body{
                 </h2>
                 <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
                     <div class="accordion-body">
-                        <canvas class="charts" id="myChart2"></canvas>
+                        <canvas class="charts" id="myChart"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-<script src="chart.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
    const ctx = document.getElementById('myChart');
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: <?php echo $labels_json;?>,
-      datasets: [{
-        label: 'Quantidade',
-        data: <?php echo $quantidade_json;?>,
-        borderWidth: 1
-      },
-    
-    ]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-  
-  //Gráfico de pizza
-  const ctx2 = document.getElementById('myChart2');
-  new Chart(ctx2, {
+new Chart(ctx, {
     type: 'pie',
     data: {
-      labels: <?php echo $labels_json;?>,
-      datasets: [{
-        label: 'quant janeiro',
-        data: <?php echo $quantidade_json;?>,
-        borderWidth: 1
-      }]
+        labels: <?php echo $cirurgias_json ?>,
+        datasets: [{
+            label: 'Quantidade',
+            data: <?php echo $quantcirurgias_json ?>,
+            borderWidth: 1
+        }]
     },
     options: {
-      scales: {
-        y: {
-          beginAtZero: true
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            legend: {
+                display: true,
+                position: 'bottom', // Posição da legenda (pode ser 'top', 'bottom', 'left', 'right')
+                labels: {
+                    font: {
+                        size: 10 // Tamanho da fonte da legenda
+                    },
+                    // Altere a legenda aqui
+                    text: 'Sua nova legenda' // Texto personalizado da legenda
+                }
+            }
         }
-      }
     }
-  });
-
-  //Gráfico de linha
-  // const nova_linha_data = php echo json_encode($nova_linha); ?>;
-  // const nova_linha2_data = php echo json_encode($nova_linha2); ?>;
-
-  const ctx3 = document.getElementById('myChart3');
-  new Chart(ctx3, {
+});
+   const ctx2 = document.getElementById('myChart3');
+new Chart(ctx2, {
     type: 'line',
     data: {
-      labels: <?php echo $labels_json;?>,
-      datasets: [
-        {
-        label: ' quant janeiro',
-        data: <?php echo $quantidade_json;?>,
-        borderWidth: 1
-      }]
+        labels: <?php echo $cirurgias_json ?>,
+        datasets: [{
+            label: 'Quantidade',
+            data: <?php echo $quantcirurgias_json ?>,
+            borderWidth: 1,
+            borderColor: 'rgba(255, 99, 132, 2)', // Cor da linha
+            backgroundColor: 'rgba(255, 99, 132, 2)', // Cor de preenchimento da área sob a linha
+        }]
     },
     options: {
-      scales: {
-        y: {
-          beginAtZero: true
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            legend: {
+                display: true,
+                position: 'bottom', // Posição da legenda (pode ser 'top', 'bottom', 'left', 'right')
+                labels: {
+                    font: {
+                        size: 10 // Tamanho da fonte da legenda
+                    },
+                    // Altere a legenda aqui
+                    text: 'Sua nova legenda' // Texto personalizado da legenda
+                }
+            }
         }
-      }
     }
-  });
-
-
-
-
-
-
-
+});
+   const ctx3 = document.getElementById('myChart2');
+new Chart(ctx3, {
+    type: 'bar',
+    data: {
+        labels: <?php echo $cirurgias_json ?>,
+        datasets: [{
+            label: 'Quantidade',
+            data: <?php echo $quantcirurgias_json ?>,
+            backgroundColor: [
+            'rgba(255, 99, 132, 2)',   // Vermelho
+            'rgba(54, 162, 235, 2)',   // Azul
+            'rgba(255, 206, 86, 2)',   // Amarelo
+            'rgba(75, 192, 192, 2)',   // Verde
+            'rgba(153, 102, 255, 2)',  // Roxo
+            'rgba(255, 159, 64, 2)',   // Laranja
+            'rgba(255, 0, 255, 2)',    // Magenta
+            'rgba(0, 255, 255, 2)',    // Ciano
+            'rgba(255, 255, 0, 2)',    // Amarelo claro
+            'rgba(0, 255, 0, 2)',      // Verde claro
+],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            legend: {
+                display: true,
+                position: 'bottom', // Posição da legenda (pode ser 'top', 'bottom', 'left', 'right')
+                labels: {
+                    font: {
+                        size: 10 // Tamanho da fonte da legenda
+                    },
+                    // Altere a legenda aqui
+                    text: 'Sua nova legenda' // Texto personalizado da legenda
+                }
+            }
+        }
+    }
+});
 
 </script>
-<br>
-<br>
+
 </main>
 
 <footer>
-  <p></p>
-</footer>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const hamburger = document.querySelector('.hamburger-menu');
-        const sidebar = document.querySelector('.sidebar');
 
-        hamburger.addEventListener('click', function () {
-            sidebar.classList.toggle('active');
-        });
-    });
-</script>
+</footer>
+
 
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
