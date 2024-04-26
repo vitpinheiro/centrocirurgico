@@ -25,19 +25,18 @@ INNER JOIN setores as seto
 ON seto.id = ciru.id_setores
 ORDER BY id_setores ASC";
 
-                    
 $result = mysqli_query($conn, $sql);
-$row=mysqli_fetch_assoc($result);
 
-if ($result && mysqli_num_rows($result) > 0){
-    while ($row = mysqli_fetch_assoc($result))
-    {
-     $setores_array[] = $row['setor'];
-     $cirurgioes_array[] = $row['nomeciru'];
-     }
+if ($result && mysqli_num_rows($result) > 0) {
+
+    $cirurgioes_por_setor = array();
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $setor = $row['setor'];
+        $nome_cirurgiao = $row['nomeciru'];
+        $cirurgioes_por_setor[$setor][] = $nome_cirurgiao;
+
     }
-
-
 
 
 ?>
@@ -124,36 +123,35 @@ body{
   
     <h2>Cirurgiões</h2>
     
-
-  
-    
+    <?php foreach ($cirurgioes_por_setor as $setor => $cirurgioes) { ?>
     <div class="row">
-    <?php foreach ($setores_array as $index => $setor): ?>
-        <div class="col-lg-5 col-md-10 col-sm-12 accordion" id="accordionPanelsStayOpenExample<?php echo $index; ?>">
+        <div class="col-lg-5 col-md-10 col-sm-12 accordion" id="accordionPanelsStayOpenExample<?php echo $setor; ?>">
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $index; ?>" aria-expanded="true" aria-controls="panelsStayOpen-collapse<?php echo $index; ?>">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $setor; ?>" aria-expanded="true" aria-controls="panelsStayOpen-collapse<?php echo $setor; ?>">
                         <?php echo $setor; ?>
                     </button>
                 </h2>
-                <div id="panelsStayOpen-collapse<?php echo $index; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne">
+                
+                <div id="panelsStayOpen-collapse<?php echo $setor; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne">
                     <div class="accordion-body">
                       <ul>
-                        <li>
-                        <?php echo $cirurgioes_array[$index]; ?>
-                        </li>
-                        </ul>
+
+                <?php // Itera sobre os cirurgiões do setor
+                      foreach ($cirurgioes as $cirurgiao) { ?>
+                        <li><?php echo $cirurgiao; ?></li> <?php }
+                        ?>
+                      </ul>
                     </div>
                 </div>
             </div>
         </div>
-    <?php endforeach ?>
+
 </div>
-
-  
-    
-
-
+<?php
+    }
+}
+?>
 <script>
    const ctx = document.getElementById('myChart');
   new Chart(ctx, {

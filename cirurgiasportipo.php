@@ -140,9 +140,60 @@ body{
 
 <main>
   <div class="content">
+    <div id="carouselExample" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+
+          <div class="row">
+          <div class="col-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                <?php echo $ciru;?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">adsadasdsada</div>
+                        </div>                      
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+        <div class="carousel-item">
+        <div class="row">
+
+          <div class="col-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                <?php echo $ciru;?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">adsadasdsada</div>
+                        </div>                      
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        </div>
+    </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+  </div>
+
     <div class="row">
     <?php foreach ($cirurgias_array as $ciru):?>
-
         <div class="col-4">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
@@ -164,6 +215,7 @@ body{
 <div class="container">
     <br>
     <div class="row">
+      
         <div class="col-lg-5 col-md-6 col-sm-12 accordion " id="accordionPanelsStayOpenExample1">
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -177,6 +229,7 @@ body{
                     </div>
                 </div>
             </div>
+
         </div>
         <div class="col-lg-5 col-md-6 col-sm-12 accordion " id="accordionPanelsStayOpenExample2">
             <div class="accordion-item">
