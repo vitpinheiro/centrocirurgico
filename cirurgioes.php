@@ -5,16 +5,6 @@ include("conexao.php");
 
 include_once("pegarregistro.php");
 
-// $puxardados = new PuxarDados;
-// $mostrarbanco = $puxardados->pegarcirurgioes();
-
-// // Extraia as informações do banco de dados para uso no gráfico
-// $labels = array_column($mostrarbanco, 'nome');
-// $quantidade = array_column($mostrarbanco, 'quantidade');
-
-// $labels_json = json_encode($labels);
-// $quantidade_json = json_encode($quantidade);
-
 $funcoes = new PuxarFuncoes;
 $sql = "SELECT  
 ciru.id_setores as idsetor,
@@ -51,12 +41,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     <link rel="stylesheet" href="node_modules\font-awesome\css\font-awesome.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules\sweetalert2\dist\sweetalert2.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
-
-    <script src="chart.js"></script>
-
-    
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">  
     
 <style>
  *{
@@ -119,10 +104,7 @@ body{
 
 <main>
  
-
-  
     <h2>Cirurgiões</h2>
-    
     <?php foreach ($cirurgioes_por_setor as $setor => $cirurgioes) { ?>
     <div class="row">
         <div class="col-lg-5 col-md-10 col-sm-12 accordion" id="accordionPanelsStayOpenExample<?php echo $setor; ?>">
@@ -145,8 +127,7 @@ body{
                     </div>
                 </div>
             </div>
-        </div>
-
+        </div>    
 </div>
 
 
@@ -155,25 +136,6 @@ body{
     }
 }
 ?>
-<div class="row align-items-start">
-    <div class="col-xl-9 col-md-6 mb-4">
-        <!-- Colunas existentes -->
-    </div>
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card border-left-danger shadow h-80 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                            Pendentes
-                        </div>
-                        <div class="display-4 h4 mb-0 font-weight-bold text-gray-800"></div>
-                    </div>
-                    <div class="col-auto">
-                        <!-- Conteúdo da coluna direita -->
-                    </div>
-
-
 <script>
    const ctx = document.getElementById('myChart');
   new Chart(ctx, {
@@ -253,22 +215,8 @@ body{
 <br>
 <br>
 </main>
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const hamburger = document.querySelector('.hamburger-menu');
-        const sidebar = document.querySelector('.sidebar');
-
-        hamburger.addEventListener('click', function () {
-            sidebar.classList.toggle('active');
-        });
-    });
-</script>
-
 </body>
-
-<script src="node_modules\@popperjs\core\dist\umd\popper.min.js"></script>
-<script src="node_modules\bootstrap\dist\js\bootstrap.min.js"></script>
+  <script src="node_modules\@popperjs\core\dist\umd\popper.min.js"></script>
+  <script src="node_modules\bootstrap\dist\js\bootstrap.min.js"></script>
 
 </html>
