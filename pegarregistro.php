@@ -93,6 +93,33 @@ class PuxarFuncoes {
            
         }
 
+        public function cirurgiasporsetor(){
+
+            try{   
+                    $sql ="SELECT
+                    seto.nome_setor as setor ,
+                    COUNT(proc.id_cirugia) AS total_cirurgias
+                FROM
+                    centrocirurgico.procedimentos AS proc
+                INNER JOIN
+                    centrocirurgico.setores AS seto ON proc.id_setores = seto.id
+                INNER JOIN
+                    centrocirurgico.cirurgias AS ciru ON proc.id_cirugia = ciru.id
+                GROUP BY
+                    seto.nome_setor;";
+                    
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute();
+                $resultado = $stmt->fetchColumn(); // Apenas uma coluna é retornada
+                return $resultado;
+
+            } catch (\PDOException $e) {
+                throw $e;
+            }
+
+           
+        }
+
 
     
         public function cirurgioesporsetor() {
@@ -116,6 +143,38 @@ class PuxarFuncoes {
           }
       }
     
+
+
+        
+      public function pegarinfo() {
+        try {
+            $sql = "SELECT
+            pac.id_procedimentos as id,
+            pac.nome as paciente,
+            seto.nome_setor as setor,
+            proc.leito,
+            proc.status
+            
+            FROM centrocirurgico.pacientes as pac 
+            INNER JOIN procedimentos as proc
+            ON proc.id = pac.id_procedimentos
+            INNER JOIN setores as seto
+            ON proc.id_setores = seto.id" ;
+
+                    $stmt = $this->pdo->prepare($sql);
+                    // Executa a consulta SQL
+                    $stmt->execute();
+                    // Obtém os resultados da consulta como um array associativo
+                    $resultados = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                    // Retorna os resultados
+                    return $resultados;
+                    
+        } catch (\PDOException $e) { // Trata qualquer exceção do tipo PDOException
+            // Lança a exceção para ser tratada em outro lugar do código
+            throw $e;
+        }
+    }
+
 
 
         public function pegarnomestatus() {

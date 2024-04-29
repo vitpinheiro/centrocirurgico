@@ -23,12 +23,16 @@ $quantidades_json = json_encode($quantidades);
 
 
 // tabela
-$mostrarstatus = $puxar->pegarnomestatus();
-$nomepaciente =array_column($mostrarstatus, 'nome');
-$nomepaciente_json = json_encode($nomepaciente);
+$mostrarstatus = $puxar->pegarinfo();
+$idprocedimento = array_column($mostrarstatus, 'id');
+$nomepaciente = array_column($mostrarstatus, 'paciente');
 $statuspaciente = array_column($mostrarstatus, 'status');
+$setor = array_column($mostrarstatus, 'setor');
+$leito = array_column($mostrarstatus, 'leito');
+$nomepaciente_json = json_encode($nomepaciente);
 $statuspaciente_json = json_encode($statuspaciente);
-
+$setor_json = json_encode($setor);
+$leito_json = json_encode($leito);
 
 
 // Extraia as informações do banco de dados para uso no gráfico
@@ -86,17 +90,6 @@ $statuspaciente_json = json_encode($statuspaciente);
   }
  
 
-     /* Centralizar o conteúdo horizontalmente */
-    
-
-        /* Diminuir o conteúdo e centralizá-lo */
-        .content {
-            margin-top: 20px; /* Espaçamento superior */
-            
-        }
-
-        /* Estilizar o dropdown */
-        /* Estilizar o dropdown */
 .dropdown-menu {
     /* Adicionando sombra e borda arredondada */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -111,9 +104,11 @@ $statuspaciente_json = json_encode($statuspaciente);
     position: relative;
 }
 
-body{
-  margin-left: 150px;
- 
+
+.badge {
+        width: 90px; /* Definindo uma largura fixa para todas as badges */
+
+        display: inline-block; /* Garantindo que as badges fiquem em linha uma ao lado da outra */
 }
 
 </style>
@@ -122,11 +117,10 @@ body{
 </head>
 <body>
 
-<header>
-<!-- Example single danger button -->
-
-<div class="btn-group ">
-  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<header >
+  
+<div class="btn-group ml-5">
+  <button type="button" class="btn btn-primary dropdown-toggle ml-5" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     MENU
   </button>
   <div class="dropdown-menu">
@@ -203,7 +197,7 @@ body{
 
     <br>
     <div class="row">
-        <div class=" col-lg-5 col-md-10 col-sm-12  accordion" id="accordionPanelsStayOpenExample1">
+        <div class=" col-lg-5 col-md-10 col-sm-12 mb-4 accordion" id="accordionPanelsStayOpenExample1">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
@@ -217,7 +211,8 @@ body{
                 </div>
             </div>
         </div>
-        <div class=" col-lg-5 col-md-6 col-sm-12 order-lg-2 accordion" id="accordionPanelsStayOpenExample2">
+
+        <div class=" col-lg-5 col-md-10 col-sm-12 order-lg-2  accordion" id="accordionPanelsStayOpenExample2">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
@@ -234,12 +229,12 @@ body{
     </div>
 
   
-    <div class="col-12 col-md-6 col-lg-5 mt-4 mt-md-0 ">
+    <div class="col-12 col-md-8 col-lg-5 mt-4 mt-md-0  ">
         <div class="accordion" id="accordionPanelsStayOpenExample3">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
-                        Gráfico
+                        
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
@@ -252,26 +247,53 @@ body{
     </div>
 </div>
 
-<div class="row mt-5">
-    <div class="col-12 col-md-6 col-lg-10">
+<div class="row mt-5 ">
+<div class="col-md-12 col-lg-10 mx-auto">
         <table class="table">
             <thead>
                 <tr class="table-primary">
+                    <th >id</th>
                     <th>Nome</th>
-                    <th>Status</th>
+                    <th>Setor</th>
+                    <th>Leito</th>
+                    <th >Status</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($nomepaciente as $index => $nome): ?>
                     <tr class="table">
+                        <td><?php echo $idprocedimento[$index]; ?></td>
                         <td><?php echo $nome; ?></td>
-                        <td><?php echo $statuspaciente[$index]; ?></td>
+                        <td><?php echo $setor[$index]; ?></td>
+                        <td><?php echo $leito[$index]; ?></td>
+                        <td>
+                            <?php 
+                            // Determina a classe da pill badge com base no status do paciente
+                            $badge_class = '';
+                            switch ($statuspaciente[$index]) {
+                                case 'Concluído':
+                                    $badge_class = 'bg-success'; 
+                                    break;
+                                case 'Em andamento':
+                                    $badge_class = 'bg-warning'; 
+                                    break;
+                                case 'Pendente':
+                                    $badge_class = 'bg-danger'; 
+                                    break;
+                            }
+                            ?>
+                            <!-- Usando pill badges para indicar o status -->
+                            <span class="badge rounded-pill <?php echo $badge_class; ?>">
+                                <?php echo $statuspaciente[$index]; ?>
+                            </span>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
 </div>
+
 
 
     <!-- <div class="col-lg-6 col-xs-12">
@@ -312,7 +334,12 @@ body{
       datasets: [{
         label: 'quantidade',
         data: <?php echo $quantidades_json; ?>,
-
+        backgroundColor: [ 
+          'green',   
+          'yellow',  
+          'red'     
+        ],
+        
         borderWidth: 1
       }
     
@@ -337,6 +364,11 @@ body{
       datasets: [{
         label: 'quantidade',
         data: <?php echo $quantidades_json; ?>,
+        backgroundColor: [ 
+          'green',   
+          'yellow',  
+          'red'     
+        ],
         borderWidth: 1
       }
     ]
@@ -364,8 +396,17 @@ body{
         {
         label: ' quantidade',
         data: <?php echo $quantidades_json;?>,
-        borderWidth: 1
-     
+        borderWidth: 1,
+        borderColor: [ 
+            'green',  
+            'yellow',  
+            'red'      
+          ],
+          backgroundColor: [ 
+            'rgba(0, 255, 0, 2)',   
+            'rgba(255, 255, 0, 2)',
+            'rgba(255, 0, 0, 2)',   
+          ]
       }
     ]
     },

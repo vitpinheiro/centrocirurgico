@@ -80,6 +80,8 @@ body{
  
 }
 
+
+
 </style>
 
 
@@ -105,6 +107,9 @@ body{
 <main>
  
     <h2>Cirurgiões</h2>
+    <h6 class="mt-4 mb-0 ">Médicos por setor:</h6>
+    <div class="row">
+    <div class="col">
     <?php foreach ($cirurgioes_por_setor as $setor => $cirurgioes) { ?>
     <div class="row">
         <div class="col-lg-5 col-md-10 col-sm-12 accordion" id="accordionPanelsStayOpenExample<?php echo $setor; ?>">
@@ -136,6 +141,28 @@ body{
     }
 }
 ?>
+
+<div class="container-fluid">
+    <div class="row justify-content-end">
+        <div class="col-12 col-md-6 col-lg-6 mt-4">
+            <div class="accordion" id="accordionPanelsStayOpenExample3">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
+                            <!-- Conteúdo do botão do accordion -->
+                        </button>
+                    </h2>
+                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
+                            <canvas class="charts" id="myChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
    const ctx = document.getElementById('myChart');
   new Chart(ctx, {

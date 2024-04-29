@@ -29,7 +29,11 @@ $sql ="SELECT
             $cirurgias_json = json_encode($cirurgias_array);
             $quantcirurgias_json = json_encode($quantcirurgias_array);
 
-           
+   $cirurgiasporsetor = $funcoes->cirurgiasporsetor();
+//    $nomesetor = array_column($cirurgiasporsetor, 'setor');
+//    $nomesetor_json = json_encode($nomesetor);        
+//    $totalciru = array_column($cirurgiasporsetor, 'total_cirurgias');
+//    $totalciru_json = json_encode($totalciru);        
 
 ?>
 <!DOCTYPE html>
@@ -241,7 +245,8 @@ body{
             </div>
         </div>
     </div>
-</div>
+
+   
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
    const ctx = document.getElementById('myChart');
@@ -354,6 +359,7 @@ new Chart(ctx3, {
         }
     }
 });
+
 
 </script>
 
