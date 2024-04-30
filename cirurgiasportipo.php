@@ -29,11 +29,39 @@ $sql ="SELECT
             $cirurgias_json = json_encode($cirurgias_array);
             $quantcirurgias_json = json_encode($quantcirurgias_array);
 
+            $sql2 = "SELECT 
+                        ciru.cirurgia as ciru1,
+                        COUNT(id_cirugia) AS quantidade_total
+                    FROM procedimentos as proc
+                    INNER JOIN cirurgias as ciru ON ciru.id = proc.id_cirugia
+                    GROUP BY proc.id_cirugia
+                    ORDER BY quantidade_total DESC
+                    LIMIT 5";        
+            
+            $result2 = mysqli_query($conn, $sql2);
+            
+            $cirurgias2_array = array();
+            $quantcirurgias2_array = array();
+            
+            if ($result2 && mysqli_num_rows($result2) > 0) {
+                while ($row2 = mysqli_fetch_assoc($result2)) {
+                    $cirurgias2_array[] = $row2['ciru1'];
+                    $quantcirurgias2_array[] = $row2['quantidade_total'];
+                }
+            }
+            
+            $cirurgias2_json = json_encode($cirurgias2_array);
+            $quantcirurgias2_json = json_encode($quantcirurgias2_array);
+           
+            
+
+
+
    $cirurgiasporsetor = $funcoes->cirurgiasporsetor();
-//    $nomesetor = array_column($cirurgiasporsetor, 'setor');
-//    $nomesetor_json = json_encode($nomesetor);        
-//    $totalciru = array_column($cirurgiasporsetor, 'total_cirurgias');
-//    $totalciru_json = json_encode($totalciru);        
+   $nomesetor = array_column($cirurgiasporsetor, 'setor');
+   $nomesetor_json = json_encode($nomesetor);        
+   $totalciru = array_column($cirurgiasporsetor, 'total_cirurgias');
+   $totalciru_json = json_encode($totalciru);        
 
 ?>
 <!DOCTYPE html>
@@ -119,6 +147,10 @@ body{
 .carousel-control-next-icon{
    background-color: black;
 }
+
+.hr {
+        border: 1px solid black; /* Define a largura e a cor da borda */
+    }
 
 </style>
 
@@ -228,23 +260,118 @@ body{
             </div>
         </div>
     </div>
-
-    <div class="row mt-4 justify-content-end">
-        <div class="col-12 col-md-6 col-lg-6 accordion " id="accordionPanelsStayOpenExample3">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
-                      
-                    </button>
-                </h2>
-                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
-                    <div class="accordion-body">
-                        <canvas class="charts" id="myChart"></canvas>
+    <div class="container">
+    <div class="row mt-4">
+        <div class="col-lg-6">
+            <!-- Seu código do gráfico de pizza aqui -->
+            <div class="row mt-4 ">
+                <div class="col-12 col-md-6 col-lg-10  accordion " id="accordionPanelsStayOpenExample3">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
+                              
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
+                            <div class="accordion-body">
+                                <canvas class="charts" id="myChart"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-lg-6">
+            <!-- Sua tabela dos top 5 cirurgias aqui -->
+            <h3 class="ml-2">TOP 5 Cirurgias</h3>   
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="table-success">
+                        <th scope="col">#</th>
+                        <th scope="col">Cirurgia</th>
+                        <th scope="col">Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Verifique se há resultados antes de exibir na tabela
+                    if (!empty($cirurgias2_array)) {
+                        // Itere sobre os resultados e exiba cada linha na tabela
+                        for ($i = 0; $i < count($cirurgias2_array); $i++) {
+                            echo '<tr>';
+                            echo '<th scope="row">' . ($i + 1) . '</th>'; // +1 para exibir números começando em 1
+                            echo '<td>' . $cirurgias2_array[$i] . '</td>';
+                            echo '<td>' . $quantcirurgias2_array[$i] . '</td>';
+                            echo '</tr>';
+                        }
+                    } else {
+                        // Caso não haja resultados, exiba uma linha na tabela informando ao usuário
+                        echo '<tr><td colspan="3">Nenhum resultado encontrado</td></tr>';
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </div>
+</div>
+
+
+   <br>
+   <br>
+   <br>
+   <br>
+   <div class="row">
+   <div class="border-top my-4">
+    <div class="border-bottom my-4">
+        <h3>Cirurgias por setor:</h3>
+        <div class="row mt-4 ">
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="accordion" id="accordionPanelsStayOpenExample3">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
+                               
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
+                            <div class="accordion-body">
+                                <canvas class="charts" id="myChart4"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="col-12 col-md-6 col-lg-6 mt-1">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="table-primary">
+                            <th scope="col">Setor</th>
+                            <th scope="col">Total de Cirurgias</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if (!empty($nomesetor) && !empty($totalciru)) {
+                            // Iterar sobre os arrays para exibir os dados na tabela
+                            for ($i = 0; $i < count($nomesetor); $i++) {
+                                echo '<tr>';
+                                echo '<td>' . $nomesetor[$i] . '</td>';
+                                echo '<td >' . $totalciru[$i] . '</td>';
+                                echo '</tr>';
+                            }
+                        } else {
+                            echo '<tr><td colspan="2">Nenhum resultado encontrado</td></tr>';
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 
    
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -360,6 +487,50 @@ new Chart(ctx3, {
     }
 });
 
+const ctx4 = document.getElementById('myChart4');
+new Chart(ctx4, {
+    type: 'bar',
+    data: {
+        labels: <?php echo $nomesetor_json?>,
+        datasets: [{
+            label: 'Quantidade',
+            data: <?php echo $totalciru_json ?>,
+            backgroundColor: [
+            'rgba(255, 99, 132, 2)',   // Vermelho
+            'rgba(54, 162, 235, 2)',   // Azul
+            'rgba(255, 206, 86, 2)',   // Amarelo
+            'rgba(75, 192, 192, 2)',   // Verde
+            'rgba(153, 102, 255, 2)',  // Roxo
+            'rgba(255, 159, 64, 2)',   // Laranja
+            'rgba(255, 0, 255, 2)',    // Magenta
+            'rgba(0, 255, 255, 2)',    // Ciano
+            'rgba(255, 255, 0, 2)',    // Amarelo claro
+            'rgba(0, 255, 0, 2)',      // Verde claro
+],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            legend: {
+                display: true,
+                position: 'bottom', // Posição da legenda (pode ser 'top', 'bottom', 'left', 'right')
+                labels: {
+                    font: {
+                        size: 10 // Tamanho da fonte da legenda
+                    },
+                    // Altere a legenda aqui
+                    text: 'Sua nova legenda' // Texto personalizado da legenda
+                }
+            }
+        }
+    }
+});
 
 </script>
 

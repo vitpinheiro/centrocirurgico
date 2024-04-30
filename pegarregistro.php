@@ -110,7 +110,8 @@ class PuxarFuncoes {
                     
                 $stmt = $this->pdo->prepare($sql);
                 $stmt->execute();
-                $resultado = $stmt->fetchColumn(); // Apenas uma coluna é retornada
+                $resultado = $stmt->fetchAll(); // Apenas uma coluna é retornada
+     
                 return $resultado;
 
             } catch (\PDOException $e) {

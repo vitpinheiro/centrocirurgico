@@ -27,6 +27,24 @@ if ($result && mysqli_num_rows($result) > 0) {
         $cirurgioes_por_setor[$setor][] = $nome_cirurgiao;
 
     }
+  }
+$sql2 = "SELECT seto.nome_setor as setor, COUNT(ciru.id) as num_medicos
+    FROM cirurgioes as ciru 
+    INNER JOIN setores as seto ON seto.id = ciru.id_setores
+    GROUP BY ciru.id_setores
+    ORDER BY ciru.id_setores ASC";
+
+$result2 = $conn->query($sql2);
+if ($result2 && mysqli_num_rows($result2) > 0) {
+  while ($row2 = mysqli_fetch_assoc($result2)) {
+      $nomesetor_array[] = $row2['setor'];
+      $nummedicos_array[] = $row2['num_medicos'];
+  }
+}
+
+$nomesetor_json = json_encode($nomesetor_array);
+$nummedicos_json = json_encode($nummedicos_array);
+
 
 
 ?>
@@ -105,73 +123,64 @@ body{
 </header>
 
 <main>
- 
-    <h2>Cirurgiões</h2>
-    <h6 class="mt-4 mb-0 ">Médicos por setor:</h6>
-    <div class="row">
-    <div class="col">
-    <?php foreach ($cirurgioes_por_setor as $setor => $cirurgioes) { ?>
-    <div class="row">
-        <div class="col-lg-5 col-md-10 col-sm-12 accordion" id="accordionPanelsStayOpenExample<?php echo $setor; ?>">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $setor; ?>" aria-expanded="true" aria-controls="panelsStayOpen-collapse<?php echo $setor; ?>">Setor de
-                        <?php echo $setor; ?>
-                    </button>
-                </h2>
-                
-                <div id="panelsStayOpen-collapse<?php echo $setor; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne">
-                    <div class="accordion-body">
-                      <ul>
-
-                <?php // Itera sobre os cirurgiões do setor
-                      foreach ($cirurgioes as $cirurgiao) { ?>
-                        <li><?php echo $cirurgiao; ?></li> <?php }
-                        ?>
-                      </ul>
+    <div class="container">
+        <h2>Cirurgiões</h2>
+        <div class="row">
+            <div class="col-lg-5">
+                <h6 class="mt-4 mb-0">Médicos por setor:</h6>
+                <?php foreach ($cirurgioes_por_setor as $setor => $cirurgioes) { ?>
+                <div class="accordion" id="accordionPanelsStayOpenExample<?php echo $setor; ?>">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $setor; ?>" aria-expanded="true" aria-controls="panelsStayOpen-collapse<?php echo $setor; ?>">Setor de
+                                <?php echo $setor; ?>
+                            </button>
+                        </h2>
+                        
+                        <div id="panelsStayOpen-collapse<?php echo $setor; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne">
+                            <div class="accordion-body">
+                                <ul>
+                                    <?php // Itera sobre os cirurgiões do setor
+                                    foreach ($cirurgioes as $cirurgiao) { ?>
+                                        <li><?php echo $cirurgiao; ?></li> <?php }
+                                    ?>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <?php } ?>
             </div>
-        </div>    
-</div>
 
-
-
-<?php
-    }
-}
-?>
-
-<div class="container-fluid">
-    <div class="row justify-content-end">
-        <div class="col-12 col-md-6 col-lg-6 mt-4">
-            <div class="accordion" id="accordionPanelsStayOpenExample3">
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
-                            <!-- Conteúdo do botão do accordion -->
-                        </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
-                        <div class="accordion-body">
-                            <canvas class="charts" id="myChart"></canvas>
+            <div class="col-lg-6 ml-4 ">
+                <div class="accordion" id="accordionPanelsStayOpenExample3">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
+                                
+                            </button>
+                        </h2>
+                        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
+                            <div class="accordion-body">
+                                <canvas class="charts" id="myChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
    const ctx = document.getElementById('myChart');
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: <?php echo $labels_json;?>,
+      labels: <?php echo $nomesetor_json;?>,
       datasets: [{
         label: 'Quantidade',
-        data: <?php echo $quantidade_json;?>,
+        data: <?php echo $nummedicos_json;?>,
         borderWidth: 1
       },
     
@@ -186,61 +195,8 @@ body{
     }
   });
   
-  //Gráfico de pizza
-  const ctx2 = document.getElementById('myChart2');
-  new Chart(ctx2, {
-    type: 'pie',
-    data: {
-      datasets: [{
-        label: 'quant janeiro',
-        data: <?php echo $quantidade_json;?>,
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
-  //Gráfico de linha
-  // const nova_linha_data = php echo json_encode($nova_linha); ?>;
-  // const nova_linha2_data = php echo json_encode($nova_linha2); ?>;
-
-  const ctx3 = document.getElementById('myChart3');
-  new Chart(ctx3, {
-    type: 'line',
-    data: {
-      labels: <?php echo $labels_json;?>,
-      datasets: [
-        {
-        label: ' quant janeiro',
-        data: <?php echo $quantidade_json;?>,
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-
-
-
-
-
-
-
-
 </script>
-<br>
-<br>
+
 </main>
 </body>
   <script src="node_modules\@popperjs\core\dist\umd\popper.min.js"></script>
