@@ -3,11 +3,32 @@ namespace teste;
 
 require_once("conexao.php");
 
-$pesquisa = isset($_GET['busca']) ? $mysqli->real_escape_string($_GET['busca']) : '';
+$sql = "SELECT
+pac.nome as paciente,
+ciru.nome as cirurgiao,
+aneste.Nome as anestesista,
+opme.opme,
+proc.pend_documento,
+proc.pend_financ,
+proc.status,
+proc.leito,
+seto.nome_setor as setor
+
+FROM centrocirurgico.pacientes as pac 
+INNER JOIN procedimentos as proc
+ON proc.id = pac.id_procedimentos
+INNER JOIN setores as seto
+ON proc.id_setores = seto.id
+INNER JOIN cirurgioes as ciru
+ON proc.id_cirurgiao = ciru.id
+INNER JOIN anestesista as aneste
+ON aneste.id = proc.anestesia
+INNER JOIN opme
+ON aneste.id = proc.opme";
+
+$result = $conn->query($sql);
 
 
-$sql_code = "SELECT * FROM pacientes WHERE plano_saude LIKE '%$pesquisa%' OR nome LIKE '%$pesquisa%' OR  idade LIKE '%$pesquisa%' OR  genero LIKE '%$pesquisa%' OR  estado LIKE '%$pesquisa%' OR  status LIKE '%$pesquisa%'";
-$sql_query = $mysqli->query($sql_code) or die("erro ao consultar".$mysqli->error);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -55,10 +76,7 @@ $sql_query = $mysqli->query($sql_code) or die("erro ao consultar".$mysqli->error
     position: relative;
 }
 
-body{
-  margin-left: 150px;
- 
-}
+
 
 
 
@@ -85,81 +103,100 @@ body{
 <body>
 
 <header>
-
-<div class="btn-group ">
-  <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    MENU
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="index.php">Home</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="solicitacaoporstatus.php">Solicitações por status</a>
-    <a class="dropdown-item" href="cirurgiasportipo.php">Cirurgias por tipo</a>
-    <a class="dropdown-item" href="cirurgioes.php">Cirurgiões</a>
-    <a class="dropdown-item" href="#">Solicitações por período de tempo</a>
-    <a class="dropdown-item" href="tabelageral.php">Tabela geral</a>
-  </div>
-</div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        MENU
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="index.php">Home</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="solicitacaoporstatus.php">Solicitações por status</a>
+                        <a class="dropdown-item" href="cirurgiasportipo.php">Cirurgias por tipo</a>
+                        <a class="dropdown-item" href="cirurgioes.php">Cirurgiões</a>
+                        <a class="dropdown-item" href="#">Solicitações por período de tempo</a>
+                        <a class="dropdown-item" href="tabelageral.php">Tabela geral</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <!-- Adicione aqui quaisquer outros elementos que você deseje alinhar -->
+            </div>
+        </div>
+    </div>
 </header>
 
 <main>
-<div class="tabela">
-<h1 >Planos de saúde</h1>
-    <form class="form" action="">
-    <input name="busca" value="<?php if(isset($_GET['busca'])) echo $_GET['busca']; ?>" placeholder="Digite os termos de pesquisa" type="text">
-        <button type="submit">Pesquisar</button>
-    </form>
+<div class="container">
 
-    <br>
-    <br>
-    <br>
-    <br>
-    
-    <table class="table table-bordered" class="formulario" width="600px " border="2">
-        <tr>
-            <th>Plano de saude</th>
-            <th>Nome</th>
-            <th>Idade</th>
-            <th>Gênero</th>
-            <th>Estado</th>
-            <th>Status</th>
-        </tr>
-   
-        <?php
+  <div class="container">
+        <h2>Tabela Geral</h2>
+        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Pesquisar...">
+        <div class="table-responsive">
+            <table class="table"  id="dataTable">
+    <thead>
+      <tr>
+        
+        <th scope="col" class="col">Paciente</th>
+        <th scope="col" class="col">Cirurgião</th>
+        <th scope="col" class="col">Anestesista</th>
+        <th scope="col" class="col">Opme</th>
+        <th scope="col" class="col">Pend Documento</th>
+        <th scope="col" class="col">Pend Financ</th>
+        <th scope="col" class="col">Status</th>
+        <th scope="col" class="col">Leito</th>
+        <th scope="col" class="col">Setor</th>
+      </tr>
+    </thead>
+    <tbody>
+    <?php
+    if ($result->num_rows > 0) {
+      // Saída de dados de cada linha
+      while($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $row["paciente"] . "</td>";
+        echo "<td>" . $row["cirurgiao"] . "</td>";
+        echo "<td>" . $row["anestesista"] . "</td>";
+        echo "<td>" . $row["opme"] . "</td>";
+        echo "<td>" . $row["pend_documento"] . "</td>";
+        echo "<td>" . $row["pend_financ"] . "</td>";
+        echo "<td>" . $row["status"] . "</td>";
+        echo "<td>" . $row["leito"] . "</td>";
+        echo "<td>" . $row["setor"] . "</td>";
+        echo "</tr>";
+      }
+    } else {
+      echo "<tr><td colspan='9'>Nenhum resultado encontrado</td></tr>";
+    }
+    ?>
+    </tbody>
+  </table>
+</div>
 
-        ?>
-        <tr>
-        </tr>
-        <?php
-      
-          $sql_code = "SELECT * FROM pacientes WHERE plano_saude LIKE '%$pesquisa%' OR nome LIKE '%$pesquisa%' OR  idade LIKE '%$pesquisa%' OR  genero LIKE '%$pesquisa%' OR  estado LIKE '%$pesquisa%'  OR status LIKE '%$pesquisa%'";
-          $sql_query = $mysqli->query($sql_code) or die("erro ao consultar".$mysqli->error);
-          
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+        $(document).ready(function(){
+            $("#searchInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                $("#dataTable tbody tr").filter(function() {
+                    var found = false;
+                    $(this).find('td').each(function(){
+                        var text = $(this).text().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                        if (text.indexOf(value) > -1) {
+                            found = true;
+                            return false; // Exit the loop early if a match is found
+                        }
+                    });
+                    $(this).toggle(found);
+                });
+            });
+        });
+</script>
 
-          if($sql_query->num_rows ==0 ){
-        ?>
-        <tr>
-        <td>Nenhum resultado encontrado</td>
-        </tr>
-        <?php 
-        }else{
-            while($dados = $sql_query->fetch_assoc()){
-                ?>
-                <tr>
-                  <td><?php echo $dados['plano_saude']; ?></td>
-                  <td><?php echo $dados['nome']; ?></td>
-                  <td><?php echo $dados['idade']; ?></td>
-                  <td><?php echo $dados['genero']; ?></td>
-                  <td><?php echo $dados['estado']; ?></td>
-                  <td><?php echo $dados['status']; ?></td>
-                </tr>
-                <?php
-            }
-          }
-        ?>
-    </table>
-    </div>
-  
+
+
 <main>
 </body>
 <script src="node_modules/jquery/dist/jquery.min.js"></script>

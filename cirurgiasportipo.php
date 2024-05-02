@@ -137,10 +137,6 @@ height: 90em;
     position: relative;
 }
 
-body{
-
- 
-}
 .carousel-control-prev-icon{
   background-color: black;
 }

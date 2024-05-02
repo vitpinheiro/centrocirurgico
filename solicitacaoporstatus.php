@@ -116,23 +116,30 @@ $leito_json = json_encode($leito);
 
 </head>
 <body>
-
-<header >
-  
-<div class="btn-group ml-5">
-  <button type="button" class="btn btn-primary dropdown-toggle ml-5" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    MENU
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="index.php">Home</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="solicitacaoporstatus.php">Solicitações por status</a>
-    <a class="dropdown-item" href="cirurgiasportipo.php">Cirurgias por tipo</a>
-    <a class="dropdown-item" href="cirurgioes.php">Cirurgiões</a>
-    <a class="dropdown-item" href="#">Solicitações por período de tempo</a>
-    <a class="dropdown-item" href="tabelageral.php">Tabela geral</a>
-  </div>
-</div>
+<header>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        MENU
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="index.php">Home</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="solicitacaoporstatus.php">Solicitações por status</a>
+                        <a class="dropdown-item" href="cirurgiasportipo.php">Cirurgias por tipo</a>
+                        <a class="dropdown-item" href="cirurgioes.php">Cirurgiões</a>
+                        <a class="dropdown-item" href="#">Solicitações por período de tempo</a>
+                        <a class="dropdown-item" href="tabelageral.php">Tabela geral</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <!-- Adicione aqui quaisquer outros elementos que você deseje alinhar -->
+            </div>
+        </div>
+    </div>
 </header>
 
 

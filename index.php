@@ -68,7 +68,7 @@
         <div class="row" id="infoBoxContainer">
             <div class="col-md-4 ">
                 <div class="info-box" id="solicitacoes">
-                    <span class="info-box-icon bg-success"><a href="solicitacaoporstatus.php"><img src="img/medico.svg" alt=""><i class="fa-solid fa-user-doctor"></a></i></span>
+                    <span class="info-box-icon bg-success"><a href="solicitacaoporstatus.php"><img src="img/status.svg" alt=""><i class="fa-regular fa-square-check"></a></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text"><a href="solicitacaoporstatus.php">Solicitações por status</a></span>
                     </div>
@@ -91,6 +91,15 @@
                     </div>
                 </div>
             </div>
+               <div class="col-md-4">
+            <div class="info-box" id="tabela">
+                   <span class="info-box-icon bg-success"><a href="tabelageral.php"><img class="tabela" src="img/table.svg" alt=""></a></span>
+                   <div class="info-box-content">
+                    <span class="info-box-text"><a href="tabelageral.php">Tabela Geral</a></span>
+            </div>
+    </div>
+</div>
+
         </div>
     </div>
 </main>
