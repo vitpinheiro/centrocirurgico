@@ -4,6 +4,7 @@ namespace teste;
 require_once("conexao.php");
 
 $sql = "SELECT
+proc.id,
 pac.nome as paciente,
 ciru.nome as cirurgiao,
 aneste.Nome as anestesista,
@@ -96,6 +97,10 @@ $result = $conn->query($sql);
 
 }
 
+a{
+  color: black;
+}
+
 </style>
 
 
@@ -139,6 +144,7 @@ $result = $conn->query($sql);
     <thead>
       <tr>
         
+        <th scope="col" class="col">id</th>
         <th scope="col" class="col">Paciente</th>
         <th scope="col" class="col">Cirurgião</th>
         <th scope="col" class="col">Anestesista</th>
@@ -156,15 +162,17 @@ $result = $conn->query($sql);
       // Saída de dados de cada linha
       while($row = $result->fetch_assoc()) {
         echo "<tr>";
-        echo "<td>" . $row["paciente"] . "</td>";
-        echo "<td>" . $row["cirurgiao"] . "</td>";
-        echo "<td>" . $row["anestesista"] . "</td>";
-        echo "<td>" . $row["opme"] . "</td>";
-        echo "<td>" . $row["pend_documento"] . "</td>";
-        echo "<td>" . $row["pend_financ"] . "</td>";
-        echo "<td>" . $row["status"] . "</td>";
-        echo "<td>" . $row["leito"] . "</td>";
-        echo "<td>" . $row["setor"] . "</td>";
+
+        echo "<td><a href='informacoes.php?id=" . $row["id"] . "'>" . $row["id"] . "</a></td>";
+        echo "<td><a href='informacoes.php". "'>" . $row["paciente"] . "</a></td>";
+        echo "<td><a href='informacoes.php". "'>".$row["cirurgiao"] . "</a></td>";
+        echo "<td><a href='informacoes.php". "'>". $row["anestesista"] . "</a></td>";
+        echo "<td><a href='informacoes.php". "'>". $row["opme"] . "</a></td>";
+        echo "<td><a href='informacoes.php". "'>". $row["pend_documento"] . "</a></td>";
+        echo "<td><a href='informacoes.php". "'>". $row["pend_financ"] . "</a></td>";
+        echo "<td><a href='informacoes.php". "'>". $row["status"] . "</a></td>";
+        echo "<td><a href='informacoes.php". "'>". $row["leito"] . "</a></td>";
+        echo "<td><a href='informacoes.php". "'>".$row["setor"] . "</a></td>";
         echo "</tr>";
       }
     } else {
