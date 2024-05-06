@@ -11,7 +11,49 @@ if(isset($_GET['id'])) {
     
 
     // Consulta SQL para obter os dados específicos do procedimento com base no id
-    $sql = "SELECT * FROM procedimentos WHERE id = $id_procedimento";
+    $sql = "SELECT 
+    pac.id as id_paciente,
+    pac.nome as nome_paciente,
+    pac.cpf,
+    pac.data_nascimento,
+    pac.telefone1 as tel1,
+    pac.telefone2 as tel2,
+    
+    proc.id as id_procedimento,
+    proc.id_cirurgiao,
+    proc.data as data,
+    proc.hora as hora,
+    
+    cirur.nome as nome_cirurgiao,
+    cirur.crm as crm_cirurgiao,
+    
+    proc.id_cirugia AS id_cirurgia,
+    cirurgia.cirurgia as nome_cirurgia,
+    
+    opme.id,
+    opme.opme as opme,
+    opme.fornecedor as fornecedor,
+    opme.quantidade as quant,
+    proc.anestesia,
+    anes.Nome as nome_anestesista,
+    anes.CRM as crm_anestesista,
+    
+    proc.pend_documento as pend_doc ,
+    proc.pend_financ as pend_financ,
+    proc.status
+    
+    FROM centrocirurgico.procedimentos as proc
+        INNER JOIN centrocirurgico.cirurgioes as cirur
+        ON cirur.id = proc.id_cirurgiao
+        INNER JOIN centrocirurgico.pacientes as pac
+        ON pac.id_procedimentos = proc.id
+        INNER JOIN centrocirurgico.cirurgias as cirurgia
+        ON cirurgia.id = proc.id_cirugia
+        INNER JOIN centrocirurgico.opme as opme
+        ON opme.id = proc.opme
+        INNER JOIN  anestesista as anes
+        ON anes.id = proc.anestesia
+        where proc.id = $id_procedimento";
     $result = $conn->query($sql);
 
     // Verifique se a consulta retornou algum resultado
@@ -19,9 +61,29 @@ if(isset($_GET['id'])) {
         // Saída de dados do procedimento
         $row = $result->fetch_assoc();
         // Exiba os dados do procedimento conforme necessário
-        echo "ID do Procedimento: " . $row["id"] . "<br>";
-        
-        // Continue exibindo outros detalhes do procedimento conforme necessário
+        $id_proc="ID do Procedimento: " . $row["id"] . "<br>";
+        $status= "Status: " . $row["status"] . "<br>";
+        $nome_paciente= "Paciente: " . $row["nome_paciente"] . "<br>";
+        $data_nascimento= "Data nascimento: " . $row["data_nascimento"] . "<br>";
+        $cpf="CPF: " . $row["cpf"] . "<br>";
+        $telefone1="Telefone 1: " . $row["tel1"] . "<br>";
+        $telefone2="Telefone 2: " . $row["tel2"] . "<br>";
+        $data="Data: " . $row["data"] . "<br>";
+        $hora="Hora: " . $row["hora"] . "<br>";
+        $id_cirurgia="id cirurgia: " . $row["id_cirurgia"] . "<br>";
+        $cpf="Nome cirurgia: " . $row["nome_cirurgia"] . "<br>";
+        $nome_cirurgiao="Nome cirurgião: " . $row["nome_cirurgiao"] . "<br>";
+        $crm_cirurgiao="CRM cirurgião: " . $row["crm_cirurgiao"] . "<br>";
+        $nome_cirurgiao="Nome cirurgião: " . $row["nome_cirurgiao"] . "<br>";
+        $nome_anestesista="Anestesista: " . $row["nome_anestesista"] . "<br>";
+        $crm_anestesista="CRM anestesista: " . $row["crm_anestesista"] . "<br>";
+        $nome_opme= "Opme: " . $row["opme"] . "<br>";
+        $quant_opme= "Quant: " . $row["quant"] . "<br>";
+        $fornecedor_opme= "Fornecedor: " . $row["fornecedor"] . "<br>";
+        $pend_doc= "Pendências médicas: " . $row["pend_doc"] . "<br>";
+        $pend_financ= "Pendências financeiras:  " . $row["pend_financ"] . "<br>";
+       
+       
     } else {
         echo "Nenhum resultado encontrado para este ID de procedimento.";
     }
@@ -147,7 +209,7 @@ if(isset($_GET['id'])) {
 </div>
 
                         <div class="col-md-12 col-sm-12" id="DivInfoSolicitante">
-                            <div class=""><p>ID do Procedimento: <?php echo $row["id"]; ?></p>
+                            <div class=""><p>ID do Procedimento: <?php echo $id_procedimento; ?></p>
                                                                     <p class="mb-4 mt-1"><i>(Solicitação atual:<?php echo $row["id"]; ?>)</i></p>
                                                             </div>
                             <div id="datesInfoDiv" class="">
@@ -195,21 +257,21 @@ if(isset($_GET['id'])) {
                         <div class="editable col-md-12 col-sm-12">
 
                             <div class="form-group">
-                                <label for="username">Nome do Paciente</label>
-                                <input id="username" class="form-control" name="username" placeholder="Nome Completo do Paciente" type="text" maxlength="150" autocomplete="off"  value="">
+                                <label for="username">Nome do Paciente: </label>
+                                <input id="username" class="form-control" name="username" placeholder="Nome Completo do Paciente" type="text" maxlength="150" autocomplete="off"  value="<?php echo $row["nome_paciente"];?>">
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="datanasc">Data de Nascimento</label>
-                                        <input id="datanasc" class="form-control" name="datanasc" type="date" max="2024-04-26" value="">
+                                        <input id="datanasc" class="form-control" name="datanasc" type="date" max="2024-04-26" value="<?php echo $row["data_nascimento"];?>">
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-sm-3">
                                     <div class="form-group">
                                         <label for="cpf">CPF</label>
-                                        <input id="cpf" class="form-control" placeholder="999.999.999-11" maxlength="14" name="cpf" type="text" autocomplete="off" >
+                                        <input id="cpf" class="form-control" placeholder="999.999.999-11" maxlength="14" name="cpf" type="text" autocomplete="off" value="<?php echo $row["cpf"];?>">
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-sm-3">
@@ -235,13 +297,13 @@ if(isset($_GET['id'])) {
                                 <div class="col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="phone">Contato 1</label>
-                                        <input id="phone" class="form-control" name="phone" placeholder="Contato" type="tel" maxlength="11"  autocomplete="off" value="">
+                                        <input id="phone" class="form-control" name="phone" placeholder="Contato" type="tel" maxlength="11"  autocomplete="off" value="<?php echo $row["tel1"];?>">
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="phone2">Contato 2</label>
-                                        <input id="phone2" class="form-control" name="phone2" placeholder="Contato" type="tel" maxlength="11"  autocomplete="off" value="">
+                                        <input id="phone2" class="form-control" name="phone2" placeholder="Contato" type="tel" maxlength="11"  autocomplete="off" value="<?php echo $row["tel2"];?>">
                                     </div>
                                 </div>
                             </div>
@@ -291,13 +353,13 @@ if(isset($_GET['id'])) {
                                     <div class="col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <label for="datacirurgia">Data pretendida</label>
-                                            <input id="datacirurgia" class="form-control" name="datacirurgia" type="date"  value="" min="2024-04-26">
+                                            <input id="datacirurgia" class="form-control" name="datacirurgia" type="datetime"  value="<?php echo $row["data"]?>" min="2024-04-26">
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-8">
                                         <div class="form-group">
                                             <label for="time">Hora pretendida</label>
-                                            <input id="time" class="form-control" name="time" type="time" value="" required="">
+                                            <input id="time" class="form-control" name="time" type="time" value="<?php echo $row["hora"]?>" required="">
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-4 ml-md-1">
@@ -336,48 +398,29 @@ if(isset($_GET['id'])) {
 
                                 <!-- Inputs de cirurgias convencionais -->
                                 <div class="form-group">
+    <?php foreach ($result as $row): ?>
+        <div id="CirurConvTitle" class="form-row align-items-end mt-2">
+            <label class="col-4">Código</label>
+            <label class="col-8 p-0">Nome do procedimento</label>
+        </div>
+        <li class="form-row mb-2 align-items-end">
+            <input name="CirConvID[]" type="hidden" value="">
+            <div class="input-group col-4 flex-column">
+                <input name="tipo_cirurgia_tuss_cod[]" class="form-control w-100" type="text" value="<?php echo $row["id_cirurgia"]; ?>" >
+            </div>
+            <div class="input-group col-8 flex-column p-0">
+                <input name="tipo_cirurgia_tuss_nome[]" class="form-control w-100" type="text" value="<?php echo $row["nome_cirurgia"]; ?>" >
+            </div>
+        </li>
+    <?php endforeach; ?>
+</div>
 
-                                    <div id="CirurConvTitle" class="form-row align-items-end mt-2">
-                                        <label class="col-4">Codigo</label>
-                                        <label class="col-8 p-0">Nome do procedimento</label>
-                                    </div>
-                                    <ul id="list_cir_conv">
-                                                                                            <li class="form-row mb-2 align-items-end">
-                                                        <input name="CirConvID[]" type="hidden" value="">
-                                                        <div class="input-group col-4 flex-column">
-                                                            <input name="tipo_cirurgia_tuss_cod[]" class="form-control w-100" type="text" value="" >
-                                                        </div>
-                                                        <div class="input-group col-8 flex-column p-0">
-                                                            <input name="tipo_cirurgia_tuss_nome[]" class="form-control w-100" type="text" value="">
-                                                        </div>
-                                                    </li>
-                                                                                                        <li class="form-row mb-2 align-items-end">
-                                                        <input name="CirConvID[]" type="hidden" value="">
-                                                        <div class="input-group col-4 flex-column">
-                                                            <input name="tipo_cirurgia_tuss_cod[]" class="form-control w-100" type="text" value="" >
-                                                        </div>
-                                                        <div class="input-group col-8 flex-column p-0">
-                                                            <input name="tipo_cirurgia_tuss_nome[]" class="form-control w-100" type="text" value="">
-                                                        </div>
-                                                    </li>
-                                                                                                        <li class="form-row mb-2 align-items-end">
-                                                        <input name="CirConvID[]" type="hidden" value="">
-                                                        <div class="input-group col-4 flex-column">
-                                                            <input name="tipo_cirurgia_tuss_cod[]" class="form-control w-100" type="text" value="" >
-                                                        </div>
-                                                        <div class="input-group col-8 flex-column p-0">
-                                                            <input name="tipo_cirurgia_tuss_nome[]" class="form-control w-100" type="text" value="" >
-                                                        </div>
-                                                    </li>
-                                                                                        </ul>
-
-                                </div>
 
                                 <div class="form-row">
 
                                     <div class="form-group mb-0 col-12 col-md-3">
 
-                                        <div class="form-check custom-control custom-checkbox mx-2 pr-2">
+                                        <div class="form-check custom-control custom-checkbox mx-2 ">
                                             <input type="checkbox" name="tipo_cir[]" class="custom-control-input" id="plas" value="" oninvalid="this.setCustomValidity(&#39;Marque pelo menos uma opção!&#39;)" oninput="this.setCustomValidity(&#39;&#39;)" autofocus="">
                                             <label class="custom-control-label" for="plas">Plástica</label>
                                         </div>
@@ -386,12 +429,7 @@ if(isset($_GET['id'])) {
 
                                 </div>
 
-                                <div id="CirurPlastTitle" class="form-row a mt-2 d-none">
-                                    <label class="col-4">Codigo</label>
-                                    <label class="col-8 p-0">Nome do procedimento</label>
-                                </div>
-
-                                <ul id="list_cir_plast">
+                           
                                                                     </ul>
 
                                 <!-- Checkbox de cirurgia sus -->
@@ -408,7 +446,7 @@ if(isset($_GET['id'])) {
 
                                 </div>
 
-                                <!-- Checkbox de cirurgias sus -->
+                                <!-- Checkbox de cirurgias sus
                                 <div class="form-group">
 
                                     <div id="CirurSusTitle" class="form-row align-items-end mt-2 d-none">
@@ -420,42 +458,42 @@ if(isset($_GET['id'])) {
 
                                 </div>
 
-                            </div>
+                            </div> -->
 
-                            <div class="form-row pl-2">
+                            <div class="form-row">
 
                                 <div class="form-group mb-0 w-100">
 
                                     <div class="form-row align-items-end">
-                                        <label class="col-8 p-0">Nome do Cirurgião</label>
+                                        <label class="col-8 ">Nome do Cirurgião</label>
                                         <label class="col-3">CRM</label>
                                     </div>
 
-                                    <ul id="list_cir">
-                                                                                    <li class="form-row mb-2 align-items-end">
-                                                <div id="oldCirur" class="input-group col-8 flex-column p-0">
-                                                    <input name="cirur_nome[]" class="form-control w-100" placeholder="Nome do Cirurgião" type="text" autocomplete="off" value="" >
+                                    <ul style="padding-left: 0em;" id="list_cir">
+                                                                                    <li class="form-row mb-2 align-items-end ">
+                                                <div id="oldCirur" class="input-group col-8 flex-column"> 
+                                                    <input name="cirur_nome[]" class="form-control w-100"  placeholder="Nome do Cirurgião" type="text" autocomplete="off" value="<?php echo $row["nome_cirurgiao"];?>" >
                                                 </div>
                                                 <div class="input-group col-4 flex-column">
-                                                    <input name="cirur_crm[]" class="form-control w-100" placeholder="CRM" type="text" autocomplete="off" data-parsley-pattern="^[^a-zA-ZÀ-ü\s.]+$" value="">
+                                                    <input name="cirur_crm[]" class="form-control w-100" placeholder="CRM" type="text" autocomplete="off" data-parsley-pattern="^[^a-zA-ZÀ-ü\s.]+$" value="<?php echo $row["crm_cirurgiao"];?>">
                                                 </div>
                                             </li>
                                                                                 </ul>
                                 </div>
                             </div>
 
-                            <div class="form-row pl-2">
+                            <div class="form-row">
                                 <div class="form-group mb-0 w-100">
-                                    <ul id="list_cir">
+                                    <ul style="padding-left: 0em;" id="list_cir">
                                         <li class="form-row mb-0 align-items-end">
-                                            <div class="input-group col-8 flex-column p-0">
+                                            <div class="input-group col-8 flex-column ">
                                                 <label for="anest_nome">Anestesista</label>
-                                                <input id="anest_nome" name="anest_nome" class="form-control w-100" placeholder="Nome do Anestesista" type="text" autocomplete="off" value="">
+                                                <input id="anest_nome" name="anest_nome" class="form-control w-100" placeholder="Nome do Anestesista" type="text" autocomplete="off" value="<?php echo $row["nome_anestesista"];?>">
                                                 <input type="hidden" name="anest_id" value="">
                                             </div>
                                             <div class="input-group col-4 flex-column">
                                                 <label for="anest_crm">CRM</label>
-                                                <input id="anest_crm" name="anest_crm" class="form-control w-100" placeholder="CRM" type="text" autocomplete="off" value="">
+                                                <input id="anest_crm" name="anest_crm" class="form-control w-100" placeholder="CRM" type="text" autocomplete="off" value="<?php echo $row["crm_anestesista"];?>">
                                             </div>
                                         </li>
                                     </ul>
@@ -514,8 +552,8 @@ if(isset($_GET['id'])) {
                                         <input type="checkbox" class="custom-control-input" name="requisitos[]" id="outro" value="outro">
                                         <label class="custom-control-label" for="outro">Outro</label>
                                     </div>
-                                                                                <input class="form-control" type="text" id="outroValor" name="outro" value="" disabled="" >
-                                                                    </li>
+                                                            
+                                </li>
                                 
                             </ul>
 
@@ -528,7 +566,7 @@ if(isset($_GET['id'])) {
         OPME
     </h3>
 </div>
-
+<!-- 
                         <div class="col-md-12 col-sm-12 d-none" id="opme_div_check">
                             <div class="input-group" id="verify_file">
                                 <label>Irá ter OPME? <b></b></label>
@@ -541,96 +579,30 @@ if(isset($_GET['id'])) {
                                     <label class="custom-control-label" for="confirm_no_opme">Não</label>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-12 col-sm-12">
-                            <ul id="list_OPME">
-                                                                    <li class="form-row align-items-end my-md-2 my-4">
-                                        <div class="input-group col-12 col-md-6 flex-column">
-                                            <label>Descrição</label>
-                                            <input name="OPME_desc[]" class="form-control w-100" placeholder="Descrição" type="text"  autocomplete="off" value="">
-                                        </div>
-                                        <div class="input-group col-3 col-md-2 flex-column">
-                                            <label>Quant.</label>
-                                            <input name="OPME_quant[]" class="form-control w-100" placeholder="Qtd" type="number" min="1" data-parsley-pattern="^[a-zA-Z\s.]+$"  value="">
-                                        </div>
-                                        <div class="input-group col-9 col-md-3 flex-column">
-                                            <label>Fornecedor</label>
-                                            <input name="OPME_forn[]" class="form-control w-100" placeholder="Fornecedor" type="text" data-parsley-pattern="^[a-zA-Z\s.]+$"  autocomplete="off" value="">
-                                        </div>
-                                    </li>
-                                                                    <li class="form-row align-items-end my-md-2 my-4">
-                                        <div class="input-group col-12 col-md-6 flex-column">
-                                            <label>Descrição</label>
-                                            <input name="OPME_desc[]" class="form-control w-100" placeholder="Descrição" type="text"  autocomplete="off" value="">
-                                        </div>
-                                        <div class="input-group col-3 col-md-2 flex-column">
-                                            <label>Quant.</label>
-                                            <input name="OPME_quant[]" class="form-control w-100" placeholder="Qtd" type="number" min="1" data-parsley-pattern="^[a-zA-Z\s.]+$"  value="">
-                                        </div>
-                                        <div class="input-group col-9 col-md-3 flex-column">
-                                            <label>Fornecedor</label>
-                                            <input name="OPME_forn[]" class="form-control w-100" placeholder="Fornecedor" type="text" data-parsley-pattern="^[a-zA-Z\s.]+$"  autocomplete="off" value="">
-                                        </div>
-                                    </li>
-                                                                    <li class="form-row align-items-end my-md-2 my-4">
-                                        <div class="input-group col-12 col-md-6 flex-column">
-                                            <label>Descrição</label>
-                                            <input name="OPME_desc[]" class="form-control w-100" placeholder="Descrição" type="text" autocomplete="off" value="">
-                                        </div>
-                                        <div class="input-group col-3 col-md-2 flex-column">
-                                            <label>Quant.</label>
-                                            <input name="OPME_quant[]" class="form-control w-100" placeholder="Qtd" type="number" min="1" data-parsley-pattern="^[a-zA-Z\s.]+$"  value="">
-                                        </div>
-                                        <div class="input-group col-9 col-md-3 flex-column">
-                                            <label>Fornecedor</label>
-                                            <input name="OPME_forn[]" class="form-control w-100" placeholder="Fornecedor" type="text" data-parsley-pattern="^[a-zA-Z\s.]+$"  autocomplete="off" value="">
-                                        </div>
-                                    </li>
-                                                                    <li class="form-row align-items-end my-md-2 my-4">
-                                        <div class="input-group col-12 col-md-6 flex-column">
-                                            <label>Descrição</label>
-                                            <input name="OPME_desc[]" class="form-control w-100" placeholder="Descrição" type="text"  autocomplete="off" value="">
-                                        </div>
-                                        <div class="input-group col-3 col-md-2 flex-column">
-                                            <label>Quant.</label>
-                                            <input name="OPME_quant[]" class="form-control w-100" placeholder="Qtd" type="number" min="1" data-parsley-pattern="^[a-zA-Z\s.]+$"  value="">
-                                        </div>
-                                        <div class="input-group col-9 col-md-3 flex-column">
-                                            <label>Fornecedor</label>
-                                            <input name="OPME_forn[]" class="form-control w-100" placeholder="Fornecedor" type="text" data-parsley-pattern="^[a-zA-Z\s.]+$" autocomplete="off" value="">
-                                        </div>
-                                    </li>
-                                                                    <li class="form-row align-items-end my-md-2 my-4">
-                                        <div class="input-group col-12 col-md-6 flex-column">
-                                            <label>Descrição</label>
-                                            <input name="OPME_desc[]" class="form-control w-100" placeholder="Descrição" type="text"  autocomplete="off" value=" ">
-                                        </div>
-                                        <div class="input-group col-3 col-md-2 flex-column">
-                                            <label>Quant.</label>
-                                            <input name="OPME_quant[]" class="form-control w-100" placeholder="Qtd" type="number" min="1" data-parsley-pattern="^[a-zA-Z\s.]+$"  value="">
-                                        </div>
-                                        <div class="input-group col-9 col-md-3 flex-column">
-                                            <label>Fornecedor</label>
-                                            <input name="OPME_forn[]" class="form-control w-100" placeholder="Fornecedor" type="text" data-parsley-pattern="^[a-zA-Z\s.]+$"  autocomplete="off" value="">
-                                        </div>
-                                    </li>
-                                                                    <li class="form-row align-items-end my-md-2 my-4">
-                                        <div class="input-group col-12 col-md-6 flex-column">
-                                            <label>Descrição</label>
-                                            <input name="OPME_desc[]" class="form-control w-100" placeholder="Descrição" type="text"  autocomplete="off" value=" ">
-                                        </div>
-                                        <div class="input-group col-3 col-md-2 flex-column">
-                                            <label>Quant.</label>
-                                            <input name="OPME_quant[]" class="form-control w-100" placeholder="Qtd" type="number" min="1" data-parsley-pattern="^[a-zA-Z\s.]+$"  value="">
-                                        </div>
-                                        <div class="input-group col-9 col-md-3 flex-column">
-                                            <label>Fornecedor</label>
-                                            <input name="OPME_forn[]" class="form-control w-100" placeholder="Fornecedor" type="text" data-parsley-pattern="^[a-zA-Z\s.]+$"  autocomplete="off" value="">
-                                        </div>
-                                    </li>
-                                                            </ul>
-                        </div>
-                    </div><div class="row box">
+    <ul  id="list_OPME" style="padding-left: 0em;">
+        <?php foreach ($result as $opme): ?>
+            <li class="form-row align-items-end my-md-2 my-4">
+                <div class="input-group col-12 col-md-6 flex-column">
+                    <label>Descrição</label>
+                    <input name="OPME_desc[]" class="form-control w-100" placeholder="Descrição" type="text" autocomplete="off" value="<?php echo $opme['opme']; ?>">
+                </div>
+                <div class="input-group col-3 col-md-2 flex-column">
+                    <label>Quant.</label>
+                    <input name="OPME_quant[]" class="form-control w-100" placeholder="Qtd" type="number" min="1" data-parsley-pattern="^[a-zA-Z\s.]+$" value="<?php echo $opme['quant']; ?>">
+                </div>
+                <div class="input-group col-9 col-md-3 flex-column">
+                    <label>Fornecedor</label>
+                    <input name="OPME_forn[]" class="form-control w-100" placeholder="Fornecedor" type="text" data-parsley-pattern="^[a-zA-Z\s.]+$" autocomplete="off" value="<?php echo $opme['fornecedor']; ?>">
+                </div>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
+
+                    </div>
+                    <div class="row box">
                     <div class="box-header">
     <h3 class="mb-3">
         <strong><span class="badge badge-success rounded-circle">5</span></strong>
@@ -639,7 +611,7 @@ if(isset($_GET['id'])) {
 </div>
 
                         <div class="col-md-12">
-                            <p id="nome_arquivo">Não tem arquivo salvo</p>                                <input type="hidden" name="confirm_change_file" value="vazio">
+                            <p id="nome_arquivo"><?php echo $opme['pend_doc']; ?></p>                                <input type="hidden" name="confirm_change_file" value="vazio">
                                                             <input type="file" name="filepond" id="filep" class="d-none" disabled="">
                         </div>
                         <!-- <div class="col-md-12">
@@ -654,7 +626,7 @@ if(isset($_GET['id'])) {
 </div>
 
                         <div class="col-md-12">
-                            <p id="nome_arquivo">Não tem arquivo salvo</p>                                <input type="hidden" name="confirm_change_file_financ" value="vazio">
+                            <p id="nome_arquivo"><?php echo $opme['pend_financ']; ?></p>                                <input type="hidden" name="confirm_change_file_financ" value="vazio">
                                 
                             <input type="file" name="filepond_financ" id="filep_financ" class="d-none" disabled="">
 

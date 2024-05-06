@@ -3,29 +3,35 @@ namespace teste;
 
 require_once("conexao.php");
 
-$sql = "SELECT
-proc.id,
+$sql = "SELECT 
+proc.id as id,
 pac.nome as paciente,
-ciru.nome as cirurgiao,
-aneste.Nome as anestesista,
-opme.opme,
+cirur.nome as cirurgiao,
+anes.Nome as nome_anestesista,
+opme.opme as opme,
 proc.pend_documento,
 proc.pend_financ,
 proc.status,
 proc.leito,
 seto.nome_setor as setor
 
-FROM centrocirurgico.pacientes as pac 
-INNER JOIN procedimentos as proc
-ON proc.id = pac.id_procedimentos
-INNER JOIN setores as seto
+
+
+
+
+
+FROM centrocirurgico.procedimentos as proc
+	INNER JOIN centrocirurgico.cirurgioes as cirur
+    ON cirur.id = proc.id_cirurgiao
+    iNNER JOIN centrocirurgico.pacientes as pac
+		ON pac.id_procedimentos = proc.id
+    INNER JOIN centrocirurgico.opme as opme
+    ON opme.id = proc.opme
+    INNER JOIN setores as seto
 ON proc.id_setores = seto.id
-INNER JOIN cirurgioes as ciru
-ON proc.id_cirurgiao = ciru.id
-INNER JOIN anestesista as aneste
-ON aneste.id = proc.anestesia
-INNER JOIN opme
-ON aneste.id = proc.opme";
+    INNER JOIN  anestesista as anes
+    ON anes.id = proc.anestesia;
+";
 
 $result = $conn->query($sql);
 
@@ -163,16 +169,16 @@ a{
       while($row = $result->fetch_assoc()) {
         echo "<tr>";
 
-        echo "<td><a href='informacoes.php?id=" . $row["id"] . "'>" . $row["id"] . "</a></td>";
-        echo "<td><a href='informacoes.php". "'>" . $row["paciente"] . "</a></td>";
-        echo "<td><a href='informacoes.php". "'>".$row["cirurgiao"] . "</a></td>";
-        echo "<td><a href='informacoes.php". "'>". $row["anestesista"] . "</a></td>";
-        echo "<td><a href='informacoes.php". "'>". $row["opme"] . "</a></td>";
-        echo "<td><a href='informacoes.php". "'>". $row["pend_documento"] . "</a></td>";
-        echo "<td><a href='informacoes.php". "'>". $row["pend_financ"] . "</a></td>";
-        echo "<td><a href='informacoes.php". "'>". $row["status"] . "</a></td>";
-        echo "<td><a href='informacoes.php". "'>". $row["leito"] . "</a></td>";
-        echo "<td><a href='informacoes.php". "'>".$row["setor"] . "</a></td>";
+        echo "<td><a href='informacoes.php?id=". $row["id"]. "'>" . $row["id"] . "</a></td>";
+        echo "<td><a href='informacoes.php?id=". $row["id"]. "'>" . $row["paciente"] . "</a></td>";
+        echo "<td><a href='informacoes.php?id=". $row["id"]. "'>".$row["cirurgiao"] . "</a></td>";
+        echo "<td><a href='informacoes.php?id=". $row["id"]. "'>". $row["nome_anestesista"] . "</a></td>";
+        echo "<td><a href='informacoes.php?id=". $row["id"]. "'>". $row["opme"] . "</a></td>";
+        echo "<td><a href='informacoes.php?id=". $row["id"]. "'>". $row["pend_documento"] . "</a></td>";
+        echo "<td><a href='informacoes.php?id=". $row["id"]. "'>". $row["pend_financ"] . "</a></td>";
+        echo "<td><a href='informacoes.php?id=". $row["id"]. "'>". $row["status"] . "</a></td>";
+        echo "<td><a href='informacoes.php?id=". $row["id"]. "'>". $row["leito"] . "</a></td>";
+        echo "<td><a href='informacoes.php?id=". $row["id"]. "'>".$row["setor"] . "</a></td>";
         echo "</tr>";
       }
     } else {
