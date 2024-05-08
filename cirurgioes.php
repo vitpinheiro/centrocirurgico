@@ -122,8 +122,10 @@ $nummedicos_json = json_encode($nummedicos_array);
         <div class="container">
             <h2>Cirurgiões</h2>
             <div class="row">
+                
                 <div class="col-lg-6 mr-5">
                     <h6 class="mt-4 mb-0">Médicos por setor:</h6>
+                    
                     <?php foreach ($cirurgioes_por_setor as $setor => $cirurgioes) { ?>
                     <div class="accordion" id="accordionPanelsStayOpenExample<?php echo $setor; ?>">
                         <div class="accordion-item">
@@ -147,6 +149,10 @@ $nummedicos_json = json_encode($nummedicos_array);
                     </div>
                     <?php } ?>
                 </div>
+
+               
+
+
 
                 <div class="col-lg-5  mt-5">
                     <div class="accordion mt-2 mb-4" id="accordionPanelsStayOpenExample3">
@@ -224,6 +230,20 @@ $nummedicos_json = json_encode($nummedicos_array);
                 }
             }
         });
+
+        // function filtrarSetor() {
+        //     var setorSelecionado = document.getElementById("setorSelect").value;
+        //     var accordions = document.querySelectorAll('.accordion');
+
+        //     // Oculta todos os accordions e exibe apenas o do setor selecionado
+        //     accordions.forEach(function(accordion) {
+        //         if (accordion.id === 'accordionPanelsStayOpenExample' + setorSelecionado) {
+        //             accordion.style.display = 'block';
+        //         } else {
+        //             accordion.style.display = 'none';
+        //         }
+        //     });
+        // }
     </script>
 
     <script src="node_modules\@popperjs\core\dist\umd\popper.min.js"></script>

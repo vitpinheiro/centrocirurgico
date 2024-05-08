@@ -144,7 +144,9 @@ $leito_json = json_encode($leito);
 
 
   <main>
+
   <div class="container">
+    
     <h2 id="solicitacao" >Solicitações por status</h2>
     <div class="row">
     <div class="col-xl-3 col-md-12 col-lg-3 mb-4">
@@ -199,7 +201,6 @@ $leito_json = json_encode($leito);
                     </div>
 
 <!--  -->
-
 
 
     <br>

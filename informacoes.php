@@ -23,6 +23,7 @@ if(isset($_GET['id'])) {
     proc.id_cirurgiao,
     proc.data as data,
     proc.hora as hora,
+    proc.leito as leito,
     
     cirur.nome as nome_cirurgiao,
     cirur.crm as crm_cirurgiao,
@@ -37,6 +38,7 @@ if(isset($_GET['id'])) {
     proc.anestesia,
     anes.Nome as nome_anestesista,
     anes.CRM as crm_anestesista,
+    plano.empresa as convenio,
     
     proc.pend_documento as pend_doc ,
     proc.pend_financ as pend_financ,
@@ -53,6 +55,8 @@ if(isset($_GET['id'])) {
         ON opme.id = proc.opme
         INNER JOIN  anestesista as anes
         ON anes.id = proc.anestesia
+        INNER JOIN planos_saude as plano
+        on plano.id = proc.id_plano
         where proc.id = $id_procedimento";
     $result = $conn->query($sql);
 
@@ -68,6 +72,8 @@ if(isset($_GET['id'])) {
         $cpf="CPF: " . $row["cpf"] . "<br>";
         $telefone1="Telefone 1: " . $row["tel1"] . "<br>";
         $telefone2="Telefone 2: " . $row["tel2"] . "<br>";
+        $plano="Plano: " . $row["convenio"] . "<br>";
+        $acomodacao="Acomodacao: " . $row["leito"] . "<br>";
         $data="Data: " . $row["data"] . "<br>";
         $hora="Hora: " . $row["hora"] . "<br>";
         $id_cirurgia="id cirurgia: " . $row["id_cirurgia"] . "<br>";
@@ -258,37 +264,23 @@ if(isset($_GET['id'])) {
 
                             <div class="form-group">
                                 <label for="username">Nome do Paciente: </label>
-                                <input id="username" class="form-control" name="username" placeholder="Nome Completo do Paciente" type="text" maxlength="150" autocomplete="off"  value="<?php echo $row["nome_paciente"];?>">
+                                <input id="username" class="form-control" name="username" placeholder="Nome Completo do Paciente" type="text" disabled=" "  maxlength="150" autocomplete="off"  value="<?php echo $row["nome_paciente"];?>">
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="datanasc">Data de Nascimento</label>
-                                        <input id="datanasc" class="form-control" name="datanasc" type="date" max="2024-04-26" value="<?php echo $row["data_nascimento"];?>">
+                                        <input id="datanasc" class="form-control" name="datanasc" type="date" disabled=" "  max="2024-04-26" value="<?php echo $row["data_nascimento"];?>">
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-sm-3">
                                     <div class="form-group">
                                         <label for="cpf">CPF</label>
-                                        <input id="cpf" class="form-control" placeholder="999.999.999-11" maxlength="14" name="cpf" type="text" autocomplete="off" value="<?php echo $row["cpf"];?>">
+                                        <input id="cpf" class="form-control" placeholder="999.999.999-11" maxlength="14" name="cpf" type="text" disabled=" "  autocomplete="off" value="<?php echo $row["cpf"];?>">
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-sm-3">
-                                    <label >CPF próprio?</label>
-                                    <div class="d-flex align-items-center h-50 mb-5" >
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault" >
-                                            <label class="form-check-label px-1" >
-                                                Sim
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault" >
-                                            <label class="form-check-label px-1" >
-                                                Não
-                                            </label>
-                                        </div>
+                               
                                     </div>
                                 </div>
                             </div>
@@ -297,13 +289,13 @@ if(isset($_GET['id'])) {
                                 <div class="col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="phone">Contato 1</label>
-                                        <input id="phone" class="form-control" name="phone" placeholder="Contato" type="tel" maxlength="11"  autocomplete="off" value="<?php echo $row["tel1"];?>">
+                                        <input id="phone" class="form-control" name="phone" placeholder="Contato" type="tel" maxlength="11" disabled=" "   autocomplete="off" value="<?php echo $row["tel1"];?>">
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="phone2">Contato 2</label>
-                                        <input id="phone2" class="form-control" name="phone2" placeholder="Contato" type="tel" maxlength="11"  autocomplete="off" value="<?php echo $row["tel2"];?>">
+                                        <input id="phone2" class="form-control" name="phone2" placeholder="Contato" type="tel" maxlength="11" disabled=" "   autocomplete="off" value="<?php echo $row["tel2"];?>">
                                     </div>
                                 </div>
                             </div>
@@ -312,17 +304,15 @@ if(isset($_GET['id'])) {
                                 <div class="col-md-6 col-sm-6">
                                     <div class="form-group">
                                         <label for="convenio">Convênio</label>
-                                        <input id="convenio" class="form-control" name="convenio" placeholder="Convênio" type="text"  autocomplete="off" value="">
+                                        <input id="convenio" class="form-control" name="convenio" placeholder="Convênio" type="text" disabled=" "  autocomplete="off" value="<?php echo $row["convenio"];?>">
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-sm-6 d-flex align-items-center">
     <div class="form-group w-100">
         <label for="acomodacao">Acomodação</label>
         <div class="dropdown bootstrap-select disabled wide">
-            <select id="acomodacao" class="wide selectpicker" name="acomodacao" tabindex="null">
-                <option value="Apt">Apartamento</option>
-                <option value="Enf" selected="">Enfermaria</option>
-            </select>
+            <input id="acomodacao" class="wide selectpicker" name="acomodacao" disabled=" " value="<?php echo $row["leito"];?>">
+            
         </div>
     </div>
 </div>
@@ -331,7 +321,7 @@ if(isset($_GET['id'])) {
                             <div class="row">
                                 <div class="col-md-12 col-sm-12 mb-4">
                                     <label for="alergias">Alergias</label>
-                                    <textarea id="alergias" name="alergias" maxlength="400" style="max-height: 9em; min-height: 3em" class="w-100 form-control"></textarea>
+                                    <textarea id="alergias" name="alergias" disabled=" " maxlength="400" style="max-height: 9em; min-height: 3em" class="w-100 form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -353,13 +343,13 @@ if(isset($_GET['id'])) {
                                     <div class="col-md-4 col-sm-4">
                                         <div class="form-group">
                                             <label for="datacirurgia">Data pretendida</label>
-                                            <input id="datacirurgia" class="form-control" name="datacirurgia" type="datetime"  value="<?php echo $row["data"]?>" min="2024-04-26">
+                                            <input id="datacirurgia" class="form-control" name="datacirurgia" type="date" disabled=" "  value="<?php echo $row["data"]?>" min="2024-04-26">
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-sm-8">
                                         <div class="form-group">
                                             <label for="time">Hora pretendida</label>
-                                            <input id="time" class="form-control" name="time" type="time" value="<?php echo $row["hora"]?>" required="">
+                                            <input id="time" class="form-control" name="time" type="time" disabled=" "  value="<?php echo $row["hora"]?>" required="">
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-4 ml-md-1">
@@ -406,10 +396,10 @@ if(isset($_GET['id'])) {
         <li class="form-row mb-2 align-items-end">
             <input name="CirConvID[]" type="hidden" value="">
             <div class="input-group col-4 flex-column">
-                <input name="tipo_cirurgia_tuss_cod[]" class="form-control w-100" type="text" value="<?php echo $row["id_cirurgia"]; ?>" >
+                <input name="tipo_cirurgia_tuss_cod[]" class="form-control w-100" type="text" disabled=" " value="<?php echo $row["id_cirurgia"]; ?>" >
             </div>
             <div class="input-group col-8 flex-column p-0">
-                <input name="tipo_cirurgia_tuss_nome[]" class="form-control w-100" type="text" value="<?php echo $row["nome_cirurgia"]; ?>" >
+                <input name="tipo_cirurgia_tuss_nome[]" class="form-control w-100" type="text" disabled=" " value="<?php echo $row["nome_cirurgia"]; ?>" >
             </div>
         </li>
     <?php endforeach; ?>
@@ -472,10 +462,10 @@ if(isset($_GET['id'])) {
                                     <ul style="padding-left: 0em;" id="list_cir">
                                                                                     <li class="form-row mb-2 align-items-end ">
                                                 <div id="oldCirur" class="input-group col-8 flex-column"> 
-                                                    <input name="cirur_nome[]" class="form-control w-100"  placeholder="Nome do Cirurgião" type="text" autocomplete="off" value="<?php echo $row["nome_cirurgiao"];?>" >
+                                                    <input name="cirur_nome[]" class="form-control w-100"  placeholder="Nome do Cirurgião" type="text" disabled=" " autocomplete="off" value="<?php echo $row["nome_cirurgiao"];?>" >
                                                 </div>
                                                 <div class="input-group col-4 flex-column">
-                                                    <input name="cirur_crm[]" class="form-control w-100" placeholder="CRM" type="text" autocomplete="off" data-parsley-pattern="^[^a-zA-ZÀ-ü\s.]+$" value="<?php echo $row["crm_cirurgiao"];?>">
+                                                    <input name="cirur_crm[]" class="form-control w-100" placeholder="CRM" type="text" disabled=" " autocomplete="off" data-parsley-pattern="^[^a-zA-ZÀ-ü\s.]+$" value="<?php echo $row["crm_cirurgiao"];?>">
                                                 </div>
                                             </li>
                                                                                 </ul>
@@ -488,12 +478,12 @@ if(isset($_GET['id'])) {
                                         <li class="form-row mb-0 align-items-end">
                                             <div class="input-group col-8 flex-column ">
                                                 <label for="anest_nome">Anestesista</label>
-                                                <input id="anest_nome" name="anest_nome" class="form-control w-100" placeholder="Nome do Anestesista" type="text" autocomplete="off" value="<?php echo $row["nome_anestesista"];?>">
+                                                <input id="anest_nome" name="anest_nome" class="form-control w-100" placeholder="Nome do Anestesista" type="text" disabled=" " autocomplete="off" value="<?php echo $row["nome_anestesista"];?>">
                                                 <input type="hidden" name="anest_id" value="">
                                             </div>
                                             <div class="input-group col-4 flex-column">
                                                 <label for="anest_crm">CRM</label>
-                                                <input id="anest_crm" name="anest_crm" class="form-control w-100" placeholder="CRM" type="text" autocomplete="off" value="<?php echo $row["crm_anestesista"];?>">
+                                                <input id="anest_crm" name="anest_crm" class="form-control w-100" placeholder="CRM" type="text" disabled=" " autocomplete="off" value="<?php echo $row["crm_anestesista"];?>">
                                             </div>
                                         </li>
                                     </ul>
@@ -586,15 +576,15 @@ if(isset($_GET['id'])) {
             <li class="form-row align-items-end my-md-2 my-4">
                 <div class="input-group col-12 col-md-6 flex-column">
                     <label>Descrição</label>
-                    <input name="OPME_desc[]" class="form-control w-100" placeholder="Descrição" type="text" autocomplete="off" value="<?php echo $opme['opme']; ?>">
+                    <input name="OPME_desc[]" class="form-control w-100" placeholder="Descrição" type="text" disabled=" " autocomplete="off" value="<?php echo $opme['opme']; ?>">
                 </div>
                 <div class="input-group col-3 col-md-2 flex-column">
                     <label>Quant.</label>
-                    <input name="OPME_quant[]" class="form-control w-100" placeholder="Qtd" type="number" min="1" data-parsley-pattern="^[a-zA-Z\s.]+$" value="<?php echo $opme['quant']; ?>">
+                    <input name="OPME_quant[]" class="form-control w-100" placeholder="Qtd" type="number"  disabled=" " min="1" data-parsley-pattern="^[a-zA-Z\s.]+$" value="<?php echo $opme['quant']; ?>">
                 </div>
                 <div class="input-group col-9 col-md-3 flex-column">
                     <label>Fornecedor</label>
-                    <input name="OPME_forn[]" class="form-control w-100" placeholder="Fornecedor" type="text" data-parsley-pattern="^[a-zA-Z\s.]+$" autocomplete="off" value="<?php echo $opme['fornecedor']; ?>">
+                    <input name="OPME_forn[]" class="form-control w-100" placeholder="Fornecedor" type="text" disabled=" " data-parsley-pattern="^[a-zA-Z\s.]+$" autocomplete="off" value="<?php echo $opme['fornecedor']; ?>">
                 </div>
             </li>
         <?php endforeach; ?>

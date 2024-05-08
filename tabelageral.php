@@ -85,8 +85,6 @@ $result = $conn->query($sql);
 
 
 
-
-
 .table-bordered{
     width: 60em;
     justify-content: center;
@@ -107,6 +105,22 @@ a{
   color: black;
 }
 
+.custom-table {
+        border-collapse: collapse;
+    }
+
+    
+
+    .custom-table th:first-child,
+    .custom-table td:first-child {
+        border-left: none; /* Remove a borda esquerda do primeiro td e th */
+        
+    }
+
+    .custom-table th:last-child,
+    .custom-table td:last-child {
+        border-right: none; /* Remove a borda direita do último td e th */
+    }
 </style>
 
 
@@ -121,7 +135,7 @@ a{
                     <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         MENU
                     </button>
-                    <div class="dropdown-menu">
+                    <div class="dropdown-menu ">
                         <a class="dropdown-item" href="index.php">Home</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="solicitacaoporstatus.php">Solicitações por status</a>
@@ -141,12 +155,42 @@ a{
 
 <main>
 <div class="container">
-
-  <div class="container">
-        <h2>Tabela Geral</h2>
-        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Pesquisar...">
-        <div class="table-responsive">
-            <table class="table"  id="dataTable">
+<div class="accordion" id="accordionPanelsStayOpenExample" class="text-center">
+                                    <div class="accordion-item text-center">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button shadow-sm text-white text-center" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne" style="background-color: #00a24d !important;">
+                                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                                <i class="fa-solid fa-circle-info"></i>
+                                                <h5>Tabela geral</h5>
+                                            </button>
+                                        </h2>
+                                        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" class="text-center">
+                                            <div class="accordion-body">
+                                                <div class="col">
+                                                    <br>
+                                                    <input id="tabela" class="form-control" type="text" onkeyup="filtrarTabela()" placeholder="Filtrar registros..." />
+                                                </div>
+                                                <br>
+                                                
+                                                <div class="row">
+                                                    <div class="col-6 col-lg-2 mb-5" style="text-align: left;">
+                                                        <b>Status</b>
+                                                        <select class="form-control" id="statusSelect" onchange="filtrarRegistros(event)">
+                                                            <option value="">Selecione o status</option>
+                                                            <option value="Pendente">Pendente</option>
+                                                            <option value="Em andamento">Em andamento</option>
+                                                            <option value="Concluído">Concluído</option>
+                                                        </select>
+                                                        
+                                                    </div>
+                                                    <div class="col-4" style="text-align: left;">
+                                                        <b>Data do Procedimento</b>
+                                                        <input class="form-control" type="date" id="solicitacaoInput" onchange="filtrarRegistros(event)">
+                                                    </div>
+                                                  
+        
+        <div class="table-responsive custom-scrollbar">
+            <table class="table table-bordered custom-table"  id="dataTable">
     <thead>
       <tr>
         
@@ -155,8 +199,8 @@ a{
         <th scope="col" class="col">Cirurgião</th>
         <th scope="col" class="col">Anestesista</th>
         <th scope="col" class="col">Opme</th>
-        <th scope="col" class="col">Pend Documento</th>
-        <th scope="col" class="col">Pend Financ</th>
+        <th scope="col" class="col" nowrap>Pend Doc</th>
+        <th scope="col" class="col" nowrap>Pend Financ</th>
         <th scope="col" class="col">Status</th>
         <th scope="col" class="col">Leito</th>
         <th scope="col" class="col">Setor</th>
@@ -188,9 +232,52 @@ a{
     </tbody>
   </table>
 </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+ function filtrarTabela() {
+            var input, filtro, tabela, linhas, celula, texto;
+            input = document.getElementById("tabela");
+            filtro = input.value.toUpperCase();
+            tabela = document.getElementById("dataTable");
+            linhas = tabela.getElementsByTagName("tr");
+
+            for (var i = 0; i < linhas.length; i++) {
+                var encontrou = false; 
+                celula = linhas[i].getElementsByTagName("td");
+                for (var j = 0; j < celula.length; j++) {
+                    if (celula[j]) {
+                        texto = celula[j].innerText.toUpperCase() || celula[j].textContent.toUpperCase();
+                        if (texto.indexOf(filtro) > -1) {
+                            encontrou = true;
+                            break;
+                        }
+                    }
+                }
+                if (encontrou) {
+                    linhas[i].style.display = "";
+                } else {
+                    linhas[i].style.display = "none";
+                }
+            }
+        }
+
+        function filtrarRegistros(event) {
+    var tabela = document.getElementById("dataTable");
+    var linhas = tabela.getElementsByTagName("tr");
+    var selectedStatus = document.getElementById("statusSelect").value.toLowerCase(); // Obtendo o status selecionado em letras minúsculas para uma comparação sem distinção entre maiúsculas e minúsculas
+
+    for (var i = 1; i < linhas.length; i++) { // Começamos em 1 para pular a linha de cabeçalho
+        var celulas = linhas[i].getElementsByTagName("td");
+        var status = celulas[7].innerText.toLowerCase(); // A coluna de status é a oitava coluna (índice 7)
+
+        if (selectedStatus === "" || status === selectedStatus) { // Se nenhum status estiver selecionado ou se o status da linha corresponder ao status selecionado
+            linhas[i].style.display = ""; // Exibe a linha
+        } else {
+          linhas[i].style.display = "none"; // Exibe a linha
+    }
+  }}
         $(document).ready(function(){
             $("#searchInput").on("keyup", function() {
                 var value = $(this).val().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
