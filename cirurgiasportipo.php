@@ -49,19 +49,55 @@ $sql ="SELECT
                     $quantcirurgias2_array[] = $row2['quantidade_total'];
                 }
             }
-            
+              
             $cirurgias2_json = json_encode($cirurgias2_array);
             $quantcirurgias2_json = json_encode($quantcirurgias2_array);
            
             
 
 
+            $sql3 = "SELECT 
+            cirur.cirurgia as cirurgia,
+            proc.prioridade as prioridade,
+            COUNT(*) AS num_cirurgias
+        FROM procedimentos AS proc
+        INNER JOIN centrocirurgico.cirurgias AS cirur ON proc.id_cirugia = cirur.id
+        GROUP BY cirur.cirurgia, proc.prioridade";        
+            
+            $result3 = mysqli_query($conn, $sql3);
+            $data = array();
+while($row3 = $result3->fetch_assoc()) {
+    $cirurgia = $row3["cirurgia"];
+    $prioridade = $row3["prioridade"];
+    $num_cirurgias = $row3["num_cirurgias"];
+
+    if (!isset($data[$cirurgia])) {
+        $data[$cirurgia] = array(
+            "Eletiva" => 0,
+            "Urgência" => 0
+        );
+    }
+
+    $data[$cirurgia][$prioridade] = $num_cirurgias;
+}
+
+// Consulta por mês
+// SELECT 
+// cirur.cirurgia,
+// YEAR(proc.data) AS ano,
+// MONTH(proc.data) AS mes,
+// COUNT(*) AS num_cirurgias
+// FROM procedimentos AS proc
+// INNER JOIN centrocirurgico.cirurgias AS cirur ON proc.id_cirugia = cirur.id
+// GROUP BY cirur.cirurgia, ano, mes;
+          
 
    $cirurgiasporsetor = $funcoes->cirurgiasporsetor();
    $nomesetor = array_column($cirurgiasporsetor, 'setor');
    $nomesetor_json = json_encode($nomesetor);        
    $totalciru = array_column($cirurgiasporsetor, 'total_cirurgias');
    $totalciru_json = json_encode($totalciru);        
+
 
 ?>
 <!DOCTYPE html>
@@ -235,7 +271,7 @@ height: 90em;
                 </h2>
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
                     <div class="accordion-body">
-                        <canvas class="charts" id="myChart3"></canvas>
+                        <canvas class="charts" id="myChart5"></canvas>
                     </div>
                 </div>
             </div>
@@ -372,6 +408,52 @@ height: 90em;
    
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+var data = <?php echo json_encode($data); ?>;
+
+// Extrair os nomes das cirurgias e os valores para eletiva e urgência
+var labels = Object.keys(data);
+var eletivas = [];
+var urgencias = [];
+
+labels.forEach(function(cirurgia) {
+    eletivas.push(data[cirurgia]["Eletiva"]);
+    urgencias.push(data[cirurgia]["Urgência"]);
+});
+
+// Criar um gráfico de barras
+var ctx5 = document.getElementById('myChart5').getContext('2d');
+var myChart5 = new Chart(ctx5, {
+    type: 'line',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Eletiva',
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1,
+            data: eletivas
+        },
+        {
+            label: 'Urgência',
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1,
+            data: urgencias
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+
+
    const ctx = document.getElementById('myChart');
 new Chart(ctx, {
     type: 'pie',

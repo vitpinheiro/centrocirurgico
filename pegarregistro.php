@@ -120,7 +120,30 @@ class PuxarFuncoes {
 
            
         }
+        public function cirurgiasprioridade(){
 
+            try{   
+                    $sql ="SELECT 
+                    cirur.cirurgia,
+                    proc.prioridade,
+                     COUNT(*) AS num_cirurgias
+                    FROM procedimentos as proc
+                    INNER JOIN centrocirurgico.cirurgias as cirur on proc.id_cirugia = cirur.id
+                    GROUP BY cirur.cirurgia, proc.prioridade;";
+                    
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute();
+                $resultado = $stmt->fetchAll(); // Apenas uma coluna é retornada
+     
+                return $resultado;
+
+            } catch (\PDOException $e) {
+                throw $e;
+            }
+
+           
+        }
+     
 
     
         public function cirurgioesporsetor() {

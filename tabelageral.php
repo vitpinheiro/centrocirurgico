@@ -13,8 +13,8 @@ proc.pend_documento,
 proc.pend_financ,
 proc.status,
 proc.leito,
+DATE_FORMAT(proc.data, '%d/%m/%Y') AS data_formatada,
 seto.nome_setor as setor
-
 
 
 
@@ -201,6 +201,7 @@ a{
         <th scope="col" class="col">Opme</th>
         <th scope="col" class="col" nowrap>Pend Doc</th>
         <th scope="col" class="col" nowrap>Pend Financ</th>
+        <th scope="col" class="col">data</th>
         <th scope="col" class="col">Status</th>
         <th scope="col" class="col">Leito</th>
         <th scope="col" class="col">Setor</th>
@@ -220,6 +221,7 @@ a{
         echo "<td><a href='informacoes.php?id=". $row["id"]. "'>". $row["opme"] . "</a></td>";
         echo "<td><a href='informacoes.php?id=". $row["id"]. "'>". $row["pend_documento"] . "</a></td>";
         echo "<td><a href='informacoes.php?id=". $row["id"]. "'>". $row["pend_financ"] . "</a></td>";
+        echo "<td><a href='informacoes.php?id=". $row["id"]. "'>". $row["data_formatada"] . "</a></td>";
         echo "<td><a href='informacoes.php?id=". $row["id"]. "'>". $row["status"] . "</a></td>";
         echo "<td><a href='informacoes.php?id=". $row["id"]. "'>". $row["leito"] . "</a></td>";
         echo "<td><a href='informacoes.php?id=". $row["id"]. "'>".$row["setor"] . "</a></td>";
@@ -270,7 +272,7 @@ a{
 
     for (var i = 1; i < linhas.length; i++) { // Começamos em 1 para pular a linha de cabeçalho
         var celulas = linhas[i].getElementsByTagName("td");
-        var status = celulas[7].innerText.toLowerCase(); // A coluna de status é a oitava coluna (índice 7)
+        var status = celulas[8].innerText.toLowerCase(); // A coluna de status é a oitava coluna (índice 7)
 
         if (selectedStatus === "" || status === selectedStatus) { // Se nenhum status estiver selecionado ou se o status da linha corresponder ao status selecionado
             linhas[i].style.display = ""; // Exibe a linha
@@ -278,6 +280,8 @@ a{
           linhas[i].style.display = "none"; // Exibe a linha
     }
   }}
+
+ 
         $(document).ready(function(){
             $("#searchInput").on("keyup", function() {
                 var value = $(this).val().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
