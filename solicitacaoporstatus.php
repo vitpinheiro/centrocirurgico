@@ -148,63 +148,68 @@ $leito_json = json_encode($leito);
   <div class="container">
     
     <h2 id="solicitacao" >Solicitações por status</h2>
-    <div class="row">
-    <div class="col-xl-3 col-md-12 col-lg-3 mb-4">
-                            <div class="card border-left-success shadow h-80 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Concluídos</div>
-                                            <div class="display-4 h4 mb-0 font-weight-bold text-gray-1000"><?php echo $quantidadeConcluidos; ?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                        
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+    <div class="btn-group d-flex justify-content-center mt-4" role="group" aria-label="Basic example" id="monthButtons">
+
+</div>
+<div class="row justify-content-center d-flex">
+    <div class="col-xl-4 col-md-12 col-lg-3 mb-4 mb-0">
+        <div class="card border-left-success shadow h-80 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Concluídos
                         </div>
-  
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-80 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Em andamento</div>
-                                            <div class="display-4 h4 mb-0 font-weight-bold text-gray-800"><?php echo $quantidadeEmAndamento; ?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-danger shadow h-80 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                                Pendentes</div>
-                                            <div class="display-4 h4 mb-0 font-weight-bold text-gray-800"><?php echo $quantidadePendentes; ?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                        <img src="img/pendente.svg" alt=""><i class="<i class="fa-solid fa-hourglass-end fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="display-4 h4 mb-0 font-weight-bold text-gray-1000"><?php echo $quantidadeConcluidos; ?></div>
                     </div>
+                    <div class="col-auto">
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4 mb-0">
+        <div class="card border-left-warning shadow h-80 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Em andamento
+                        </div>
+                        <div class="display-4 h4 mb-0 font-weight-bold text-gray-800"><?php echo $quantidadeEmAndamento; ?></div>
+                    </div>
+                    <div class="col-auto">
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-md-6 mb-4 mb-0">
+        <div class="card border-left-danger shadow h-80 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                            Pendentes
+                        </div>
+                        <div class="display-4 h4 mb-0 font-weight-bold text-gray-800"><?php echo $quantidadePendentes; ?></div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--  -->
 
 
     <br>
-    <div class="row">
+    <div class="row justify-content-center">
         <div class=" col-lg-5 col-md-10 col-sm-12 mb-4 accordion" id="accordionPanelsStayOpenExample1">
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -220,7 +225,7 @@ $leito_json = json_encode($leito);
             </div>
         </div>
 
-        <div class=" col-lg-5 col-md-10 col-sm-12 order-lg-2  accordion" id="accordionPanelsStayOpenExample2">
+        <div class="col-lg-5 col-md-10 col-sm-12 order-lg-2 mb-4 accordion" id="accordionPanelsStayOpenExample2">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
@@ -236,7 +241,7 @@ $leito_json = json_encode($leito);
         </div>
     </div>
 
-  
+  <div class="row justify-content-center">
     <div class="col-12 col-md-8 col-lg-5 mt-4 mt-md-0  ">
         <div class="accordion" id="accordionPanelsStayOpenExample3">
             <div class="accordion-item">
@@ -451,7 +456,37 @@ $leito_json = json_encode($leito);
 <script src="chart.js"></script>
 
 <script>
-  // Seus scripts JavaScript
+
+// Função para obter o nome do mês
+function getMonthName(monthIndex) {
+    const months = ["Jan", "Fev", "Mar", "Abril", "Maio", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+    return months[monthIndex];
+}
+
+// Pegar a data atual
+const currentDate = new Date();
+// Inicializar um array para armazenar os nomes dos últimos cinco meses
+const lastFiveMonths = [];
+
+// Loop para obter os nomes dos últimos cinco meses
+for (let i = 0; i < 5; i++) {
+    const monthIndex = (currentDate.getMonth() - i + 12) % 12; // Para tratar o ano novo
+    lastFiveMonths.unshift(getMonthName(monthIndex)); // Adiciona no início do array
+}
+
+// Selecionar o elemento pai dos botões
+const monthButtonsContainer = document.getElementById("monthButtons");
+
+// Adicionar os botões dinamicamente com os nomes dos últimos cinco meses
+lastFiveMonths.forEach((monthName, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.classList.add("btn", "btn-primary");
+    button.textContent = monthName;
+    button.id = monthName.toLowerCase(); // IDs em letras minúsculas
+    monthButtonsContainer.appendChild(button);
+});
+
 </script>
 
 <script>

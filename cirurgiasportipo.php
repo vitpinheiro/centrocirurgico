@@ -97,7 +97,35 @@ while($row3 = $result3->fetch_assoc()) {
    $nomesetor_json = json_encode($nomesetor);        
    $totalciru = array_column($cirurgiasporsetor, 'total_cirurgias');
    $totalciru_json = json_encode($totalciru);        
+// Consulta SQL
+$sql4 = "SELECT 
+            cirur.cirurgia,
+            CONCAT(MONTHNAME(proc.data)) AS mes,
+            COUNT(*) AS num_cirurgias
+        FROM procedimentos AS proc
+        INNER JOIN centrocirurgico.cirurgias AS cirur ON proc.id_cirugia = cirur.id
+        GROUP BY cirur.cirurgia, mes
+        ORDER BY MONTH(proc.data)";
+        
 
+$result4 = mysqli_query($conn, $sql4);
+
+$cirurgias4 = array();
+$quantcirurgias4 = array();
+
+if ($result4 && mysqli_num_rows($result4) > 0) {
+    while ($row4 = mysqli_fetch_assoc($result4)) {
+        $mes = $row4['mes'];
+        if (!isset($cirurgias4[$mes])) {
+            $cirurgias4[$mes] = $mes;
+            $quantcirurgias4[$mes] = 0;
+        }
+        $quantcirurgias4[$mes] += $row4['num_cirurgias'];
+    }
+}
+
+$cirurgias4_json = json_encode(array_values($cirurgias4));
+$quantcirurgias4_json = json_encode(array_values($quantcirurgias4));
 
 ?>
 <!DOCTYPE html>
@@ -220,6 +248,9 @@ height: 90em;
 
 <div class="container">
 <h2>Cirurgias por tipo:</h2>
+<div class="btn-group d-flex justify-content-center mt-4" role="group" aria-label="Basic example" id="monthButtons">
+
+</div>
 <div id="carouselExampleIndicators" class="carousel slide">
     <div class="carousel-inner">
         <?php 
@@ -266,7 +297,7 @@ height: 90em;
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                      
+                      Urgência e eletiva
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
@@ -281,7 +312,7 @@ height: 90em;
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
-                      
+                      Quantidade por mês
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show">
@@ -301,7 +332,7 @@ height: 90em;
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
-                              
+                              Quantidade por tipo
                             </button>
                         </h2>
                         <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
@@ -362,7 +393,7 @@ height: 90em;
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
-                               
+                               quant de cirurgias por setor
                             </button>
                         </h2>
                         <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
@@ -524,10 +555,10 @@ new Chart(ctx2, {
 new Chart(ctx3, {
     type: 'bar',
     data: {
-        labels: <?php echo $cirurgias_json ?>,
+        labels: <?php echo $cirurgias4_json ?>,
         datasets: [{
-            label: 'Quantidade',
-            data: <?php echo $quantcirurgias_json ?>,
+            label: 'Quant cirurgias',
+            data: <?php echo $quantcirurgias4_json ?>,
             backgroundColor: [
             'rgba(255, 99, 132, 2)',   // Vermelho
             'rgba(54, 162, 235, 2)',   // Azul
@@ -610,7 +641,87 @@ new Chart(ctx4, {
     }
 });
 
+// Função para obter o nome do mês
+function getMonthName(monthIndex) {
+    const months = ["Jan", "Fev", "Mar", "Abril", "Maio", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+    return months[monthIndex];
+}
+
+// Pegar a data atual
+const currentDate = new Date();
+// Inicializar um array para armazenar os nomes dos últimos cinco meses
+const lastFiveMonths = [];
+
+// Loop para obter os nomes dos últimos cinco meses
+for (let i = 0; i < 5; i++) {
+    const monthIndex = (currentDate.getMonth() - i + 12) % 12; // Para tratar o ano novo
+    lastFiveMonths.unshift(getMonthName(monthIndex)); // Adiciona no início do array
+}
+
+// Selecionar o elemento pai dos botões
+const monthButtonsContainer = document.getElementById("monthButtons");
+
+// Adicionar os botões dinamicamente com os nomes dos últimos cinco meses
+lastFiveMonths.forEach((monthName, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.classList.add("btn", "btn-primary");
+    button.textContent = monthName;
+    button.id = monthName.toLowerCase(); // IDs em letras minúsculas
+    monthButtonsContainer.appendChild(button);
+});
+// Função para atualizar a página com os dados do mês selecionado
+function updatePage(monthName) {
+    // Construir a URL com base no mês selecionado
+    const url = `buscar_dados_do_mes.php?mes=${monthName.toLowerCase()}`;
+
+    // Enviar a requisição AJAX
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            // Aqui você pode chamar as funções para atualizar os gráficos e tabelas com os dados recebidos
+            updateChart(data);
+            updateTable(data);
+        })
+        .catch(error => console.error('Erro ao buscar os dados:', error));
+}
+
+// Função para atualizar o gráfico
+function updateChart(data) {
+    // Atualize o gráfico com os novos dados recebidos
+      // Recupere o contexto do gráfico
+      const ctx = document.getElementById('myChart').getContext('2d');
+      const ctx2 = document.getElementById('myChart2').getContext('2d');
+
+// Atualize os dados do gráfico
+myChart.data.labels = data.labels;
+myChart.data.datasets[0].data = data.values;
+myChart2.data.labels = data.labels;
+myChart2.data.datasets[0].data = data.values;
+
+// Atualize o gráfico
+myChart.update();
+myChart2.update();
+}
+
+// Função para atualizar a tabela
+function updateTable(data) {
+    // Limpe o conteúdo da tabela antes de atualizar
+    const tableBody = document.getElementById('myTable').getElementsByTagName('tbody')[0];
+    tableBody.innerHTML = '';
+
+    // Adicione as novas linhas à tabela
+    data.forEach(item => {
+        const newRow = tableBody.insertRow();
+        const cell1 = newRow.insertCell(0);
+        const cell2 = newRow.insertCell(1);
+        cell1.textContent = item.name;
+        cell2.textContent = item.value;
+    });
+}
+
 </script>
+
 
 </main>
 
