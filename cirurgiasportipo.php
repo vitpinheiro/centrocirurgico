@@ -52,17 +52,37 @@ $sql ="SELECT
               
             $cirurgias2_json = json_encode($cirurgias2_array);
             $quantcirurgias2_json = json_encode($quantcirurgias2_array);
-           
             
 
 
-            $sql3 = "SELECT 
-            cirur.cirurgia as cirurgia,
-            proc.prioridade as prioridade,
-            COUNT(*) AS num_cirurgias
-        FROM procedimentos AS proc
-        INNER JOIN centrocirurgico.cirurgias AS cirur ON proc.id_cirugia = cirur.id
-        GROUP BY cirur.cirurgia, proc.prioridade";        
+if(isset($_GET['mes'])) {
+    $monthMap = array(
+        "Jan" => 1,
+        "Feb" => 2,
+        "Mar" => 3,
+        "Apr" => 4,
+        "May" => 5,
+        "Jun" => 6,
+        "Jul" => 7,
+        "Aug" => 8,
+        "Sep" => 9,
+        "Oct" => 10,
+        "Nov" => 11,
+        "Dec" => 12
+    );
+
+    // Obtém a abreviação do mês da URL
+    $mesClicadoAbbr = $_GET['mes'];
+    $mesClicado = $monthMap[$mesClicadoAbbr];
+    $sql3 = "SELECT 
+                cirur.cirurgia as cirurgia,
+                proc.prioridade as prioridade,
+                COUNT(*) AS num_cirurgias
+            FROM procedimentos AS proc
+            INNER JOIN centrocirurgico.cirurgias AS cirur ON proc.id_cirugia = cirur.id
+            WHERE MONTH(proc.data) = $mesClicado
+            GROUP BY cirur.cirurgia, proc.prioridade";
+
             
             $result3 = mysqli_query($conn, $sql3);
             $data = array();
@@ -79,6 +99,34 @@ while($row3 = $result3->fetch_assoc()) {
     }
 
     $data[$cirurgia][$prioridade] = $num_cirurgias;
+
+}
+} else {
+    // Se o parâmetro 'mes' não foi passado na URL, execute a consulta sem filtragem por mês
+    $sql3 = "SELECT 
+                cirur.cirurgia as cirurgia,
+                proc.prioridade as prioridade,
+                COUNT(*) AS num_cirurgias
+            FROM procedimentos AS proc
+            INNER JOIN centrocirurgico.cirurgias AS cirur ON proc.id_cirugia = cirur.id
+            GROUP BY cirur.cirurgia, proc.prioridade";
+                 
+                 $result3 = mysqli_query($conn, $sql3);
+                 $data = array();
+     while($row3 = $result3->fetch_assoc()) {
+         $cirurgia = $row3["cirurgia"];
+         $prioridade = $row3["prioridade"];
+         $num_cirurgias = $row3["num_cirurgias"];
+     
+         if (!isset($data[$cirurgia])) {
+             $data[$cirurgia] = array(
+                 "Eletiva" => 0,
+                 "Urgência" => 0
+             );
+         }
+     
+         $data[$cirurgia][$prioridade] = $num_cirurgias;
+        }
 }
 
 // Consulta por mês
@@ -312,7 +360,7 @@ height: 90em;
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
-                      Quantidade por mês
+                      Quantidade de cirurgias
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show">
@@ -451,7 +499,6 @@ labels.forEach(function(cirurgia) {
     urgencias.push(data[cirurgia]["Urgência"]);
 });
 
-// Criar um gráfico de barras
 var ctx5 = document.getElementById('myChart5').getContext('2d');
 var myChart5 = new Chart(ctx5, {
     type: 'line',
@@ -555,10 +602,10 @@ new Chart(ctx2, {
 new Chart(ctx3, {
     type: 'bar',
     data: {
-        labels: <?php echo $cirurgias4_json ?>,
+        labels: <?php echo $cirurgias2_json ?>,
         datasets: [{
             label: 'Quant cirurgias',
-            data: <?php echo $quantcirurgias4_json ?>,
+            data: <?php echo $quantcirurgias2_json ?>,
             backgroundColor: [
             'rgba(255, 99, 132, 2)',   // Vermelho
             'rgba(54, 162, 235, 2)',   // Azul
@@ -643,13 +690,12 @@ new Chart(ctx4, {
 
 // Função para obter o nome do mês
 function getMonthName(monthIndex) {
-    const months = ["Jan", "Fev", "Mar", "Abril", "Maio", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     return months[monthIndex];
 }
 
 // Pegar a data atual
 const currentDate = new Date();
-// Inicializar um array para armazenar os nomes dos últimos cinco meses
 const lastFiveMonths = [];
 
 // Loop para obter os nomes dos últimos cinco meses
@@ -658,67 +704,99 @@ for (let i = 0; i < 5; i++) {
     lastFiveMonths.unshift(getMonthName(monthIndex)); // Adiciona no início do array
 }
 
-// Selecionar o elemento pai dos botões
 const monthButtonsContainer = document.getElementById("monthButtons");
 
-// Adicionar os botões dinamicamente com os nomes dos últimos cinco meses
 lastFiveMonths.forEach((monthName, index) => {
     const button = document.createElement("button");
     button.type = "button";
     button.classList.add("btn", "btn-primary");
     button.textContent = monthName;
-    button.id = monthName.toLowerCase(); // IDs em letras minúsculas
+    button.id = monthName; 
+
+     // Adicione um evento de clique ao botão
+button.addEventListener("click", function() {
+    const monthClicked = this.id;
+    const currentURL = window.location.href;
+
+    // Verifica se já existe um parâmetro 'mes' na URL
+    if (currentURL.indexOf("?mes=") !== -1) {
+        // Se já existe, substitui o valor do parâmetro 'mes'
+        const updatedURL = currentURL.replace(/(mes=)[^\&]+/, '$1' + monthClicked);
+        // Redireciona para a nova URL
+        window.location.href = updatedURL;
+    } else {
+        // Se não existe, adiciona o parâmetro 'mes' à URL
+        const updatedURL = `${currentURL}?mes=${monthClicked}`;
+        // Redireciona para a nova URL
+        window.location.href = updatedURL;
+    }
+    
+    // // Atualiza o gráfico após a URL ser atualizada
+    // atualizarGrafico(monthClicked);
+});
+
+// // Função para atualizar o gráfico com os dados incorporados na página HTML
+// var dadosGrafico = <?php echo json_encode($data); ?>;
+// function atualizarGrafico(mes) {
+//     myChart5.data.labels = Object.keys(dadosGrafico);
+//     myChart5.data.datasets[0].data = Object.values(dadosGrafico).map(eletivas);
+//     myChart5.data.datasets[1].data = Object.values(dadosGrafico).map(urgencias);
+//     myChart5.update();
+// }
+
     monthButtonsContainer.appendChild(button);
 });
-// Função para atualizar a página com os dados do mês selecionado
-function updatePage(monthName) {
-    // Construir a URL com base no mês selecionado
-    const url = `buscar_dados_do_mes.php?mes=${monthName.toLowerCase()}`;
+  
 
-    // Enviar a requisição AJAX
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            // Aqui você pode chamar as funções para atualizar os gráficos e tabelas com os dados recebidos
-            updateChart(data);
-            updateTable(data);
-        })
-        .catch(error => console.error('Erro ao buscar os dados:', error));
-}
+// // Função para atualizar a página com os dados do mês selecionado
+// function updatePage(monthName) {
+//     // Construir a URL com base no mês selecionado
+//     const url = `buscar_dados_do_mes.php?mes=${monthName.toLowerCase()}`;
 
-// Função para atualizar o gráfico
-function updateChart(data) {
-    // Atualize o gráfico com os novos dados recebidos
-      // Recupere o contexto do gráfico
-      const ctx = document.getElementById('myChart').getContext('2d');
-      const ctx2 = document.getElementById('myChart2').getContext('2d');
+//     // Enviar a requisição AJAX
+//     fetch(url)
+//         .then(response => response.json())
+//         .then(data => {
+//             // Aqui você pode chamar as funções para atualizar os gráficos e tabelas com os dados recebidos
+//             updateChart(data);
+//             updateTable(data);
+//         })
+//         .catch(error => console.error('Erro ao buscar os dados:', error));
+// }
 
-// Atualize os dados do gráfico
-myChart.data.labels = data.labels;
-myChart.data.datasets[0].data = data.values;
-myChart2.data.labels = data.labels;
-myChart2.data.datasets[0].data = data.values;
+// // Função para atualizar o gráfico
+// function updateChart(data) {
+//     // Atualize o gráfico com os novos dados recebidos
+//       // Recupere o contexto do gráfico
+//       const ctx = document.getElementById('myChart').getContext('2d');
+//       const ctx2 = document.getElementById('myChart2').getContext('2d');
 
-// Atualize o gráfico
-myChart.update();
-myChart2.update();
-}
+// // Atualize os dados do gráfico
+// myChart.data.labels = data.labels;
+// myChart.data.datasets[0].data = data.values;
+// myChart2.data.labels = data.labels;
+// myChart2.data.datasets[0].data = data.values;
 
-// Função para atualizar a tabela
-function updateTable(data) {
-    // Limpe o conteúdo da tabela antes de atualizar
-    const tableBody = document.getElementById('myTable').getElementsByTagName('tbody')[0];
-    tableBody.innerHTML = '';
+// // Atualize o gráfico
+// myChart.update();
+// myChart2.update();
+// }
 
-    // Adicione as novas linhas à tabela
-    data.forEach(item => {
-        const newRow = tableBody.insertRow();
-        const cell1 = newRow.insertCell(0);
-        const cell2 = newRow.insertCell(1);
-        cell1.textContent = item.name;
-        cell2.textContent = item.value;
-    });
-}
+// // Função para atualizar a tabela
+// function updateTable(data) {
+//     // Limpe o conteúdo da tabela antes de atualizar
+//     const tableBody = document.getElementById('myTable').getElementsByTagName('tbody')[0];
+//     tableBody.innerHTML = '';
+
+//     // Adicione as novas linhas à tabela
+//     data.forEach(item => {
+//         const newRow = tableBody.insertRow();
+//         const cell1 = newRow.insertCell(0);
+//         const cell2 = newRow.insertCell(1);
+//         cell1.textContent = item.name;
+//         cell2.textContent = item.value;
+//     });
+// }
 
 </script>
 
