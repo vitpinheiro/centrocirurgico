@@ -5,15 +5,36 @@ include("conexao.php");
 include_once("pegarregistro.php");
 
 $funcoes = new PuxarFuncoes;
+$cirurgias_array = array();
+$quantcirurgias_array = array();
+if(isset($_GET['mes'])) {
+    $monthMap = array(
+        "Jan" => 1,
+        "Feb" => 2,
+        "Mar" => 3,
+        "Apr" => 4,
+        "May" => 5,
+        "Jun" => 6,
+        "Jul" => 7,
+        "Aug" => 8,
+        "Sep" => 9,
+        "Oct" => 10,
+        "Nov" => 11,
+        "Dec" => 12
+    );
+    $mesClicadoAbbr = $_GET['mes'];
+    $mesClicado = $monthMap[$mesClicadoAbbr];
 $sql ="SELECT 
         -- proc.id as idprocedimento,
         -- proc.id_cirugia,
         -- ciru.id as idcirurgia,
 
         ciru.cirurgia as ciru1,
+        
         COUNT(id_cirugia) AS quantidade_total
             FROM procedimentos as proc
             INNER JOIN cirurgias as ciru ON ciru.id = proc.id_cirugia
+            WHERE MONTH(proc.data) = $mesClicado
             GROUP BY proc.id_cirugia";
                     
             $result = mysqli_query($conn, $sql);
@@ -28,12 +49,59 @@ $sql ="SELECT
             }
             $cirurgias_json = json_encode($cirurgias_array);
             $quantcirurgias_json = json_encode($quantcirurgias_array);
+        }
+        else {
+            $sql ="SELECT 
+            -- proc.id as idprocedimento,
+            -- proc.id_cirugia,
+            -- ciru.id as idcirurgia,
+    
+            ciru.cirurgia as ciru1,
+            COUNT(id_cirugia) AS quantidade_total
+                FROM procedimentos as proc
+                INNER JOIN cirurgias as ciru ON ciru.id = proc.id_cirugia
+                GROUP BY proc.id_cirugia";
+                        
+                $result = mysqli_query($conn, $sql);
+                $row=mysqli_fetch_assoc($result);
+    
+                if ($result && mysqli_num_rows($result) > 0){
+                    while ($row = mysqli_fetch_assoc($result))
+                    {
+                        $cirurgias_array[] = $row['ciru1'];
+                        $quantcirurgias_array[] = $row['quantidade_total'];
+                    }
+                }
+                $cirurgias_json = json_encode($cirurgias_array);
+                $quantcirurgias_json = json_encode($quantcirurgias_array);
+            }
+          
 
+
+
+            if(isset($_GET['mes'])) {
+                $monthMap = array(
+                    "Jan" => 1,
+                    "Feb" => 2,
+                    "Mar" => 3,
+                    "Apr" => 4,
+                    "May" => 5,
+                    "Jun" => 6,
+                    "Jul" => 7,
+                    "Aug" => 8,
+                    "Sep" => 9,
+                    "Oct" => 10,
+                    "Nov" => 11,
+                    "Dec" => 12
+                );
+                $mesClicadoAbbr = $_GET['mes'];
+                $mesClicado = $monthMap[$mesClicadoAbbr];
             $sql2 = "SELECT 
                         ciru.cirurgia as ciru1,
                         COUNT(id_cirugia) AS quantidade_total
                     FROM procedimentos as proc
                     INNER JOIN cirurgias as ciru ON ciru.id = proc.id_cirugia
+                    WHERE MONTH(proc.data) = $mesClicado
                     GROUP BY proc.id_cirugia
                     ORDER BY quantidade_total DESC
                     LIMIT 5";        
@@ -52,7 +120,34 @@ $sql ="SELECT
               
             $cirurgias2_json = json_encode($cirurgias2_array);
             $quantcirurgias2_json = json_encode($quantcirurgias2_array);
-            
+        }
+     else {
+        $sql2 = "SELECT 
+        ciru.cirurgia as ciru1,
+        COUNT(id_cirugia) AS quantidade_total
+    FROM procedimentos as proc
+    INNER JOIN cirurgias as ciru ON ciru.id = proc.id_cirugia
+    GROUP BY proc.id_cirugia
+    ORDER BY quantidade_total DESC
+    LIMIT 5";        
+
+$result2 = mysqli_query($conn, $sql2);
+
+$cirurgias2_array = array();
+$quantcirurgias2_array = array();
+
+if ($result2 && mysqli_num_rows($result2) > 0) {
+while ($row2 = mysqli_fetch_assoc($result2)) {
+    $cirurgias2_array[] = $row2['ciru1'];
+    $quantcirurgias2_array[] = $row2['quantidade_total'];
+}
+}
+
+$cirurgias2_json = json_encode($cirurgias2_array);
+$quantcirurgias2_json = json_encode($quantcirurgias2_array);
+}
+
+
 
 
 if(isset($_GET['mes'])) {
@@ -325,6 +420,13 @@ height: 90em;
             
             echo '</div></div>';
         }
+         if (empty($cirurgias_array) || empty($quantcirurgias_array)) {
+            
+             echo "<p style='text-align: center;'>Não há dados disponíveis para exibir.</p>";
+        } else {
+          
+        }
+
         ?>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev" style="margin-left:-80px;">
@@ -336,7 +438,6 @@ height: 90em;
         <span class="visually-hidden">Next</span>
     </button>
 </div>
-
 
     <br>
     <div class="row">
@@ -736,7 +837,7 @@ button.addEventListener("click", function() {
 });
 
 // // Função para atualizar o gráfico com os dados incorporados na página HTML
-// var dadosGrafico = <?php echo json_encode($data); ?>;
+// var dadosGrafico = 
 // function atualizarGrafico(mes) {
 //     myChart5.data.labels = Object.keys(dadosGrafico);
 //     myChart5.data.datasets[0].data = Object.values(dadosGrafico).map(eletivas);

@@ -90,21 +90,6 @@ $leito_json = json_encode($leito);
   }
  
 
-.dropdown-menu {
-    /* Adicionando sombra e borda arredondada */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    /* Adicionando uma cor de fundo */
-    background-color: #ffffff;
-    /* Definindo a largura do dropdown */
-    min-width: 200px;
-    /* Ajustando o espaçamento interno */
-    padding: 10px;
-    /* Definindo a posição como relativa para garantir que o dropdown esteja acima do conteúdo */
-    position: relative;
-}
-
-
 .badge {
         width: 90px; /* Definindo uma largura fixa para todas as badges */
 
@@ -136,7 +121,6 @@ $leito_json = json_encode($leito);
                 </div>
             </div>
             <div class="col-auto">
-                <!-- Adicione aqui quaisquer outros elementos que você deseje alinhar -->
             </div>
         </div>
     </div>
@@ -151,7 +135,7 @@ $leito_json = json_encode($leito);
     <div class="btn-group d-flex justify-content-center mt-4" role="group" aria-label="Basic example" id="monthButtons">
 
 </div>
-<div class="row justify-content-center d-flex">
+<div class="row mt-4 ">
     <div class="col-xl-4 col-md-12 col-lg-3 mb-4 mb-0">
         <div class="card border-left-success shadow h-80 py-2">
             <div class="card-body">
@@ -170,7 +154,7 @@ $leito_json = json_encode($leito);
         </div>
     </div>
 
-    <div class="col-xl-3 col-md-6 mb-4 mb-0">
+    <div class="col-xl-4 col-md-6 mb-4 mb-0">
         <div class="card border-left-warning shadow h-80 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -205,12 +189,10 @@ $leito_json = json_encode($leito);
     </div>
 </div>
 
-<!--  -->
-
 
     <br>
     <div class="row justify-content-center">
-        <div class=" col-lg-5 col-md-10 col-sm-12 mb-4 accordion" id="accordionPanelsStayOpenExample1">
+        <div class=" col-lg-6 col-md-10 col-sm-12 mb-4 accordion" id="accordionPanelsStayOpenExample1">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
@@ -225,7 +207,7 @@ $leito_json = json_encode($leito);
             </div>
         </div>
 
-        <div class="col-lg-5 col-md-10 col-sm-12 order-lg-2 mb-4 accordion" id="accordionPanelsStayOpenExample2">
+        <div class="col-lg-6 col-md-10 col-sm-12 order-lg-2 mb-4 accordion" id="accordionPanelsStayOpenExample2">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
@@ -241,8 +223,8 @@ $leito_json = json_encode($leito);
         </div>
     </div>
 
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-8 col-lg-5 mt-4 mt-md-0  ">
+  <div class="row">
+    <div class="col-12 col-md-8 col-lg-6 mt-4 mt-md-0  ">
         <div class="accordion" id="accordionPanelsStayOpenExample3">
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -261,7 +243,7 @@ $leito_json = json_encode($leito);
 </div>
 
 <div class="row mt-5 ">
-<div class="col-md-12 col-lg-10 mx-auto">
+<div class="col-md-12 col-lg-12 mx-auto">
         <table class="table">
             <thead>
                 <tr class="table-primary">
@@ -295,7 +277,7 @@ $leito_json = json_encode($leito);
                                     break;
                             }
                             ?>
-                            <!-- Usando pill badges para indicar o status -->
+                        
                             <span class="badge rounded-pill <?php echo $badge_class; ?>">
                                 <?php echo $statuspaciente[$index]; ?>
                             </span>
@@ -309,36 +291,9 @@ $leito_json = json_encode($leito);
 
 
 
-    <!-- <div class="col-lg-6 col-xs-12">
-        <h5 class="text-center">Gráfico</h5>
-        <canvas class="charts" id="myChart" ></canvas>
-    </div> -->
-
-    <!-- <div class="col-lg-6 col-xs-12">
-        <h4 class="text-center">Gráfico de linhas</h4>
-          <canvas class="charts" id="myChart3"></canvas>
-        </div>
-   </div>
- 
-    <br>
-    <div class="row justify-content-center">        
-        <div class="col-lg-3 col-xs-12">
-          <h5 class="text-center">Gráfico de pizza</h5>
-          <canvas  class="charts" id="myChart2"></canvas>
-        </div>
-    </div>
- 
-</div>
-  </div>
-</div> -->
-
-
 <script src="chart.js"></script>
 
 <script>
-  //Gráfico de barras
-  // const nova_barra_data = php echo json_encode($nova_barra); ?>;
-  // const nova_barra2_data = php echo json_encode($nova_barra2); ?>;
   const ctx = document.getElementById('myChart');
   new Chart(ctx, {
     type: 'bar',
@@ -368,7 +323,7 @@ $leito_json = json_encode($leito);
     }
   });
   
-  //Gráfico de pizza
+  
   const ctx2 = document.getElementById('myChart2');
   new Chart(ctx2, {
     type: 'pie',
@@ -395,9 +350,6 @@ $leito_json = json_encode($leito);
     }
   });
 
-  //Gráfico de linha
-  // const nova_linha_data = php echo json_encode($nova_linha); ?>;
-  // const nova_linha2_data = php echo json_encode($nova_linha2); ?>;
 
   const ctx3 = document.getElementById('myChart3');
   
@@ -442,15 +394,6 @@ $leito_json = json_encode($leito);
 
 
 
-
-<!-- Outros elementos HTML -->
-
-<footer>
-  <p></p>
-</footer>
-
-
-
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="chart.js"></script>
@@ -459,13 +402,12 @@ $leito_json = json_encode($leito);
 
 // Função para obter o nome do mês
 function getMonthName(monthIndex) {
-    const months = ["Jan", "Fev", "Mar", "Abril", "Maio", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     return months[monthIndex];
 }
 
 // Pegar a data atual
 const currentDate = new Date();
-// Inicializar um array para armazenar os nomes dos últimos cinco meses
 const lastFiveMonths = [];
 
 // Loop para obter os nomes dos últimos cinco meses
@@ -474,47 +416,52 @@ for (let i = 0; i < 5; i++) {
     lastFiveMonths.unshift(getMonthName(monthIndex)); // Adiciona no início do array
 }
 
-// Selecionar o elemento pai dos botões
 const monthButtonsContainer = document.getElementById("monthButtons");
 
-// Adicionar os botões dinamicamente com os nomes dos últimos cinco meses
 lastFiveMonths.forEach((monthName, index) => {
     const button = document.createElement("button");
     button.type = "button";
     button.classList.add("btn", "btn-primary");
     button.textContent = monthName;
-    button.id = monthName.toLowerCase(); // IDs em letras minúsculas
-    monthButtonsContainer.appendChild(button);
+    button.id = monthName; 
+
+     // Adicione um evento de clique ao botão
+button.addEventListener("click", function() {
+    const monthClicked = this.id;
+    const currentURL = window.location.href;
+
+    // Verifica se já existe um parâmetro 'mes' na URL
+    if (currentURL.indexOf("?mes=") !== -1) {
+        // Se já existe, substitui o valor do parâmetro 'mes'
+        const updatedURL = currentURL.replace(/(mes=)[^\&]+/, '$1' + monthClicked);
+        // Redireciona para a nova URL
+        window.location.href = updatedURL;
+    } else {
+        // Se não existe, adiciona o parâmetro 'mes' à URL
+        const updatedURL = `${currentURL}?mes=${monthClicked}`;
+        // Redireciona para a nova URL
+        window.location.href = updatedURL;
+    }
+    
+    // // Atualiza o gráfico após a URL ser atualizada
+    // atualizarGrafico(monthClicked);
 });
 
+// // Função para atualizar o gráfico com os dados incorporados na página HTML
+// var dadosGrafico = 
+// function atualizarGrafico(mes) {
+//     myChart5.data.labels = Object.keys(dadosGrafico);
+//     myChart5.data.datasets[0].data = Object.values(dadosGrafico).map(eletivas);
+//     myChart5.data.datasets[1].data = Object.values(dadosGrafico).map(urgencias);
+//     myChart5.update();
+// }
+
+    monthButtonsContainer.appendChild(button);
+});
 </script>
 
-<script>
-  // Script para o menu hamburguer
-  document.addEventListener('DOMContentLoaded', function () {
-    const hamburger = document.querySelector('.hamburger-menu');
-    const sidebar = document.querySelector('.sidebar');
 
-    hamburger.addEventListener('click', function () {
-      sidebar.classList.toggle('active');
-    });
-  });
-</script>
 
-<!-- <script>
-  // Script para o acordeão
-  document.querySelectorAll('.accordion-button').forEach(button => {
-    button.addEventListener('click', () => {
-      const target = button.getAttribute('data-bs-target');
-      const collapseElements = document.querySelectorAll('.accordion-collapse');
-      collapseElements.forEach(collapse => {
-        if (collapse.id !== target) {
-          collapse.classList.remove('collapse');
-        }
-      });
-    });
-  });
-</script> -->
 
 </body>
 </html>

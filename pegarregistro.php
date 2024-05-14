@@ -21,11 +21,35 @@ class PuxarFuncoes {
 
         public function pegarstatus() {
             try {
-                $sql= "SELECT status, COUNT(*) AS quantidade FROM procedimentos GROUP BY status ";
+                if(isset($_GET['mes'])) {
+                    $monthMap = array(
+                        "Jan" => 1,
+                        "Feb" => 2,
+                        "Mar" => 3,
+                        "Apr" => 4,
+                        "May" => 5,
+                        "Jun" => 6,
+                        "Jul" => 7,
+                        "Aug" => 8,
+                        "Sep" => 9,
+                        "Oct" => 10,
+                        "Nov" => 11,
+                        "Dec" => 12
+                    );
+                    $mesClicadoAbbr = $_GET['mes'];
+                    $mesClicado = $monthMap[$mesClicadoAbbr];
+                $sql= "SELECT status, COUNT(*) AS quantidade FROM procedimentos as proc WHERE MONTH(proc.data)=$mesClicado GROUP BY status ";
                 $stmt = $this->pdo->prepare($sql);
                 $stmt->execute();
                 $resultados = $stmt->fetchAll(\PDO::FETCH_ASSOC);
                 return $resultados;
+                }else{
+                    $sql= "SELECT status, COUNT(*) AS quantidade FROM procedimentos as proc GROUP BY status ";
+                    $stmt = $this->pdo->prepare($sql);
+                    $stmt->execute();
+                    $resultados = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                    return $resultados;
+                }
             } catch (\PDOException $e) {
                 throw $e;
             }
@@ -33,11 +57,35 @@ class PuxarFuncoes {
 
         public function pegarQuantidadeConcluidos() {
             try {
+                if(isset($_GET['mes'])) {
+                    $monthMap = array(
+                        "Jan" => 1,
+                        "Feb" => 2,
+                        "Mar" => 3,
+                        "Apr" => 4,
+                        "May" => 5,
+                        "Jun" => 6,
+                        "Jul" => 7,
+                        "Aug" => 8,
+                        "Sep" => 9,
+                        "Oct" => 10,
+                        "Nov" => 11,
+                        "Dec" => 12
+                    );
+                    $mesClicadoAbbr = $_GET['mes'];
+                    $mesClicado = $monthMap[$mesClicadoAbbr];
+                $sql = "SELECT COUNT(*) AS quantidade FROM procedimentos as proc WHERE status = 'Concluído' AND MONTH(proc.data)=$mesClicado";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute();
+                $resultado = $stmt->fetchColumn(); // Apenas uma coluna é retornada
+                return $resultado;
+                }else{
                 $sql = "SELECT COUNT(*) AS quantidade FROM procedimentos WHERE status = 'Concluído'";
                 $stmt = $this->pdo->prepare($sql);
                 $stmt->execute();
                 $resultado = $stmt->fetchColumn(); // Apenas uma coluna é retornada
                 return $resultado;
+                }
             } catch (\PDOException $e) {
                 throw $e;
             }
@@ -45,11 +93,35 @@ class PuxarFuncoes {
 
         public function pegarQuantidadeEmAndamento() {
             try {
-                $sql = "SELECT COUNT(*) AS quantidade FROM procedimentos WHERE status = 'Em andamento'";
+                if(isset($_GET['mes'])) {
+                    $monthMap = array(
+                        "Jan" => 1,
+                        "Feb" => 2,
+                        "Mar" => 3,
+                        "Apr" => 4,
+                        "May" => 5,
+                        "Jun" => 6,
+                        "Jul" => 7,
+                        "Aug" => 8,
+                        "Sep" => 9,
+                        "Oct" => 10,
+                        "Nov" => 11,
+                        "Dec" => 12
+                    );
+                    $mesClicadoAbbr = $_GET['mes'];
+                    $mesClicado = $monthMap[$mesClicadoAbbr];
+                $sql = "SELECT COUNT(*) AS quantidade FROM procedimentos as proc WHERE status = 'Em andamento' AND MONTH(proc.data)=$mesClicado";
                 $stmt = $this->pdo->prepare($sql);
                 $stmt->execute();
                 $resultado = $stmt->fetchColumn(); // Apenas uma coluna é retornada
                 return $resultado;
+                }else{
+                $sql = "SELECT COUNT(*) AS quantidade FROM procedimentos as proc WHERE status = 'Em andamento'";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute();
+                $resultado = $stmt->fetchColumn(); // Apenas uma coluna é retornada
+                return $resultado;
+                }
             } catch (\PDOException $e) {
                 throw $e;
             }
@@ -57,11 +129,35 @@ class PuxarFuncoes {
         
         public function pegarQuantidadePendentes() {
             try {
-                $sql = "SELECT COUNT(*) AS quantidade FROM procedimentos WHERE status = 'Pendente'";
+                if(isset($_GET['mes'])) {
+                    $monthMap = array(
+                        "Jan" => 1,
+                        "Feb" => 2,
+                        "Mar" => 3,
+                        "Apr" => 4,
+                        "May" => 5,
+                        "Jun" => 6,
+                        "Jul" => 7,
+                        "Aug" => 8,
+                        "Sep" => 9,
+                        "Oct" => 10,
+                        "Nov" => 11,
+                        "Dec" => 12
+                    );
+                    $mesClicadoAbbr = $_GET['mes'];
+                    $mesClicado = $monthMap[$mesClicadoAbbr];
+                $sql = "SELECT COUNT(*) AS quantidade FROM procedimentos as proc WHERE status = 'Pendente' AND MONTH(proc.data)=$mesClicado";
                 $stmt = $this->pdo->prepare($sql);
                 $stmt->execute();
                 $resultado = $stmt->fetchColumn(); // Apenas uma coluna é retornada
                 return $resultado;
+                }else{
+                    $sql = "SELECT COUNT(*) AS quantidade FROM procedimentos as proc WHERE status = 'Pendente'";
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute();
+                $resultado = $stmt->fetchColumn(); // Apenas uma coluna é retornada
+                return $resultado;
+                }
             } catch (\PDOException $e) {
                 throw $e;
             }
@@ -96,6 +192,42 @@ class PuxarFuncoes {
         public function cirurgiasporsetor(){
 
             try{   
+                if(isset($_GET['mes'])) {
+                    $monthMap = array(
+                        "Jan" => 1,
+                        "Feb" => 2,
+                        "Mar" => 3,
+                        "Apr" => 4,
+                        "May" => 5,
+                        "Jun" => 6,
+                        "Jul" => 7,
+                        "Aug" => 8,
+                        "Sep" => 9,
+                        "Oct" => 10,
+                        "Nov" => 11,
+                        "Dec" => 12
+                    );
+                    $mesClicadoAbbr = $_GET['mes'];
+                    $mesClicado = $monthMap[$mesClicadoAbbr];
+                    $sql ="SELECT
+                    seto.nome_setor as setor ,
+                    COUNT(proc.id_cirugia) AS total_cirurgias
+                FROM
+                    centrocirurgico.procedimentos AS proc
+                INNER JOIN
+                    centrocirurgico.setores AS seto ON proc.id_setores = seto.id
+                INNER JOIN
+                    centrocirurgico.cirurgias AS ciru ON proc.id_cirugia = ciru.id
+                    WHERE MONTH(proc.data) = $mesClicado
+                GROUP BY
+                    seto.nome_setor;";
+                    
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute();
+                $resultado = $stmt->fetchAll(); // Apenas uma coluna é retornada
+     
+                return $resultado;
+                }else{
                     $sql ="SELECT
                     seto.nome_setor as setor ,
                     COUNT(proc.id_cirugia) AS total_cirurgias
@@ -113,6 +245,7 @@ class PuxarFuncoes {
                 $resultado = $stmt->fetchAll(); // Apenas uma coluna é retornada
      
                 return $resultado;
+                }
 
             } catch (\PDOException $e) {
                 throw $e;
@@ -171,7 +304,24 @@ class PuxarFuncoes {
 
         
       public function pegarinfo() {
-        try {
+            try{   
+                if(isset($_GET['mes'])) {
+                    $monthMap = array(
+                        "Jan" => 1,
+                        "Feb" => 2,
+                        "Mar" => 3,
+                        "Apr" => 4,
+                        "May" => 5,
+                        "Jun" => 6,
+                        "Jul" => 7,
+                        "Aug" => 8,
+                        "Sep" => 9,
+                        "Oct" => 10,
+                        "Nov" => 11,
+                        "Dec" => 12
+                    );
+                    $mesClicadoAbbr = $_GET['mes'];
+                    $mesClicado = $monthMap[$mesClicadoAbbr];
             $sql = "SELECT
             pac.id_procedimentos as id,
             pac.nome as paciente,
@@ -183,7 +333,8 @@ class PuxarFuncoes {
             INNER JOIN procedimentos as proc
             ON proc.id = pac.id_procedimentos
             INNER JOIN setores as seto
-            ON proc.id_setores = seto.id" ;
+            ON proc.id_setores = seto.id
+            WHERE MONTH(proc.data)=$mesClicado" ;
 
                     $stmt = $this->pdo->prepare($sql);
                     // Executa a consulta SQL
@@ -192,14 +343,34 @@ class PuxarFuncoes {
                     $resultados = $stmt->fetchAll(\PDO::FETCH_ASSOC);
                     // Retorna os resultados
                     return $resultados;
+                }else{
+                    $sql = "SELECT
+                    pac.id_procedimentos as id,
+                    pac.nome as paciente,
+                    seto.nome_setor as setor,
+                    proc.leito,
+                    proc.status
                     
+                    FROM centrocirurgico.pacientes as pac 
+                    INNER JOIN procedimentos as proc
+                    ON proc.id = pac.id_procedimentos
+                    INNER JOIN setores as seto
+                    ON proc.id_setores = seto.id" ;
+        
+                            $stmt = $this->pdo->prepare($sql);
+                            // Executa a consulta SQL
+                            $stmt->execute();
+                            // Obtém os resultados da consulta como um array associativo
+                            $resultados = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+                            // Retorna os resultados
+                            return $resultados;
+                }
         } catch (\PDOException $e) { // Trata qualquer exceção do tipo PDOException
             // Lança a exceção para ser tratada em outro lugar do código
             throw $e;
         }
     }
-
-
+    
 
         public function pegarnomestatus() {
             try {
