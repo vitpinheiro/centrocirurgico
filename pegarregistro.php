@@ -1,5 +1,6 @@
 <?php
 namespace teste;
+use DateTime;
 
 
 
@@ -300,7 +301,56 @@ class PuxarFuncoes {
           }
       }
     
+      public function cirurgioesPorHora() {
+        try {
+       
+            // Obter a data e hora atual
+            $dataHoraAtual = (new DateTime())->format('Y-m-d H:i:s');
+          
+            $consulta = "
+                SELECT 
+                    cirur.id as id_cirurgiao,
+                    cirur.nome as nome_cirurgiao,
+                    seto.id as id_setores,
+                    horarios.hora_inicio,
+                    horarios.hora_termino,
+                    CASE DAYOFWEEK(horarios.data)
+                    WHEN 1 THEN 'Domingo'
+                    WHEN 2 THEN 'Segunda-feira'
+                    WHEN 3 THEN 'Terça-feira'
+                    WHEN 4 THEN 'Quarta-feira'
+                    WHEN 5 THEN 'Quinta-feira'
+                    WHEN 6 THEN 'Sexta-feira'
+                    WHEN 7 THEN 'Sábado'
+                END as dia_semana,
+                    seto.nome_setor as setor
+                FROM 
+                    horarios_cirurgioes as horarios
+                INNER JOIN 
+                    cirurgioes as cirur ON cirur.id = horarios.id_cirurgiao
+                INNER JOIN 
+                    setores as seto ON seto.id = horarios.id_setores
+                WHERE 
+                horarios.hora_inicio <= :dataHoraAtual
+                
 
+            ";
+    
+            // Preparar a consulta
+            $stmt =  $this->pdo->prepare($consulta);
+    
+            // Executar a consulta com o parâmetro da data atual
+            $stmt->execute(['dataHoraAtual' => $dataHoraAtual]);
+    
+            // Retornar os resultados
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    
+        } catch (\PDOException $e) {
+            
+            throw $e;
+        }
+    }
+    
 
         
       public function pegarinfo() {

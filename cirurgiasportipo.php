@@ -832,72 +832,15 @@ button.addEventListener("click", function() {
         window.location.href = updatedURL;
     }
     
-    // // Atualiza o gráfico após a URL ser atualizada
-    // atualizarGrafico(monthClicked);
 });
 
-// // Função para atualizar o gráfico com os dados incorporados na página HTML
-// var dadosGrafico = 
-// function atualizarGrafico(mes) {
-//     myChart5.data.labels = Object.keys(dadosGrafico);
-//     myChart5.data.datasets[0].data = Object.values(dadosGrafico).map(eletivas);
-//     myChart5.data.datasets[1].data = Object.values(dadosGrafico).map(urgencias);
-//     myChart5.update();
-// }
+
 
     monthButtonsContainer.appendChild(button);
 });
   
 
-// // Função para atualizar a página com os dados do mês selecionado
-// function updatePage(monthName) {
-//     // Construir a URL com base no mês selecionado
-//     const url = `buscar_dados_do_mes.php?mes=${monthName.toLowerCase()}`;
 
-//     // Enviar a requisição AJAX
-//     fetch(url)
-//         .then(response => response.json())
-//         .then(data => {
-//             // Aqui você pode chamar as funções para atualizar os gráficos e tabelas com os dados recebidos
-//             updateChart(data);
-//             updateTable(data);
-//         })
-//         .catch(error => console.error('Erro ao buscar os dados:', error));
-// }
-
-// // Função para atualizar o gráfico
-// function updateChart(data) {
-//     // Atualize o gráfico com os novos dados recebidos
-//       // Recupere o contexto do gráfico
-//       const ctx = document.getElementById('myChart').getContext('2d');
-//       const ctx2 = document.getElementById('myChart2').getContext('2d');
-
-// // Atualize os dados do gráfico
-// myChart.data.labels = data.labels;
-// myChart.data.datasets[0].data = data.values;
-// myChart2.data.labels = data.labels;
-// myChart2.data.datasets[0].data = data.values;
-
-// // Atualize o gráfico
-// myChart.update();
-// myChart2.update();
-// }
-
-// // Função para atualizar a tabela
-// function updateTable(data) {
-//     // Limpe o conteúdo da tabela antes de atualizar
-//     const tableBody = document.getElementById('myTable').getElementsByTagName('tbody')[0];
-//     tableBody.innerHTML = '';
-
-//     // Adicione as novas linhas à tabela
-//     data.forEach(item => {
-//         const newRow = tableBody.insertRow();
-//         const cell1 = newRow.insertCell(0);
-//         const cell2 = newRow.insertCell(1);
-//         cell1.textContent = item.name;
-//         cell2.textContent = item.value;
-//     });
-// }
 
 </script>
 

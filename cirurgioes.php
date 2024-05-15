@@ -6,28 +6,16 @@ include("conexao.php");
 include_once("pegarregistro.php");
 
 $funcoes = new PuxarFuncoes;
-$sql = "SELECT  
-ciru.id_setores as idsetor,
-ciru.nome as nomeciru,
-seto.nome_setor as setor
-FROM cirurgioes as ciru 
-INNER JOIN setores as seto
-ON seto.id = ciru.id_setores
-ORDER BY id_setores ASC";
+$cirurgioes_por_hora = $funcoes->cirurgioesPorHora();
 
-$result = mysqli_query($conn, $sql);
+// Agrupa os cirurgiões por setor
+$cirurgioes_por_setor = [];
+foreach ($cirurgioes_por_hora as $cirurgiao) {
+    $setor = $cirurgiao['setor'];
+    $nome_cirurgiao = $cirurgiao['nome_cirurgiao'];
+    $cirurgioes_por_setor[$setor][] = $nome_cirurgiao;
+}
 
-if ($result && mysqli_num_rows($result) > 0) {
-
-    $cirurgioes_por_setor = array();
-
-    while ($row = mysqli_fetch_assoc($result)) {
-        $setor = $row['setor'];
-        $nome_cirurgiao = $row['nomeciru'];
-        $cirurgioes_por_setor[$setor][] = $nome_cirurgiao;
-
-    }
-  }
 $sql2 = "SELECT seto.nome_setor as setor, COUNT(ciru.id) as num_medicos
     FROM cirurgioes as ciru 
     INNER JOIN setores as seto ON seto.id = ciru.id_setores
@@ -119,36 +107,56 @@ $nummedicos_json = json_encode($nummedicos_array);
 </header>
 
     <main>
-        <div class="container">
-            <h2>Cirurgiões</h2>
-            <div class="row">
-                
-                <div class="col-lg-6 mr-5">
-                    <h6 class="mt-4 mb-0">Médicos por setor:</h6>
-                    
-                    <?php foreach ($cirurgioes_por_setor as $setor => $cirurgioes) { ?>
-                    <div class="accordion" id="accordionPanelsStayOpenExample<?php echo $setor; ?>">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $setor; ?>" aria-expanded="true" aria-controls="panelsStayOpen-collapse<?php echo $setor; ?>">Setor de
-                                    <?php echo $setor; ?>
-                                </button>
-                            </h2>
-                            
-                            <div id="panelsStayOpen-collapse<?php echo $setor; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne">
-                                <div class="accordion-body">
-                                    <ul>
-                                        <?php // Itera sobre os cirurgiões do setor
-                                        foreach ($cirurgioes as $cirurgiao) { ?>
-                                            <li><?php echo $cirurgiao; ?></li> <?php }
-                                        ?>
-                                    </ul>
-                                </div>
+    <div class="container">
+    <h2>Cirurgiões</h2>
+    <div class="row">
+        <div class="col-lg-6 mr-5">
+            <h6 class="mt-4 mb-0">Médicos por setor:</h6>
+            <?php foreach ($cirurgioes_por_setor as $setor => $cirurgioes) { ?>
+                <div class="accordion" id="accordionPanelsStayOpenExample<?php echo $setor; ?>">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $setor; ?>" aria-expanded="true" aria-controls="panelsStayOpen-collapse<?php echo $setor; ?>">Setor de
+                                <?php echo $setor; ?>
+                            </button>
+                        </h2>
+                        
+                        <div id="panelsStayOpen-collapse<?php echo $setor; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne">
+                            <div class="accordion-body">
+                                <ul>
+                                    <?php // Itera sobre os cirurgiões do setor
+                                    foreach ($cirurgioes as $cirurgiao) { ?>
+                                    
+                                        <li><?php echo $cirurgiao; ?>
+                                            <ul>
+                                                <?php 
+                                                // Array associativo para armazenar os horários já exibidos para cada cirurgião
+                                                $horarios_exibidos = [];
+                                                // Itera sobre os horários do cirurgião no setor atual
+                                                foreach ($cirurgioes_por_hora as $horario) {
+                                                    if ($horario['nome_cirurgiao'] === $cirurgiao && $horario['setor'] === $setor && !isset($horarios_exibidos[$horario['hora_inicio']])) { ?>
+                                        <h6><?php echo $horario['dia_semana']; ?></h6>
+                                            
+                                                        <li>
+                                                           Horário:  <?php echo $horario['hora_inicio']; ?> -  <?php echo $horario['hora_termino']; ?>
+                                                        </li>
+                                                        <?php
+                                                        // Marca o horário como exibido
+                                                        $horarios_exibidos[$horario['hora_inicio']] = true;
+                                                    }
+                                                } ?>
+                                            </ul>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    <?php } ?>
                 </div>
+            <?php } ?>
+        </div>
+
+
 
                
 
