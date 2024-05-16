@@ -16,22 +16,28 @@ foreach ($cirurgioes_por_hora as $cirurgiao) {
     $cirurgioes_por_setor[$setor][] = $nome_cirurgiao;
 }
 
+$dataHoraAtual= "2024-05-16 14:21:00";
 $sql2 = "SELECT seto.nome_setor as setor, COUNT(ciru.id) as num_medicos
-    FROM cirurgioes as ciru 
-    INNER JOIN setores as seto ON seto.id = ciru.id_setores
-    GROUP BY ciru.id_setores
-    ORDER BY ciru.id_setores ASC";
+    FROM horarios_cirurgioes as horarios
+    INNER JOIN setores as seto ON seto.id = horarios.id_setores
+    INNER JOIN cirurgioes as ciru ON ciru.id = horarios.id_cirurgiao
+    WHERE 
+        horarios.hora_termino > '$dataHoraAtual'
+        AND horarios.hora_inicio <= '$dataHoraAtual'
+    GROUP BY seto.nome_setor
+";
 
 $result2 = $conn->query($sql2);
 if ($result2 && mysqli_num_rows($result2) > 0) {
-  while ($row2 = mysqli_fetch_assoc($result2)) {
-      $nomesetor_array[] = $row2['setor'];
-      $nummedicos_array[] = $row2['num_medicos'];
-  }
+    while ($row2 = mysqli_fetch_assoc($result2)) {
+        $nomesetor_array[] = $row2['setor'];
+        $nummedicos_array[] = $row2['num_medicos'];
+    }
 }
 
 $nomesetor_json = json_encode($nomesetor_array);
 $nummedicos_json = json_encode($nummedicos_array);
+
 
 
 
@@ -113,7 +119,7 @@ $nummedicos_json = json_encode($nummedicos_array);
         <div class="col-lg-6 mr-5">
             <h6 class="mt-4 mb-0">Médicos por setor:</h6>
             <?php foreach ($cirurgioes_por_setor as $setor => $cirurgioes) { ?>
-                <div class="accordion" id="accordionPanelsStayOpenExample<?php echo $setor; ?>">
+                <div class="accordion mb-4" id="accordionPanelsStayOpenExample<?php echo $setor; ?>">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $setor; ?>" aria-expanded="true" aria-controls="panelsStayOpen-collapse<?php echo $setor; ?>">Setor de
@@ -122,7 +128,7 @@ $nummedicos_json = json_encode($nummedicos_array);
                         </h2>
                         
                         <div id="panelsStayOpen-collapse<?php echo $setor; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne">
-                            <div class="accordion-body">
+                            <div class="accordion-body ">
                                 <ul>
                                     <?php // Itera sobre os cirurgiões do setor
                                     foreach ($cirurgioes as $cirurgiao) { ?>
@@ -135,7 +141,7 @@ $nummedicos_json = json_encode($nummedicos_array);
                                                 // Itera sobre os horários do cirurgião no setor atual
                                                 foreach ($cirurgioes_por_hora as $horario) {
                                                     if ($horario['nome_cirurgiao'] === $cirurgiao && $horario['setor'] === $setor && !isset($horarios_exibidos[$horario['hora_inicio']])) { ?>
-                                        <h6><?php echo $horario['dia_semana']; ?></h6>
+                                        
                                             
                                                         <li>
                                                            Horário:  <?php echo $horario['hora_inicio']; ?> -  <?php echo $horario['hora_termino']; ?>
@@ -167,7 +173,7 @@ $nummedicos_json = json_encode($nummedicos_array);
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
-                                    
+                                Quantidade por setor
                                 </button>
                             </h2>
                             <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
@@ -199,26 +205,32 @@ $nummedicos_json = json_encode($nummedicos_array);
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const ctx = document.getElementById('myChart');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: <?php echo $nomesetor_json;?>,
-                datasets: [{
-                    label: 'Quantidade',
-                    data: <?php echo $nummedicos_json;?>,
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
+    const ctx = document.getElementById('myChart');
+const data = {
+    labels: <?php echo $nomesetor_json;?>,
+    datasets: [{
+        label: 'Quantidade',
+        data: <?php echo $nummedicos_json;?>,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+    }]
+};
+
+new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
             }
-        });
-        
+        }
+    }
+});
+
+
+
         const ctx2 = document.getElementById('myChart2');
         new Chart(ctx2, {
             type: 'pie',

@@ -55,7 +55,63 @@ class PuxarFuncoes {
                 throw $e;
             }
         }
-
+ 
+        // public function pegarTiposConcluidos() {
+        //     try {
+        //         if(isset($_GET['mes'])) {
+        //             $monthMap = array(
+        //                 "Jan" => 1,
+        //                 "Feb" => 2,
+        //                 "Mar" => 3,
+        //                 "Apr" => 4,
+        //                 "May" => 5,
+        //                 "Jun" => 6,
+        //                 "Jul" => 7,
+        //                 "Aug" => 8,
+        //                 "Sep" => 9,
+        //                 "Oct" => 10,
+        //                 "Nov" => 11,
+        //                 "Dec" => 12
+        //             );
+        //             $mesClicadoAbbr = $_GET['mes'];
+        //             $mesClicado = $monthMap[$mesClicadoAbbr];
+        //         $sql = "SELECT 
+        //         ciru.cirurgia AS nome_cirurgia,
+        //         COUNT(proc.id_cirugia) AS quantidade_concluida
+        //     FROM 
+        //         procedimentos AS proc
+        //     INNER JOIN 
+        //         cirurgias AS ciru ON ciru.id = proc.id_cirugia
+        //     WHERE 
+        //         proc.status = 'Concluído'
+        //     GROUP BY 
+        //         ciru.cirurgia AND MONTH(proc.data)=$mesClicado";
+        //         $stmt = $this->pdo->prepare($sql);
+        //         $stmt->execute();
+        //         $resultado = $stmt->fetchColumn(); // Apenas uma coluna é retornada
+        //         return $resultado;
+        //         }else{
+        //         $sql = "SELECT 
+        //         ciru.cirurgia AS nome_cirurgia,
+        //         COUNT(proc.id_cirugia) AS quantidade_concluida
+        //     FROM 
+        //         procedimentos AS proc
+        //     INNER JOIN 
+        //         cirurgias AS ciru ON ciru.id = proc.id_cirugia
+        //     WHERE 
+        //         proc.status = 'Concluído'
+        //     GROUP BY 
+        //         ciru.cirurgia";
+        //         $stmt = $this->pdo->prepare($sql);
+        //         $stmt->execute();
+        //         $resultado = $stmt->fetchAll(); // Apenas uma coluna é retornada
+        //         return $resultado;
+        //         }
+        //     } catch (\PDOException $e) {
+        //         throw $e;
+        //     }
+        // }
+       
         public function pegarQuantidadeConcluidos() {
             try {
                 if(isset($_GET['mes'])) {
@@ -305,8 +361,9 @@ class PuxarFuncoes {
         try {
        
             // Obter a data e hora atual
-            $dataHoraAtual = (new DateTime())->format('Y-m-d H:i:s');
-          
+            $dataHoraAtual = ("2024-05-16 14:21:00");
+            // date('Y-m-d H:i:s');
+          echo $dataHoraAtual;
             $consulta = "
                 SELECT 
                     cirur.id as id_cirurgiao,
@@ -314,15 +371,7 @@ class PuxarFuncoes {
                     seto.id as id_setores,
                     horarios.hora_inicio,
                     horarios.hora_termino,
-                    CASE DAYOFWEEK(horarios.data)
-                    WHEN 1 THEN 'Domingo'
-                    WHEN 2 THEN 'Segunda-feira'
-                    WHEN 3 THEN 'Terça-feira'
-                    WHEN 4 THEN 'Quarta-feira'
-                    WHEN 5 THEN 'Quinta-feira'
-                    WHEN 6 THEN 'Sexta-feira'
-                    WHEN 7 THEN 'Sábado'
-                END as dia_semana,
+                    
                     seto.nome_setor as setor
                 FROM 
                     horarios_cirurgioes as horarios
@@ -331,11 +380,13 @@ class PuxarFuncoes {
                 INNER JOIN 
                     setores as seto ON seto.id = horarios.id_setores
                 WHERE 
-                horarios.hora_inicio <= :dataHoraAtual
+                
+           horarios.hora_termino > :dataHoraAtual
+                AND horarios.hora_inicio <= :dataHoraAtual
                 
 
             ";
-    
+            // AND horarios.hora_termino > :dataHoraAtual
             // Preparar a consulta
             $stmt =  $this->pdo->prepare($consulta);
     
@@ -350,8 +401,9 @@ class PuxarFuncoes {
             throw $e;
         }
     }
-    
+   
 
+    
         
       public function pegarinfo() {
             try{   

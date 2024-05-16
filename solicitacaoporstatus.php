@@ -35,30 +35,6 @@ $setor_json = json_encode($setor);
 $leito_json = json_encode($leito);
 
 
-// Extraia as informações do banco de dados para uso no gráfico
-// 
-//  $labels = array_column($mostrarbanco, 'plano_saude');
-// $datajan = array_column($mostrarbanco, 'quantidade_jan');
-//  $datafev = array_column($mostrarbanco, 'quantidade_fev');
-// $datamar = array_column($mostrarbanco, 'quantidade_mar');
-// $data = array_column($mostrarbanco, 'plano_saude');
-// 
-// Converta os dados para JSON para uso no JavaScript
-// 
-//  $labels_json = json_encode($labels);
-//  $datajan_json = json_encode($datajan);
-//  $datafev_json = json_encode($datafev);
-//  $datamar_json = json_encode($datamar);
-//  $data_json = json_encode($data);
-//  
-// echo ($mostrarbanco);
-
-// // Juntando os arrays
-// $arrayjunto = array_merge($nomeconvenio, $quant);
-// $nova_linha = [3, 5, 4, 6, 8, 9, 10, 12];
-// $nova_barra = [3, 5, 4, 6, 8, 9, 10, 12];
-// $nova_barra2 = [4, 6, 5, 7, 9, 11, 13,14];
-// $nova_linha2 = [6, 8, 6, 8, 9, 12, 14,15];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -196,7 +172,7 @@ $leito_json = json_encode($leito);
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                        
+                        Concluídos
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
@@ -298,14 +274,14 @@ $leito_json = json_encode($leito);
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: <?php echo $status_json; ?>,
+      labels: <?php echo $status_json ;?>,
       datasets: [{
         label: 'quantidade',
         data: <?php echo $quantidades_json; ?>,
         backgroundColor: [ 
-          'green',   
-          'yellow',  
-          'red'     
+          'green',
+          'yellow',
+          'red'  
         ],
         
         borderWidth: 1
