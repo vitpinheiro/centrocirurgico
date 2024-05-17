@@ -14,6 +14,26 @@ $quantidadePendentes = $puxar->pegarQuantidadePendentes();
 
 
 // gráficos
+
+$concluidos = $puxar->pegarConcluidos();
+$tiposciru = array_column($concluidos, 'nome_cirurgia');
+$quant = array_column($concluidos, 'quantidade_concluida');
+$tiposciru_json = json_encode($tiposciru);
+$quant_json = json_encode($quant);
+
+$Emandamento = $puxar->pegarEmandamento();
+$tiposciru2 = array_column($Emandamento, 'nome_cirurgia');
+$quant2 = array_column($Emandamento, 'quantidade_Em_andamento');
+$tiposciru2_json = json_encode($tiposciru2);
+$quant2_json = json_encode($quant2);
+
+$Pendente = $puxar->pegarPendente();
+$tiposciru3 = array_column($Pendente, 'nome_cirurgia');
+$quant3 = array_column($Pendente, 'quantidade_Pendente');
+$tiposciru3_json = json_encode($tiposciru3);
+$quant3_json = json_encode($quant3);
+
+
 $mostrarstatus2 = $puxar->pegarstatus();
 $status = array_column($mostrarstatus2, 'status');
 $quantidades = array_column($mostrarstatus2, 'quantidade');
@@ -91,7 +111,6 @@ $leito_json = json_encode($leito);
                         <a class="dropdown-item" href="solicitacaoporstatus.php">Solicitações por status</a>
                         <a class="dropdown-item" href="cirurgiasportipo.php">Cirurgias por tipo</a>
                         <a class="dropdown-item" href="cirurgioes.php">Cirurgiões</a>
-                        <a class="dropdown-item" href="#">Solicitações por período de tempo</a>
                         <a class="dropdown-item" href="tabelageral.php">Tabela geral</a>
                     </div>
                 </div>
@@ -107,7 +126,7 @@ $leito_json = json_encode($leito);
 
   <div class="container">
     
-    <h2 id="solicitacao" >Solicitações por status</h2>
+    <h2 id="solicitacao">Solicitações por status</h2>
     <div class="btn-group d-flex justify-content-center mt-4" role="group" aria-label="Basic example" id="monthButtons">
 
 </div>
@@ -168,11 +187,11 @@ $leito_json = json_encode($leito);
 
     <br>
     <div class="row justify-content-center">
-        <div class=" col-lg-6 col-md-10 col-sm-12 mb-4 accordion" id="accordionPanelsStayOpenExample1">
+        <div class=" col-lg-6 col-md-10 col-sm-12 mb-4 accordion" id="accordionPanelsStayOpenExample1" >
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                        Concluídos
+                    Concluídos
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
@@ -187,7 +206,7 @@ $leito_json = json_encode($leito);
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
-                        
+                    Em andamento   
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show">
@@ -205,7 +224,7 @@ $leito_json = json_encode($leito);
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
-                        
+                    Pendente    
                     </button>
                 </h2>
                 <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show">
@@ -274,14 +293,12 @@ $leito_json = json_encode($leito);
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: <?php echo $status_json ;?>,
+      labels: <?php echo $tiposciru_json ;?>,
       datasets: [{
         label: 'quantidade',
-        data: <?php echo $quantidades_json; ?>,
+        data: <?php echo $quant_json; ?>,
         backgroundColor: [ 
-          'green',
-          'yellow',
-          'red'  
+          'green',  
         ],
         
         borderWidth: 1
@@ -302,16 +319,14 @@ $leito_json = json_encode($leito);
   
   const ctx2 = document.getElementById('myChart2');
   new Chart(ctx2, {
-    type: 'pie',
+    type: 'bar',
     data: {
-      labels: <?php echo $status_json; ?>,
+      labels: <?php echo $tiposciru3_json; ?>,
       datasets: [{
         label: 'quantidade',
-        data: <?php echo $quantidades_json; ?>,
+        data: <?php echo $quant3_json; ?>,
         backgroundColor: [ 
-          'green',   
-          'yellow',  
-          'red'     
+          'red', 
         ],
         borderWidth: 1
       }
@@ -328,25 +343,18 @@ $leito_json = json_encode($leito);
 
 
   const ctx3 = document.getElementById('myChart3');
-  
   new Chart(ctx3, {
-    type: 'line',
+    type: 'bar',
     data: {
-      labels: <?php echo $status_json;?>,
+      labels: <?php echo $tiposciru2_json;?>,
       datasets: [
         {
         label: ' quantidade',
-        data: <?php echo $quantidades_json;?>,
+        data: <?php echo $quant2_json;?>,
         borderWidth: 1,
-        borderColor: [ 
-            'green',  
-            'yellow',  
-            'red'      
-          ],
+    
           backgroundColor: [ 
-            'rgba(0, 255, 0, 2)',   
-            'rgba(255, 255, 0, 2)',
-            'rgba(255, 0, 0, 2)',   
+            'yellow',      
           ]
       }
     ]
@@ -382,58 +390,39 @@ function getMonthName(monthIndex) {
     return months[monthIndex];
 }
 
-// Pegar a data atual
-const currentDate = new Date();
-const lastFiveMonths = [];
-
-// Loop para obter os nomes dos últimos cinco meses
-for (let i = 0; i < 5; i++) {
-    const monthIndex = (currentDate.getMonth() - i + 12) % 12; // Para tratar o ano novo
-    lastFiveMonths.unshift(getMonthName(monthIndex)); // Adiciona no início do array
-}
-
 const monthButtonsContainer = document.getElementById("monthButtons");
 
-lastFiveMonths.forEach((monthName, index) => {
+// Loop para obter os nomes dos meses de janeiro até dezembro
+for (let i = 0; i < 12; i++) {
+    const monthName = getMonthName(i);
+
     const button = document.createElement("button");
     button.type = "button";
     button.classList.add("btn", "btn-primary");
     button.textContent = monthName;
-    button.id = monthName; 
+    button.id = monthName;
 
-     // Adicione um evento de clique ao botão
-button.addEventListener("click", function() {
-    const monthClicked = this.id;
-    const currentURL = window.location.href;
+    // Adicione um evento de clique ao botão
+    button.addEventListener("click", function () {
+        const monthClicked = this.id;
+        const currentURL = window.location.href;
 
-    // Verifica se já existe um parâmetro 'mes' na URL
-    if (currentURL.indexOf("?mes=") !== -1) {
-        // Se já existe, substitui o valor do parâmetro 'mes'
-        const updatedURL = currentURL.replace(/(mes=)[^\&]+/, '$1' + monthClicked);
-        // Redireciona para a nova URL
-        window.location.href = updatedURL;
-    } else {
-        // Se não existe, adiciona o parâmetro 'mes' à URL
-        const updatedURL = `${currentURL}?mes=${monthClicked}`;
-        // Redireciona para a nova URL
-        window.location.href = updatedURL;
-    }
-    
-    // // Atualiza o gráfico após a URL ser atualizada
-    // atualizarGrafico(monthClicked);
-});
-
-// // Função para atualizar o gráfico com os dados incorporados na página HTML
-// var dadosGrafico = 
-// function atualizarGrafico(mes) {
-//     myChart5.data.labels = Object.keys(dadosGrafico);
-//     myChart5.data.datasets[0].data = Object.values(dadosGrafico).map(eletivas);
-//     myChart5.data.datasets[1].data = Object.values(dadosGrafico).map(urgencias);
-//     myChart5.update();
-// }
+        // Verifica se já existe um parâmetro 'mes' na URL
+        if (currentURL.indexOf("?mes=") !== -1) {
+            // Se já existe, substitui o valor do parâmetro 'mes'
+            const updatedURL = currentURL.replace(/(mes=)[^\&]+/, '$1' + monthClicked);
+            // Redireciona para a nova URL
+            window.location.href = updatedURL;
+        } else {
+            // Se não existe, adiciona o parâmetro 'mes' à URL
+            const updatedURL = `${currentURL}?mes=${monthClicked}`;
+            // Redireciona para a nova URL
+            window.location.href = updatedURL;
+        }
+    });
 
     monthButtonsContainer.appendChild(button);
-});
+}
 </script>
 
 

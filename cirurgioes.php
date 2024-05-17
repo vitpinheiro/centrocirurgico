@@ -16,7 +16,8 @@ foreach ($cirurgioes_por_hora as $cirurgiao) {
     $cirurgioes_por_setor[$setor][] = $nome_cirurgiao;
 }
 
-$dataHoraAtual= "2024-05-16 14:21:00";
+date_default_timezone_set('America/Sao_Paulo');
+$dataHoraAtual = date('Y-m-d H:i:s');
 $sql2 = "SELECT seto.nome_setor as setor, COUNT(ciru.id) as num_medicos
     FROM horarios_cirurgioes as horarios
     INNER JOIN setores as seto ON seto.id = horarios.id_setores
@@ -60,25 +61,19 @@ $nummedicos_json = json_encode($nummedicos_array);
             padding: 5px;
         }
         
-        /* Centralizar o conteúdo horizontalmente */
-        /* Diminuir o conteúdo e centralizá-lo */
+        
         .content {
-            margin-top: 20px; /* Espaçamento superior */
+            margin-top: 20px; 
         }
 
-        /* Estilizar o dropdown */
-        /* Estilizar o dropdown */
+        
         .dropdown-menu {
             /* Adicionando sombra e borda arredondada */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
-            /* Adicionando uma cor de fundo */
             background-color: #ffffff;
-            /* Definindo a largura do dropdown */
             min-width: 200px;
-            /* Ajustando o espaçamento interno */
             padding: 10px;
-            /* Definindo a posição como relativa para garantir que o dropdown esteja acima do conteúdo */
             position: relative;
         }
 
@@ -86,7 +81,7 @@ $nummedicos_json = json_encode($nummedicos_array);
     </style>
 </head>
 <body>
-<header>
+<header id="resultados">
     <div class="container">
         <div class="row align-items-center">
             <div class="col">
@@ -100,22 +95,22 @@ $nummedicos_json = json_encode($nummedicos_array);
                         <a class="dropdown-item" href="solicitacaoporstatus.php">Solicitações por status</a>
                         <a class="dropdown-item" href="cirurgiasportipo.php">Cirurgias por tipo</a>
                         <a class="dropdown-item" href="cirurgioes.php">Cirurgiões</a>
-                        <a class="dropdown-item" href="#">Solicitações por período de tempo</a>
                         <a class="dropdown-item" href="tabelageral.php">Tabela geral</a>
                     </div>
                 </div>
             </div>
             <div class="col-auto">
-                <!-- Adicione aqui quaisquer outros elementos que você deseje alinhar -->
+             
             </div>
         </div>
     </div>
 </header>
 
     <main>
+
     <div class="container">
     <h2>Cirurgiões</h2>
-    <div class="row">
+    <div  class="row">
         <div class="col-lg-6 mr-5">
             <h6 class="mt-4 mb-0">Médicos por setor:</h6>
             <?php foreach ($cirurgioes_por_setor as $setor => $cirurgioes) { ?>
@@ -130,15 +125,14 @@ $nummedicos_json = json_encode($nummedicos_array);
                         <div id="panelsStayOpen-collapse<?php echo $setor; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne">
                             <div class="accordion-body ">
                                 <ul>
-                                    <?php // Itera sobre os cirurgiões do setor
+                                    <?php 
                                     foreach ($cirurgioes as $cirurgiao) { ?>
                                     
                                         <li><?php echo $cirurgiao; ?>
                                             <ul>
                                                 <?php 
-                                                // Array associativo para armazenar os horários já exibidos para cada cirurgião
+                                              
                                                 $horarios_exibidos = [];
-                                                // Itera sobre os horários do cirurgião no setor atual
                                                 foreach ($cirurgioes_por_hora as $horario) {
                                                     if ($horario['nome_cirurgiao'] === $cirurgiao && $horario['setor'] === $setor && !isset($horarios_exibidos[$horario['hora_inicio']])) { ?>
                                         
@@ -147,7 +141,6 @@ $nummedicos_json = json_encode($nummedicos_array);
                                                            Horário:  <?php echo $horario['hora_inicio']; ?> -  <?php echo $horario['hora_termino']; ?>
                                                         </li>
                                                         <?php
-                                                        // Marca o horário como exibido
                                                         $horarios_exibidos[$horario['hora_inicio']] = true;
                                                     }
                                                 } ?>
@@ -161,11 +154,6 @@ $nummedicos_json = json_encode($nummedicos_array);
                 </div>
             <?php } ?>
         </div>
-
-
-
-               
-
 
 
                 <div class="col-lg-5  mt-5">
@@ -251,19 +239,8 @@ new Chart(ctx, {
             }
         });
 
-        // function filtrarSetor() {
-        //     var setorSelecionado = document.getElementById("setorSelect").value;
-        //     var accordions = document.querySelectorAll('.accordion');
+        
 
-        //     // Oculta todos os accordions e exibe apenas o do setor selecionado
-        //     accordions.forEach(function(accordion) {
-        //         if (accordion.id === 'accordionPanelsStayOpenExample' + setorSelecionado) {
-        //             accordion.style.display = 'block';
-        //         } else {
-        //             accordion.style.display = 'none';
-        //         }
-        //     });
-        // }
     </script>
 
     <script src="node_modules\@popperjs\core\dist\umd\popper.min.js"></script>

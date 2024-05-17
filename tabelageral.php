@@ -56,30 +56,16 @@ $result = $conn->query($sql);
     padding: 5px;
     font-family: sans-serif;
   }
- 
-
-     /* Centralizar o conteúdo horizontalmente */
-    
-
-        /* Diminuir o conteúdo e centralizá-lo */
         .content {
-            margin-top: 20px; /* Espaçamento superior */
+            margin-top: 20px; 
             
         }
-
-        /* Estilizar o dropdown */
-        /* Estilizar o dropdown */
 .dropdown-menu {
-    /* Adicionando sombra e borda arredondada */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    /* Adicionando uma cor de fundo */
     background-color: #ffffff;
-    /* Definindo a largura do dropdown */
     min-width: 200px;
-    /* Ajustando o espaçamento interno */
     padding: 10px;
-    /* Definindo a posição como relativa para garantir que o dropdown esteja acima do conteúdo */
     position: relative;
 }
 
@@ -113,13 +99,13 @@ a{
 
     .custom-table th:first-child,
     .custom-table td:first-child {
-        border-left: none; /* Remove a borda esquerda do primeiro td e th */
+        border-left: none; 
         
     }
 
     .custom-table th:last-child,
     .custom-table td:last-child {
-        border-right: none; /* Remove a borda direita do último td e th */
+        border-right: none; 
     }
 </style>
 
@@ -141,13 +127,12 @@ a{
                         <a class="dropdown-item" href="solicitacaoporstatus.php">Solicitações por status</a>
                         <a class="dropdown-item" href="cirurgiasportipo.php">Cirurgias por tipo</a>
                         <a class="dropdown-item" href="cirurgioes.php">Cirurgiões</a>
-                        <a class="dropdown-item" href="#">Solicitações por período de tempo</a>
                         <a class="dropdown-item" href="tabelageral.php">Tabela geral</a>
                     </div>
                 </div>
             </div>
             <div class="col-auto">
-                <!-- Adicione aqui quaisquer outros elementos que você deseje alinhar -->
+              
             </div>
         </div>
     </div>

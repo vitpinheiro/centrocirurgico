@@ -22,45 +22,32 @@ if(isset($_GET['mes'])) {
         "Nov" => 11,
         "Dec" => 12
     );
-    $mesClicadoAbbr = $_GET['mes'];
-    $mesClicado = $monthMap[$mesClicadoAbbr];
-$sql ="SELECT 
-        -- proc.id as idprocedimento,
-        -- proc.id_cirugia,
-        -- ciru.id as idcirurgia,
-
-        ciru.cirurgia as ciru1,
-        
-        COUNT(id_cirugia) AS quantidade_total
-            FROM procedimentos as proc
-            INNER JOIN cirurgias as ciru ON ciru.id = proc.id_cirugia
-            WHERE MONTH(proc.data) = $mesClicado
-            GROUP BY proc.id_cirugia";
+$mesClicadoAbbr = $_GET['mes'];
+$mesClicado = $monthMap[$mesClicadoAbbr];
+$sql ="SELECT ciru.cirurgia as ciru1,
+    COUNT(id_cirugia) AS quantidade_total
+    FROM procedimentos as proc
+    INNER JOIN cirurgias as ciru ON ciru.id = proc.id_cirugia
+    WHERE MONTH(proc.data) = $mesClicado
+    GROUP BY proc.id_cirugia";
                     
-            $result = mysqli_query($conn, $sql);
-            $row=mysqli_fetch_assoc($result);
+$result = mysqli_query($conn, $sql);
+$row=mysqli_fetch_assoc($result);
 
-            if ($result && mysqli_num_rows($result) > 0){
-                while ($row = mysqli_fetch_assoc($result))
-                {
-                    $cirurgias_array[] = $row['ciru1'];
-                    $quantcirurgias_array[] = $row['quantidade_total'];
-                }
-            }
-            $cirurgias_json = json_encode($cirurgias_array);
-            $quantcirurgias_json = json_encode($quantcirurgias_array);
+if ($result && mysqli_num_rows($result) > 0){
+    while ($row = mysqli_fetch_assoc($result))
+        {$cirurgias_array[] = $row['ciru1'];
+        $quantcirurgias_array[] = $row['quantidade_total'];}
         }
-        else {
-            $sql ="SELECT 
-            -- proc.id as idprocedimento,
-            -- proc.id_cirugia,
-            -- ciru.id as idcirurgia,
-    
-            ciru.cirurgia as ciru1,
-            COUNT(id_cirugia) AS quantidade_total
-                FROM procedimentos as proc
-                INNER JOIN cirurgias as ciru ON ciru.id = proc.id_cirugia
-                GROUP BY proc.id_cirugia";
+        $cirurgias_json = json_encode($cirurgias_array);
+        $quantcirurgias_json = json_encode($quantcirurgias_array);
+        }
+else {
+$sql ="SELECT ciru.cirurgia as ciru1,
+    COUNT(id_cirugia) AS quantidade_total
+    FROM procedimentos as proc
+    INNER JOIN cirurgias as ciru ON ciru.id = proc.id_cirugia
+    GROUP BY proc.id_cirugia";
                         
                 $result = mysqli_query($conn, $sql);
                 $row=mysqli_fetch_assoc($result);
@@ -240,7 +227,7 @@ while($row3 = $result3->fetch_assoc()) {
    $nomesetor_json = json_encode($nomesetor);        
    $totalciru = array_column($cirurgiasporsetor, 'total_cirurgias');
    $totalciru_json = json_encode($totalciru);        
-// Consulta SQL
+
 $sql4 = "SELECT 
             cirur.cirurgia,
             CONCAT(MONTHNAME(proc.data)) AS mes,
@@ -298,49 +285,17 @@ h1{
   text-align: center;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-/* 
-h2 a{
-  text-decoration: none;
-  color:white;
-}
-
-.charts {
-width: 50px;
-height: 50px;
-background-color: white;
-}
-
-#myChart{
-width: 10em;
-height: 90em;
-/*  */
-
-
 
 *{
     padding: 5px;
   }
  
-
-     /* Centralizar o conteúdo horizontalmente */
-    
-
-        /* Diminuir o conteúdo e centralizá-lo */
-       
-
-        /* Estilizar o dropdown */
-        /* Estilizar o dropdown */
 .dropdown-menu {
-    /* Adicionando sombra e borda arredondada */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    /* Adicionando uma cor de fundo */
     background-color: #ffffff;
-    /* Definindo a largura do dropdown */
     min-width: 200px;
-    /* Ajustando o espaçamento interno */
     padding: 10px;
-    /* Definindo a posição como relativa para garantir que o dropdown esteja acima do conteúdo */
     position: relative;
 }
 
@@ -348,12 +303,12 @@ height: 90em;
   background-color: black;
 }
 .carousel-control-next-icon{
-   background-color: black;
+  background-color: black;
 }
 
 .hr {
-        border: 1px solid black; /* Define a largura e a cor da borda */
-    }
+  border: 1px solid black;
+}
 
 </style>
 
@@ -374,13 +329,12 @@ height: 90em;
                         <a class="dropdown-item" href="solicitacaoporstatus.php">Solicitações por status</a>
                         <a class="dropdown-item" href="cirurgiasportipo.php">Cirurgias por tipo</a>
                         <a class="dropdown-item" href="cirurgioes.php">Cirurgiões</a>
-                        <a class="dropdown-item" href="#">Solicitações por período de tempo</a>
                         <a class="dropdown-item" href="tabelageral.php">Tabela geral</a>
                     </div>
                 </div>
             </div>
             <div class="col-auto">
-                <!-- Adicione aqui quaisquer outros elementos que você deseje alinhar -->
+            
             </div>
         </div>
     </div>
@@ -403,10 +357,10 @@ height: 90em;
 
         for ($i = 0; $i < $total_slides; $i++) {
             echo '<div class="carousel-item';
-            if ($i === 0) echo ' active'; // Adiciona a classe 'active' ao primeiro item
+            if ($i === 0) echo ' active';
             echo '"><div class="row">';
             
-            // Itera sobre os itens a serem exibidos neste slide
+
             for ($j = $i * $items_per_slide; $j < min(($i + 1) * $items_per_slide, $total_items); $j++) {
                 echo '<div class="col-4">';
                 echo '<div class="card border-left-success shadow h-80 py-1">';
@@ -795,49 +749,41 @@ function getMonthName(monthIndex) {
     return months[monthIndex];
 }
 
-// Pegar a data atual
-const currentDate = new Date();
-const lastFiveMonths = [];
-
-// Loop para obter os nomes dos últimos cinco meses
-for (let i = 0; i < 5; i++) {
-    const monthIndex = (currentDate.getMonth() - i + 12) % 12; // Para tratar o ano novo
-    lastFiveMonths.unshift(getMonthName(monthIndex)); // Adiciona no início do array
-}
-
 const monthButtonsContainer = document.getElementById("monthButtons");
 
-lastFiveMonths.forEach((monthName, index) => {
+// Loop para obter os nomes dos meses de janeiro até dezembro
+for (let i = 0; i < 12; i++) {
+    const monthName = getMonthName(i);
+
     const button = document.createElement("button");
     button.type = "button";
     button.classList.add("btn", "btn-primary");
     button.textContent = monthName;
-    button.id = monthName; 
+    button.id = monthName;
 
-     // Adicione um evento de clique ao botão
-button.addEventListener("click", function() {
-    const monthClicked = this.id;
-    const currentURL = window.location.href;
+    // Adicione um evento de clique ao botão
+    button.addEventListener("click", function () {
+        const monthClicked = this.id;
+        const currentURL = window.location.href;
 
-    // Verifica se já existe um parâmetro 'mes' na URL
-    if (currentURL.indexOf("?mes=") !== -1) {
-        // Se já existe, substitui o valor do parâmetro 'mes'
-        const updatedURL = currentURL.replace(/(mes=)[^\&]+/, '$1' + monthClicked);
-        // Redireciona para a nova URL
-        window.location.href = updatedURL;
-    } else {
-        // Se não existe, adiciona o parâmetro 'mes' à URL
-        const updatedURL = `${currentURL}?mes=${monthClicked}`;
-        // Redireciona para a nova URL
-        window.location.href = updatedURL;
-    }
-    
-});
-
-
+        // Verifica se já existe um parâmetro 'mes' na URL
+        if (currentURL.indexOf("?mes=") !== -1) {
+            // Se já existe, substitui o valor do parâmetro 'mes'
+            const updatedURL = currentURL.replace(/(mes=)[^\&]+/, '$1' + monthClicked);
+            // Redireciona para a nova URL
+            window.location.href = updatedURL;
+        } else {
+            // Se não existe, adiciona o parâmetro 'mes' à URL
+            const updatedURL = `${currentURL}?mes=${monthClicked}`;
+            // Redireciona para a nova URL
+            window.location.href = updatedURL;
+        }
+    });
 
     monthButtonsContainer.appendChild(button);
-});
+}
+
+
   
 
 
