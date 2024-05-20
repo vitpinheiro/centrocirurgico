@@ -551,6 +551,27 @@ class PuxarFuncoes
             throw $e;
         }
     }
+    public function pegarciruteste()
+    {
+        try {
+            $sql = "SELECT ciru.cirurgia as nome_cirugia,
+            COUNT(id_cirugia) AS quantidade_total,
+            CONCAT(DATE(proc.data)) AS mes,
+             proc.prioridade as prioridade
+            FROM procedimentos as proc
+            INNER JOIN cirurgias as ciru ON ciru.id = proc.id_cirugia
+            GROUP BY proc.id_cirugia
+            ORDER BY MONTH(proc.data)";
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            $resultado = $stmt->fetchAll(); // Apenas uma coluna é retornada
+            return $resultado;
+
+        } catch (\PDOException $e) {
+            throw $e;
+        }
+    }
 
     public function cirurgioesPorHora()
     {
