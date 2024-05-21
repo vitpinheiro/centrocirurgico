@@ -3,34 +3,45 @@ namespace teste;
 include("conexao.php");
 include_once("pegarregistro.php");            
 $puxar = new PuxarFuncoes;
-
 $teste = $puxar->pegarciruteste();
+
 // $tiposciru = array_column($teste, 'nome_cirurgia');
 // print_r($tiposciru);
 // $quant = array_column($teste, 'quantidade_total');
 // $tiposciru_json = json_encode($tiposciru);
 // $quant_json = json_encode($quant);
-$sql ="SELECT ciru.cirurgia as nome_cirugia,
-COUNT(id_cirugia) AS quantidade_total,
-CONCAT(DATE(proc.data)) AS mes,
- proc.prioridade as prioridade
-FROM procedimentos as proc
-INNER JOIN cirurgias as ciru ON ciru.id = proc.id_cirugia
-GROUP BY proc.id_cirugia
-ORDER BY MONTH(proc.data)";
-                    
-$result = mysqli_query($conn, $sql);
-$row=mysqli_fetch_assoc($result);
 
-if ($result && mysqli_num_rows($result) > 0){
-    while ($row = mysqli_fetch_assoc($result))
-        {$cirurgias_array[] = $row['nome_cirurgia'];
-        $quantcirurgias_array[] = $row['quantidade_total'];}
-        }
-        $tiposciru_json = json_encode($cirurgias_array);
-        $quant_json = json_encode($quantcirurgias_array);
-   
-?>
+$sql ="SELECT ciru.cirurgia as nome_cirugia,
+        COUNT(id_cirugia) AS quantidade_total,
+        CONCAT(DATE(proc.data)) AS mes,
+        proc.prioridade as prioridade
+        FROM procedimentos as proc
+            INNER JOIN cirurgias as ciru ON ciru.id = proc.id_cirugia
+                GROUP BY proc.id_cirugia
+                ORDER BY MONTH(proc.data)";
+                    
+    $result = mysqli_query($conn, $sql);
+    $row=mysqli_fetch_assoc($result);
+
+    print_r($row);
+
+        if ($result && mysqli_num_rows($result) > 0){
+
+            while ($row = mysqli_fetch_assoc($result)){
+
+                $cirurgias_array[] = $row['nome_cirugia'];
+                $quantcirurgias_array[] = $row['quantidade_total'];
+                $data_array[] = $row['mes'];
+            }
+                }
+
+                $tiposciru = json_encode($cirurgias_array);
+                echo($tiposciru);
+                $quant_json = json_encode($quantcirurgias_array);
+                $data_json = json_encode($data_array);
+                print_r($data_json);
+        
+    ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -147,14 +158,16 @@ if ($result && mysqli_num_rows($result) > 0){
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
 
-var tiposCirurgia = <?php echo $tiposciru_json; ?>;
+var tiposCirurgia = <?php echo $tiposciru; ?>;
 var quantidades = <?php echo $quant_json; ?>;
-var chartTypeSelect = document.getElementById('chartTypeSelect');
-var startDateInput = document.getElementById('startDate');
-var endDateInput = document.getElementById('endDate');
-var prioritySelect = document.getElementById('prioritySelect');
-var chartCanvas = document.getElementById('chartCanvas');
-var myChart;
+var data = <?php echo $data_json; ?>
+
+    var chartTypeSelect = document.getElementById('chartTypeSelect');
+    var startDateInput = document.getElementById('startDate');
+    var endDateInput = document.getElementById('endDate');
+    var prioritySelect = document.getElementById('prioritySelect');
+    var chartCanvas = document.getElementById('chartCanvas');
+    var myChart;
 
 function updateChart() {
     var selectedChartType = chartTypeSelect.value;
@@ -190,8 +203,8 @@ function updateChart() {
                 }
             }
         });
-    } else {
-        // Se for um tipo de gráfico diferente de "Pizza", configure o eixo y normalmente
+    } else if (selectedChartType === 'bar' || selectedChartType === 'line') {
+
         myChart = new Chart(ctx, {
             type: selectedChartType,
             data: {
@@ -219,7 +232,10 @@ function updateChart() {
 // Atualize o gráfico quando os filtros forem alterados
 chartTypeSelect.addEventListener('change', updateChart);
 startDateInput.addEventListener('change', updateChart);
+window.alert(startDateInput);
+
 endDateInput.addEventListener('change', updateChart);
+console.log(endDateInput);
 prioritySelect.addEventListener('change', updateChart);
 
 // Inicialize o gráfico
