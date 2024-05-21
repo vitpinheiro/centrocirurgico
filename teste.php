@@ -12,13 +12,13 @@ $teste = $puxar->pegarciruteste();
 // $quant_json = json_encode($quant);
 
 $sql ="SELECT ciru.cirurgia as nome_cirugia,
-        COUNT(id_cirugia) AS quantidade_total,
-        CONCAT(DATE(proc.data)) AS mes,
-        proc.prioridade as prioridade
-        FROM procedimentos as proc
-            INNER JOIN cirurgias as ciru ON ciru.id = proc.id_cirugia
-                GROUP BY proc.id_cirugia
-                ORDER BY MONTH(proc.data)";
+COUNT(id_cirugia) AS quantidade_total,
+proc.data AS mes,
+ proc.prioridade as prioridade
+FROM procedimentos as proc
+INNER JOIN cirurgias as ciru ON ciru.id = proc.id_cirugia
+GROUP BY proc.id_cirugia
+ORDER BY DATE(proc.data)";
                     
     $result = mysqli_query($conn, $sql);
     $row=mysqli_fetch_assoc($result);
@@ -32,6 +32,7 @@ $sql ="SELECT ciru.cirurgia as nome_cirugia,
                 $cirurgias_array[] = $row['nome_cirugia'];
                 $quantcirurgias_array[] = $row['quantidade_total'];
                 $data_array[] = $row['mes'];
+                $prioridade_array[] = $row['prioridade'];
             }
                 }
 
@@ -39,6 +40,7 @@ $sql ="SELECT ciru.cirurgia as nome_cirugia,
                 echo($tiposciru);
                 $quant_json = json_encode($quantcirurgias_array);
                 $data_json = json_encode($data_array);
+                $prioridade_json = json_encode($prioridade_array);
                 print_r($data_json);
         
     ?>
@@ -119,9 +121,9 @@ $sql ="SELECT ciru.cirurgia as nome_cirugia,
         </div>
 
         <div class="col-lg-2 d-flex align-items-center ml-4" style="text-align: left;">
-            <input class="form-control mr-2  mb-lg-4" type="date" id="startDate">
+            <input class="form-control mr-2  mb-lg-4" type="date" id="startDate" value="">
             <p class="mb-0 mr-2  mb-lg-4">até</p>
-            <input class="form-control  mb-lg-4" type="date" id="endDate">
+            <input class="form-control  mb-lg-4" type="date" id="endDate" value="">
         </div>
     </div>
 
@@ -169,13 +171,23 @@ var data = <?php echo $data_json; ?>
     var chartCanvas = document.getElementById('chartCanvas');
     var myChart;
 
-function updateChart() {
+
+    function updateChart() {
     var selectedChartType = chartTypeSelect.value;
     var startDate = startDateInput.value;
-
+    var datas = data;
     var endDate = endDateInput.value;
     var selectedPriority = prioritySelect.value;
  
+    // Filtrar os tipos de cirurgia e quantidades com base nas datas selecionadas
+    var tiposCirurgiaFiltrados = [];
+    var quantidadesFiltradas = [];
+    for (var i = 0; i < datas.length; i++) {
+        if (datas[i] >= startDate && datas[i] <= endDate) {
+            tiposCirurgiaFiltrados.push(tiposCirurgia[i]);
+            quantidadesFiltradas.push(quantidades[i]);
+        }
+    }
 
     var ctx = chartCanvas.getContext('2d');
 
@@ -184,59 +196,79 @@ function updateChart() {
         myChart.destroy();
     }
 
-    if (selectedChartType === 'pie') {
-        // Se o tipo de gráfico for "Pizza", não é necessário definir o eixo y
-        myChart = new Chart(ctx, {
-            type: selectedChartType,
-            data: {
-                labels: tiposCirurgia,
-                datasets: [{
-                    label: 'Quantidade de Cirurgias',
-                    data: quantidades,
-                    backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)'],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                
-                }
-            }
-        });
-    } else if (selectedChartType === 'bar' || selectedChartType === 'line') {
-
-        myChart = new Chart(ctx, {
-            type: selectedChartType,
-            data: {
-                labels: tiposCirurgia,
-                datasets: [{
-                    label: 'Quantidade de Cirurgias',
-                    data: quantidades,
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
+    // Verificar se as datas são válidas e se há dados filtrados
+    if (tiposCirurgiaFiltrados.length > 0 && quantidadesFiltradas.length > 0) {
+        if (selectedChartType === 'pie') {
+            myChart = new Chart(ctx, {
+                type: selectedChartType,
+                data: {
+                    labels: tiposCirurgiaFiltrados,
+                    datasets: [{
+                        label: 'Quantidade de Cirurgias',
+                        data: quantidadesFiltradas,
+                        backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)', 'rgba(75, 192, 192, 0.5)', 'rgba(153, 102, 255, 0.5)', 'rgba(255, 159, 64, 0.5)'],
+                        borderWidth: 1
                     }]
+                },
+                options: {
+                    scales: {}
                 }
-            }
-        });
+            });
+        } else if (selectedChartType === 'bar' || selectedChartType === 'line') {
+            myChart = new Chart(ctx, {
+                type: selectedChartType,
+                data: {
+                    labels: tiposCirurgiaFiltrados,
+                    datasets: [{
+                        label: 'Quantidade de Cirurgias',
+                        data: quantidadesFiltradas,
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    } else {
+        console.log("Datas inválidas ou não selecionadas");
     }
+}
+function formatDateToYMD(date) {
+    var year = date.getFullYear();
+    var month = String(date.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda se necessário
+    var day = String(date.getDate()).padStart(2, '0'); // Adiciona zero à esquerda se necessário
+    return year + '-' + month + '-' + day;
 }
 
 // Atualize o gráfico quando os filtros forem alterados
 chartTypeSelect.addEventListener('change', updateChart);
-startDateInput.addEventListener('change', updateChart);
-window.alert(startDateInput);
+startDateInput.addEventListener('change', function() {
+    // Formata a data selecionada para o formato "YYYY-MM-DD"
+    this.value = formatDateToYMD(new Date(this.value));
+    // Atualiza o gráfico após a formatação da data
+    updateChart();
+});
 
-endDateInput.addEventListener('change', updateChart);
+
+endDateInput.addEventListener('change', function() {
+    // Formata a data selecionada para o formato "YYYY-MM-DD"
+    this.value = formatDateToYMD(new Date(this.value));
+    // Atualiza o gráfico após a formatação da data
+    updateChart();
+});
 console.log(endDateInput);
 prioritySelect.addEventListener('change', updateChart);
+
+
+
 
 // Inicialize o gráfico
 updateChart();
