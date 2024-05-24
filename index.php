@@ -14,43 +14,51 @@
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules\sweetalert2\dist\sweetalert2.min.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="node_modules\font-awesome\css\font-awesome.min.css">
     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
     <style>
 *{
     font-family: sans-serif;
 }
+
     </style>
 
 </head>
 <body>
 <header>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-<figure class="logo"><a href="index.php"><img src="img/Logobordab.png" alt=""></a></figure>
-  <div class="container-fluid">
- 
-    <a class="navbar-brand" href="#"></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="http://10.1.1.31/centralservicos/login">Home</a>
-        </li>
-      </ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-border-hrg" style="height:100px;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="http://10.1.1.31:80/centralservicos/"><img src="http://10.1.1.31:80/centralservicos/resources/img/central-servicos.png" alt="Central de Serviço" style="width: 160px">
+                </a>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navBarCentral" aria-controls="navBarCentral" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+      
+
+      <div class="collapse navbar-collapse" id="navBarCentral">
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+  <div class="content-header shadow" style="background-color:green;color:white;">
+      <div class="container-fluid">
+        <div class="row ">
+          <div class="col-sm-6">
+            <h4 class=""><b>Centro cirúrgico</b></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
 </header>
 
 <main>
 <div class="container text-center mt-5">
     
-<h1 class="pt-2 pb-5">OLÁ, ADMIN!</h1>
+<h1 class="pt-2 pb-5" style="font-family:courier,arial,helvetica;">OLÁ, ADMIN!</h1>
 
     <div id="pesquisar" class="">
         <form class="d-flex justify-content-center mt-5 pt-4 pb-2 " role="search">
@@ -68,7 +76,7 @@
         <div class="row" id="infoBoxContainer">
             <div class="col-md-4 ">
                 <div class="info-box" id="solicitacoes">
-                    <span class="info-box-icon bg-success"><a href="solicitacaoporstatus.php"><img src="img/status.svg" alt=""><i class="fa-regular fa-square-check"></a></i></span>
+                    <span class="info-box-icon bg-success"><a href="solicitacaoporstatus.php"><i class="fa-regular fa-square-check"></a></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text"><a href="solicitacaoporstatus.php">Solicitações por status</a></span>
                     </div>
@@ -77,7 +85,7 @@
 
             <div class="col-md-4">
                 <div class="info-box" id="cirurgioes">
-                    <span class="info-box-icon bg-success"><a href="cirurgioes.php"><img src="img/medico.svg" alt=""><i class="fa-solid fa-user-doctor"></a></i></span>
+                    <span class="info-box-icon bg-success"><a href="cirurgioes.php"><i class="fa-solid fa-user-doctor"></a></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text"><a href="cirurgioes.php">Cirurgiões</a></span>
                     </div>
@@ -85,7 +93,7 @@
             </div>
             <div class="col-md-4">
                 <div class="info-box" id="cirurgias">
-                    <span class="info-box-icon bg-success"><a href="cirurgiasportipo.php"><img class="cirurgia" src="img/cirurgia.svg" alt=""></a><i class="fa-solid fa-user-doctor"></i></span>
+                    <span class="info-box-icon bg-success"><a href="cirurgiasportipo.php"></a><i class="fa-solid fa-syringe"></i></i></span>
                     <div class="info-box-content">
                         <span class="info-box-text"><a href="cirurgiasportipo.php">Cirurgias</a></span>
                     </div>
@@ -93,7 +101,7 @@
             </div>
                <div class="col-md-4">
             <div class="info-box" id="tabela">
-                   <span class="info-box-icon bg-success"><a href="tabelageral.php"><img class="tabela" src="img/table.svg" alt=""></a></span>
+                   <span class="info-box-icon bg-success"><a href="tabelageral.php"><i class="fa-solid fa-table"></i></a></span>
                    <div class="info-box-content">
                     <span class="info-box-text"><a href="tabelageral.php">Tabela Geral</a></span>
             </div>

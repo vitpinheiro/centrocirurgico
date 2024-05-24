@@ -66,7 +66,7 @@ $leito_json = json_encode($leito);
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules\sweetalert2\dist\sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
 
 <style>
@@ -112,6 +112,7 @@ $leito_json = json_encode($leito);
                         <a class="dropdown-item" href="cirurgiasportipo.php">Cirurgias por tipo</a>
                         <a class="dropdown-item" href="cirurgioes.php">Cirurgiões</a>
                         <a class="dropdown-item" href="tabelageral.php">Tabela geral</a>
+                        <a class="dropdown-item" href="teste.php">Filtro Cirurgia</a>
                     </div>
                 </div>
             </div>
@@ -126,12 +127,12 @@ $leito_json = json_encode($leito);
 
   <div class="container">
     
-    <h2 id="solicitacao">Solicitações por status</h2>
-    <div class="btn-group d-flex justify-content-center mt-4" role="group" aria-label="Basic example" id="monthButtons">
-
+    <h2 id="solicitacao"><i class="fa-regular fa-calendar-check"></i>Solicitações por status</h2>
+    <div class="btn-group d-flex justify-content-center flex-wrap mt-4" role="group" aria-label="Basic example" id="monthButtons">
+    <!-- Seu conteúdo aqui -->
 </div>
 <div class="row mt-4 ">
-    <div class="col-xl-4 col-md-12 col-lg-3 mb-4 mb-0">
+    <div class="col-xl-4 col-md-12 col-lg-12 mb-4 mb-0">
         <div class="card border-left-success shadow h-80 py-2">
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
@@ -190,7 +191,7 @@ $leito_json = json_encode($leito);
         <div class=" col-lg-6 col-md-10 col-sm-12 mb-4 accordion" id="accordionPanelsStayOpenExample1" >
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne"><i class="fa-regular fa-circle-check"></i>
                     Concluídos
                     </button>
                 </h2>
@@ -205,7 +206,7 @@ $leito_json = json_encode($leito);
         <div class="col-lg-6 col-md-10 col-sm-12 order-lg-2 mb-4 accordion" id="accordionPanelsStayOpenExample2">
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo"><i class="fa-solid fa-spinner"></i>
                     Em andamento   
                     </button>
                 </h2>
@@ -223,7 +224,7 @@ $leito_json = json_encode($leito);
         <div class="accordion" id="accordionPanelsStayOpenExample3">
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree"><i class="fa-solid fa-hourglass-end"></i>
                     Pendente    
                     </button>
                 </h2>

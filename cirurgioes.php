@@ -55,6 +55,7 @@ $nummedicos_json = json_encode($nummedicos_array);
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules\sweetalert2\dist\sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <style>
         * {
@@ -96,6 +97,7 @@ $nummedicos_json = json_encode($nummedicos_array);
                         <a class="dropdown-item" href="cirurgiasportipo.php">Cirurgias por tipo</a>
                         <a class="dropdown-item" href="cirurgioes.php">Cirurgiões</a>
                         <a class="dropdown-item" href="tabelageral.php">Tabela geral</a>
+                        <a class="dropdown-item" href="teste.php">Filtro Cirurgia</a>
                     </div>
                 </div>
             </div>
@@ -109,7 +111,7 @@ $nummedicos_json = json_encode($nummedicos_array);
     <main>
 
     <div class="container">
-    <h2>Cirurgiões</h2>
+    <h2><i class="fa-solid fa-user-doctor"></i>Cirurgiões</h2>
     <div  class="row">
         <div class="col-lg-6 mr-5">
             <h6 class="mt-4 mb-0">Médicos por setor:</h6>
@@ -117,7 +119,7 @@ $nummedicos_json = json_encode($nummedicos_array);
                 <div class="accordion mb-4" id="accordionPanelsStayOpenExample<?php echo $setor; ?>">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $setor; ?>" aria-expanded="true" aria-controls="panelsStayOpen-collapse<?php echo $setor; ?>">Setor de
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse<?php echo $setor; ?>" aria-expanded="true" aria-controls="panelsStayOpen-collapse<?php echo $setor; ?>"><i class="fa-solid fa-vector-square"></i>Setor de
                                 <?php echo $setor; ?>
                             </button>
                         </h2>
@@ -160,7 +162,7 @@ $nummedicos_json = json_encode($nummedicos_array);
                     <div class="accordion mt-2 mb-4" id="accordionPanelsStayOpenExample3">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree"><i class="fa-solid fa-chart-column"></i>
                                 Quantidade por setor
                                 </button>
                             </h2>
@@ -176,7 +178,7 @@ $nummedicos_json = json_encode($nummedicos_array);
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="true" aria-controls="panelsStayOpen-collapseFour">
-                                    
+                                <i class="fa-solid fa-chart-pie"></i>
                                 </button>
                             </h2>
                             <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse show">

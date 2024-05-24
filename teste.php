@@ -5,11 +5,6 @@ include_once("pegarregistro.php");
 $puxar = new PuxarFuncoes;
 $teste = $puxar->pegarciruteste();
 
-// $tiposciru = array_column($teste, 'nome_cirurgia');
-// print_r($tiposciru);
-// $quant = array_column($teste, 'quantidade_total');
-// $tiposciru_json = json_encode($tiposciru);
-// $quant_json = json_encode($quant);
 
 $sql ="SELECT ciru.cirurgia as nome_cirugia,
 COUNT(id_cirugia) AS quantidade_total,
@@ -23,7 +18,7 @@ ORDER BY DATE(proc.data)";
     $result = mysqli_query($conn, $sql);
     $row=mysqli_fetch_assoc($result);
 
-    print_r($row);
+    
 
         if ($result && mysqli_num_rows($result) > 0){
 
@@ -37,11 +32,10 @@ ORDER BY DATE(proc.data)";
                 }
 
                 $tiposciru = json_encode($cirurgias_array);
-                echo($tiposciru);
                 $quant_json = json_encode($quantcirurgias_array);
                 $data_json = json_encode($data_array);
                 $prioridade_json = json_encode($prioridade_array);
-                print_r($data_json);
+                
         
     ?>
 <!DOCTYPE html>
@@ -109,9 +103,9 @@ ORDER BY DATE(proc.data)";
 
     <main>
 
-    <div class="container">            
-    <div class="row">
-        <div class="col-6 col-lg-2 mb-5 mr-4" style="text-align: left;">
+    <div class="container ">            
+    <div class="row align-items-center">
+        <div class="col-12 col-lg-2 mb-5 mr-4" style="text-align: left;">
             <b>Selecione o tipo</b>
             <select class="form-control" id="chartTypeSelect">
                 <option value="bar">Barra</option>
@@ -120,8 +114,8 @@ ORDER BY DATE(proc.data)";
             </select>
         </div>
 
-        <div class="col-lg-2 d-flex align-items-center ml-4" style="text-align: left;">
-            <input class="form-control mr-2  mb-lg-4" type="date" id="startDate" value="">
+        <div class="col-lg-2 col-8 d-flex align-items-center ml-2" style="text-align: left;">
+            <input class="form-control  mb-lg-4" type="date" id="startDate" value="">
             <p class="mb-0 mr-2  mb-lg-4">até</p>
             <input class="form-control  mb-lg-4" type="date" id="endDate" value="">
         </div>
@@ -129,17 +123,16 @@ ORDER BY DATE(proc.data)";
 
 
     
-    <div class="col-6 col-lg-2 " style="text-align: left;">
+    <div class="col-12 col-lg-2  " style="text-align: left;">
             <b>Selecione a prioridade</b>
             <select class="form-control" id="prioritySelect">
                 <option value="Urgência">Urgência</option>
                 <option value="Eletiva">Eletiva</option>
-           
             </select>
-        </div>
+    </div>
         <br>
         <br>
-        <div class="col-lg-7 col-md-6 col-sm-12 accordion " id="accordionPanelsStayOpenExample2">
+        <div class="col-lg-12 col-md-6 col-sm-12 accordion " id="accordionPanelsStayOpenExample2">
             <div class="accordion-item ">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
@@ -160,10 +153,10 @@ ORDER BY DATE(proc.data)";
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
 
-var tiposCirurgia = <?php echo $tiposciru; ?>;
-var quantidades = <?php echo $quant_json; ?>;
-var data = <?php echo $data_json; ?>
-
+    var tiposCirurgia = <?php echo $tiposciru; ?>;
+    var quantidades = <?php echo $quant_json; ?>;
+    var data = <?php echo $data_json; ?>;
+    var prioridade = <?php echo $prioridade_json; ?>;
     var chartTypeSelect = document.getElementById('chartTypeSelect');
     var startDateInput = document.getElementById('startDate');
     var endDateInput = document.getElementById('endDate');
@@ -178,26 +171,28 @@ var data = <?php echo $data_json; ?>
     var datas = data;
     var endDate = endDateInput.value;
     var selectedPriority = prioritySelect.value;
- 
-    // Filtrar os tipos de cirurgia e quantidades com base nas datas selecionadas
+
+    // Filtrar os tipos de cirurgia e quantidades com base nas datas selecionadas e na prioridade
     var tiposCirurgiaFiltrados = [];
     var quantidadesFiltradas = [];
     for (var i = 0; i < datas.length; i++) {
-        if (datas[i] >= startDate && datas[i] <= endDate) {
+        // Verifica se selectedPriority está presente no array prioridade[i]
+        if (datas[i] >= startDate && datas[i] <= endDate && prioridade[i].includes(selectedPriority)) {
             tiposCirurgiaFiltrados.push(tiposCirurgia[i]);
             quantidadesFiltradas.push(quantidades[i]);
         }
     }
 
+    console.log(prioridade);
+    console.log(selectedPriority);
+
     var ctx = chartCanvas.getContext('2d');
 
-    // Limpar o gráfico existente
     if (myChart instanceof Chart) {
         myChart.destroy();
     }
 
-    // Verificar se as datas são válidas e se há dados filtrados
-    if (tiposCirurgiaFiltrados.length > 0 && quantidadesFiltradas.length > 0) {
+    if (tiposCirurgiaFiltrados.length > 0 && quantidadesFiltradas.length > 0 ) {
         if (selectedChartType === 'pie') {
             myChart = new Chart(ctx, {
                 type: selectedChartType,
@@ -250,6 +245,7 @@ function formatDateToYMD(date) {
 
 // Atualize o gráfico quando os filtros forem alterados
 chartTypeSelect.addEventListener('change', updateChart);
+prioritySelect.addEventListener('change', updateChart);
 startDateInput.addEventListener('change', function() {
     // Formata a data selecionada para o formato "YYYY-MM-DD"
     this.value = formatDateToYMD(new Date(this.value));
@@ -264,8 +260,8 @@ endDateInput.addEventListener('change', function() {
     // Atualiza o gráfico após a formatação da data
     updateChart();
 });
-console.log(endDateInput);
-prioritySelect.addEventListener('change', updateChart);
+
+
 
 
 

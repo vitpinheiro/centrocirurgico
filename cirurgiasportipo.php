@@ -268,6 +268,7 @@ $quantcirurgias4_json = json_encode(array_values($quantcirurgias4));
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules\sweetalert2\dist\sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <style>
 
@@ -330,6 +331,7 @@ h1{
                         <a class="dropdown-item" href="cirurgiasportipo.php">Cirurgias por tipo</a>
                         <a class="dropdown-item" href="cirurgioes.php">Cirurgiões</a>
                         <a class="dropdown-item" href="tabelageral.php">Tabela geral</a>
+                        <a class="dropdown-item" href="teste.php">Filtro Cirurgia</a>
                     </div>
                 </div>
             </div>
@@ -344,8 +346,8 @@ h1{
   
 
 <div class="container">
-<h2>Cirurgias por tipo:</h2>
-<div class="btn-group d-flex justify-content-center mt-4" role="group" aria-label="Basic example" id="monthButtons">
+<h2><i class="fa-solid fa-syringe"></i>Cirurgias por tipo:</h2>
+<div class="btn-group d-flex justify-content-center flex-wrap mt-4" role="group" aria-label="Basic example" id="monthButtons">
 
 </div>
 <div id="carouselExampleIndicators" class="carousel slide">
@@ -366,8 +368,8 @@ h1{
                 echo '<div class="card border-left-success shadow h-80 py-1">';
                 echo '<div class="card-body">';
                 echo '<div class="row  ">';
-                echo '<div class="col mr-2">';
-                echo '<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">' . $cirurgias_array[$j] . '</div>';
+                echo '<div class="col-8 mr-2">';
+                echo '<div class=" text-xs font-weight-bold text-primary text-uppercase mb-1">' . $cirurgias_array[$j] . '</div>';
                 echo '<div class="display-4 h4 font-weight-bold text-gray-800">' . $quantcirurgias_array[$j] . '</div>';
                 echo '</div></div></div></div></div>';
             }
@@ -399,7 +401,7 @@ h1{
         <div class="col-lg-6 col-md-6 col-sm-12 accordion " id="accordionPanelsStayOpenExample1">
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne"><i class="fa-solid fa-triangle-exclamation"></i>
                       Urgência e eletiva
                     </button>
                 </h2>
@@ -414,7 +416,7 @@ h1{
         <div class="col-lg-6 col-md-6 col-sm-12 accordion " id="accordionPanelsStayOpenExample2">
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo"><i class="fa-solid fa-chart-column"></i>
                       Quantidade de cirurgias
                     </button>
                 </h2>
@@ -434,7 +436,7 @@ h1{
                 <div class="col-12 col-md-6 col-lg-10  accordion " id="accordionPanelsStayOpenExample3">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree"><i class="fa-solid fa-chart-pie"></i>
                               Quantidade por tipo
                             </button>
                         </h2>
@@ -453,7 +455,7 @@ h1{
             <table class="table table-bordered">
                 <thead>
                     <tr class="table-success">
-                        <th scope="col">#</th>
+                        <th scope="col"><i class="fa-solid fa-star"></i></th>
                         <th scope="col">Cirurgia</th>
                         <th scope="col">Quantidade</th>
                     </tr>
@@ -495,7 +497,7 @@ h1{
                 <div class="accordion" id="accordionPanelsStayOpenExample3">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree"><i class="fa-solid fa-chart-column"></i>
                                quant de cirurgias por setor
                             </button>
                         </h2>
@@ -513,8 +515,8 @@ h1{
                 <table class="table table-bordered">
                     <thead>
                         <tr class="table-primary">
-                            <th scope="col">Setor</th>
-                            <th scope="col">Total de Cirurgias</th>
+                            <th scope="col"><i class="fa-solid fa-vector-square"></i>Setor</th>
+                            <th scope="col"><i class="fa-solid fa-syringe"></i>Total de Cirurgias</th>
                         </tr>
                     </thead>
                     <tbody>
