@@ -220,8 +220,7 @@ $leito_json = json_encode($leito);
     </div>
 
   <div class="row">
-    <div class="col-12 col-md-8 col-lg-6 mt-4 mt-md-0  ">
-        <div class="accordion" id="accordionPanelsStayOpenExample3">
+    <div class="col-lg-6 col-md-10 col-sm-12 order-lg-2 mb-4 accordion " id="accordionPanelsStayOpenExample3">
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="true" aria-controls="panelsStayOpen-collapseThree"><i class="fa-solid fa-hourglass-end"></i>
@@ -239,7 +238,7 @@ $leito_json = json_encode($leito);
 </div>
 
 <div class="row mt-5 ">
-<div class="col-md-12 col-lg-12 mx-auto">
+<div class="col-md-12 col-10 col-lg-10 mx-auto">
         <table class="table">
             <thead>
                 <tr class="table-primary">

@@ -58,7 +58,7 @@
 <main>
 <div class="container text-center mt-5">
     
-<h1 class="pt-2 pb-5" style="font-family:courier,arial,helvetica;">OLÁ, ADMIN!</h1>
+<h1 class="pt-2 pb-5" style="font-family:arial;"><b>OLÁ, ADMIN!</b></h1>
 
     <div id="pesquisar" class="">
         <form class="d-flex justify-content-center mt-5 pt-4 pb-2 " role="search">
