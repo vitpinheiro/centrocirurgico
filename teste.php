@@ -239,7 +239,7 @@ ORDER BY DATE(proc.data)";
 function formatDateToYMD(date) {
     var year = date.getFullYear();
     var month = String(date.getMonth() + 1).padStart(2, '0'); // Adiciona zero à esquerda se necessário
-    var day = String(date.getDate()).padStart(2, '0'); // Adiciona zero à esquerda se necessário
+    var day = String(date.getDate() + 1).padStart(2, '0'); // Adiciona zero à esquerda se necessário
     return year + '-' + month + '-' + day;
 }
 
